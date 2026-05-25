@@ -124,21 +124,89 @@ p { margin-bottom: 0.75rem; }
   background: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 12px;
   padding: 2rem;
 }
-.reflection-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; }
-.reflection-header h2 { margin-bottom: 0; }
-.reflection-subtitle { color: #6B7280; font-size: 0.95rem; margin-bottom: 1.5rem; }
-.reflection-prompts { list-style: none; padding: 0; margin: 0 0 1.5rem 0; }
+
+.checks-progress {
+  display: flex; align-items: center; gap: 0;
+  margin-bottom: 1.5rem; padding: 1rem;
+  background: #fff; border: 1px solid #E5E7EB; border-radius: 10px;
+}
+.check-pip {
+  display: flex; align-items: center; gap: 0.4rem;
+  flex: 0 0 auto;
+}
+.pip-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  font-size: 0.8rem; font-weight: 700;
+  background: #E5E7EB; color: #9CA3AF;
+}
+.check-pip.done .pip-icon { background: #059669; color: #fff; }
+.check-pip.current .pip-icon { box-shadow: 0 0 0 3px rgba(5,150,105,0.2); }
+.pip-label { font-size: 0.85rem; font-weight: 600; color: #9CA3AF; }
+.check-pip.done .pip-label { color: #2D3B45; }
+.pip-connector {
+  flex: 1; height: 2px; background: #E5E7EB;
+  margin: 0 0.5rem; min-width: 1rem;
+}
+.pip-connector.done { background: #059669; }
+
+.scaffold-section { margin-bottom: 1.25rem; }
+.scaffold-oneliner {
+  font-size: 1.1rem; font-weight: 700; line-height: 1.45;
+  border-left: 4px solid var(--dim-color, #2D3B45);
+  padding: 0.75rem 1rem; margin-bottom: 1.5rem;
+  background: #fff; border-radius: 0 8px 8px 0;
+}
+.scaffold-bridge {
+  font-size: 0.9rem; color: #6B7280; font-style: italic;
+  padding: 0.75rem 0; margin-bottom: 0.75rem;
+  border-top: 1px solid #E5E7EB;
+}
+
+.reflection-prompts { list-style: none; padding: 0; margin: 0; }
+.reflect-zone-top {
+  padding-bottom: 1.25rem;
+  margin-bottom: 0;
+}
+.reflect-zone-read {
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.reflect-zone-share {
+  background: #ECFDF5;
+  border: 1px solid #A7F3D0;
+  border-radius: 10px;
+  padding: 1.25rem;
+}
+.prompts-step-header {
+  display: flex; align-items: center; gap: 0.6rem;
+  font-size: 0.95rem; font-weight: 700; color: #2D3B45;
+  margin-bottom: 0.85rem;
+}
+.step-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+  font-size: 0.75rem; font-weight: 700;
+  background: #2D3B45; color: #fff;
+}
+.reflect-zone-read .step-num { background: #2563EB; }
+.reflect-zone-share .step-num { background: #059669; }
 .reflection-prompts li {
   padding: 0.85rem 1rem 0.85rem 3rem; margin-bottom: 0.5rem;
-  background: #fff; border: 1px solid #E5E7EB; border-radius: 8px;
+  background: #fff; border: 1px solid #D1D5DB; border-radius: 8px;
   font-size: 0.95rem; line-height: 1.55; position: relative;
   cursor: default;
 }
+.reflection-prompts li:last-child { margin-bottom: 0; }
+}
 .reflection-prompts li::before {
-  content: '?'; position: absolute; left: 0.85rem; top: 0.85rem;
+  content: '\201C'; position: absolute; left: 0.6rem; top: 0.5rem;
   width: 24px; height: 24px; border-radius: 50%;
   background: var(--dim-color, #2D3B45); color: #fff;
-  font-size: 0.75rem; font-weight: 700;
+  font-size: 0.9rem; font-weight: 700; font-family: Georgia, serif;
   display: flex; align-items: center; justify-content: center;
 }
 
@@ -226,6 +294,13 @@ p { margin-bottom: 0.75rem; }
   background: transparent; color: #1A1A2E; border: 2px solid #CCC; transition: all 0.2s;
 }
 .btn-secondary:hover { border-color: #1A1A2E; }
+.btn-when-told {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.75rem 1.75rem; border-radius: 10px; font-size: 0.95rem; font-weight: 600;
+  background: #F3F4F6; color: #6B7280; border: 2px solid #D1D5DB;
+  transition: all 0.2s; cursor: pointer;
+}
+.btn-when-told:hover { background: #E5E7EB; color: #374151; border-color: #9CA3AF; }
 
 /* ========== DISCUSSION SCREEN ========== */
 .discussion-screen { text-align: center; padding: 3rem 1rem; }
@@ -300,6 +375,8 @@ p { margin-bottom: 0.75rem; }
   .btn-row { flex-direction: column; }
   .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
   .facilitator-panel { margin: 1rem; padding: 1.25rem; }
+  .checks-progress { flex-wrap: wrap; gap: 0.35rem; justify-content: center; }
+  .pip-connector { display: none; }
 }
 
 /* ========== TRANSITIONS ========== */
@@ -483,11 +560,7 @@ function renderActivity() {
     });
     html += `<button class="btn-primary" ${allAnswered ? '' : 'disabled'} onclick="submitAnswers()">Check my answers</button>`;
   } else {
-    const isLast = state.activityIdx >= pw.activities.length - 1;
-    html += `<button class="btn-primary" onclick="nextStep()">${isLast ? 'See summary' : 'Continue'}</button>`;
-    if (!isLast) {
-      html += `<button class="btn-secondary" onclick="goToSummary()">Skip to summary</button>`;
-    }
+    html += `<button class="btn-primary" onclick="nextStep()">Continue</button>`;
   }
   html += `</div>`;
   // Close right column, grid, and fade-in
@@ -495,50 +568,99 @@ function renderActivity() {
   app.innerHTML = html;
 }
 
-// --- REFLECTION PROMPTS (per dimension) ---
-const REFLECTION_PROMPTS = {
-  answer: [
-    "Did anything surprise you about which source was real and which was fake?",
-    "How confident were you in your answers before checking?",
-    "What would you do differently next time you receive sources from AI?"
-  ],
-  reasoning: [
-    "Did you notice the AI flattering the student? Why might AI do this?",
-    "What would a genuinely helpful AI response have looked like here?",
-    "How could you check whether a replacement source is properly citable?"
-  ],
-  behaviour: [
-    "What made this conversation different from the earlier activities?",
-    "When do you think AI is most useful as a study tool?",
-    "Would you use AI this way for your own assignments? Why or why not?"
-  ]
-};
+// --- REFLECTION SCAFFOLDING (cumulative, concrete→analytical→transfer) ---
+const REFLECTION_SCAFFOLDING = [
+  // After Activity 1
+  {
+    heading: "You\u2019ve completed your first check",
+    checksCompleted: 1,
+    oneLiner: "AI outputs mix accurate and inaccurate information \u2014 and both can look equally convincing.",
+    prompts: [
+      "What clues helped you tell the real source from the fake one \u2014 and what made it tricky?",
+      "The AI recommended the fake source over the real one. Why might AI do this, and what does it tell you about relying on AI\u2019s judgement?",
+      "Next time you get information from AI, what\u2019s the first thing you would check?"
+    ],
+    bridge: "You\u2019ve learned to check what AI produces. Next, you\u2019ll see what happens when a student catches a mistake and asks AI to fix it."
+  },
+  // After Activity 2
+  {
+    heading: "You now have two checks",
+    checksCompleted: 2,
+    oneLiner: "Spotting a problem is only half the job. You also need to judge whether AI\u2019s response to your feedback actually solves it.",
+    prompts: [
+      "The AI apologised and offered a replacement. What looked like a fix but wasn\u2019t?",
+      "The AI used flattery and contradicted its earlier advice instead of being direct. Why might AI avoid telling you it can\u2019t help?",
+      "If you pushed back on an AI response and got a confident-sounding answer, how would you decide whether the problem is actually resolved?"
+    ],
+    bridge: "You can now check the output and the reasoning. Next, you\u2019ll see what effective AI use actually looks like."
+  },
+  // After Activity 3
+  {
+    heading: "You now have all three checks",
+    checksCompleted: 3,
+    oneLiner: "You\u2019ve seen AI at its worst and its best. The difference isn\u2019t just what it says \u2014 it\u2019s how it works with you.",
+    prompts: [
+      "The AI said \u201cI can\u2019t search the database for you\u201d and gave search terms instead. How is this different from the earlier activities where it generated sources directly?",
+      "What specific AI behaviours helped the student move forward \u2014 and what behaviours in the earlier activities held them back?",
+      "When you next use AI, what would make you trust an interaction more \u2014 and what would make you stop and question it?"
+    ],
+    bridge: null
+  }
+];
 
 // --- RENDER: DISCUSSION ---
 function renderDiscussion() {
   const pw = getPathway();
   const act = pw.activities[state.activityIdx];
-  const dim = getDimension(act.dimension);
+  const scaffold = REFLECTION_SCAFFOLDING[state.activityIdx];
+  const dims = GAME_DATA.meta.dimensions;
   const isLast = state.activityIdx >= pw.activities.length - 1;
-
-  // Combine specific prompt with generic reflection prompts
-  const prompts = [act.discussionPrompt, ...REFLECTION_PROMPTS[act.dimension]];
 
   let html = `<div class="fade-in reflection-screen">
     <div class="reflection-card">
-      <div class="reflection-header">
-        <div style="color:${dim.colour};">${dimIcon(dim.id, 32)}</div>
-        <h2>Reflect on what you found</h2>
-      </div>
-      <p class="reflection-subtitle">Pick a question to think about, or discuss them all with your group.</p>
-      <ul class="reflection-prompts" style="--dim-color:${dim.colour};">`;
-  prompts.forEach(p => {
-    html += `<li>${p}</li>`;
+
+      <div class="reflect-zone-top">
+        <h2 style="margin-bottom:1.25rem;">${scaffold.heading}</h2>
+
+        <div class="checks-progress">`;
+  dims.forEach((d, i) => {
+    const done = i < scaffold.checksCompleted;
+    const current = i === scaffold.checksCompleted - 1;
+    html += `<div class="check-pip ${done ? 'done' : ''} ${current ? 'current' : ''}">
+      <span class="pip-icon">${done ? '✓' : (i + 1)}</span>
+      <span class="pip-label">${d.label}</span>
+    </div>`;
+    if (i < dims.length - 1) html += `<div class="pip-connector ${i < scaffold.checksCompleted - 1 ? 'done' : ''}"></div>`;
   });
-  html += `</ul>
-      <div class="btn-row">
-        <button class="btn-primary" onclick="advanceActivity()">${isLast ? 'See summary' : 'Next activity'}</button>
+  html += `</div>
+
+        <p class="scaffold-oneliner" style="--dim-color:${dims[scaffold.checksCompleted - 1].colour};">${scaffold.oneLiner}</p>
       </div>
+
+      <div class="reflect-zone-read">
+        <div class="prompts-step-header"><span class="step-num">1</span> Read and reflect on the following questions</div>
+        <ul class="reflection-prompts" style="--dim-color:${dims[scaffold.checksCompleted - 1].colour};">`;
+  scaffold.prompts.forEach(p => { html += `<li>${p}</li>`; });
+  html += `</ul>
+      </div>
+
+      <div class="reflect-zone-share">
+        <div class="prompts-step-header"><span class="step-num">2</span> Pick one you\u2019d like to share your thoughts on the Teams chat</div>`;
+
+  if (scaffold.bridge) {
+    html += `
+        <div class="scaffold-bridge">${scaffold.bridge}</div>`;
+  } else {
+    html += ``;
+  }
+
+  html += `
+      </div>
+
+      <div class="btn-row" style="margin-top:1rem;">
+        <button class="btn-when-told" onclick="advanceActivity()">${isLast ? 'See summary' : 'Next Check (When Told)'}</button>
+      </div>
+
     </div>
   </div>`;
   app.innerHTML = html;
@@ -655,12 +777,6 @@ function advanceActivity() {
   } else {
     state.screen = 'summary';
   }
-  render();
-  scrollTop();
-}
-
-function goToSummary() {
-  state.screen = 'summary';
   render();
   scrollTop();
 }
