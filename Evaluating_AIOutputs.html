@@ -120,7 +120,7 @@ p { margin-bottom: 0.75rem; }
 /* ========== REFLECTION SCREEN ========== */
 .reflection-screen { padding: 2rem 0; }
 .reflection-card {
-  max-width: 720px; margin: 0 auto;
+  max-width: 1040px; margin: 0 auto;
   background: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 12px;
   padding: 2rem;
 }
@@ -159,8 +159,7 @@ p { margin-bottom: 0.75rem; }
 }
 .scaffold-bridge {
   font-size: 0.9rem; color: #6B7280; font-style: italic;
-  padding: 0.75rem 0; margin-bottom: 0.75rem;
-  border-top: 1px solid #E5E7EB;
+  padding: 0.85rem 0 0.25rem; margin-top: 0.75rem;
 }
 
 .reflection-prompts { list-style: none; padding: 0; margin: 0; }
@@ -645,18 +644,14 @@ function renderDiscussion() {
       </div>
 
       <div class="reflect-zone-share">
-        <div class="prompts-step-header"><span class="step-num">2</span> Pick one you\u2019d like to share your thoughts on the Teams chat</div>`;
+        <div class="prompts-step-header"><span class="step-num">2</span> Pick one you\u2019d like to share your thoughts on the Teams chat</div>
+      </div>`;
 
   if (scaffold.bridge) {
-    html += `
-        <div class="scaffold-bridge">${scaffold.bridge}</div>`;
-  } else {
-    html += ``;
+    html += `<div class="scaffold-bridge">${scaffold.bridge}</div>`;
   }
 
   html += `
-      </div>
-
       <div class="btn-row" style="margin-top:1rem;">
         <button class="btn-when-told" onclick="advanceActivity()">${isLast ? 'See summary' : 'Next Check (When Told)'}</button>
       </div>
