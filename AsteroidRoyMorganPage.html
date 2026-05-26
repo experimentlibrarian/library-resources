@@ -11,7 +11,7 @@
             --blue-secondary: #1976d2;
             --blue-deep: #0d47a1;
             --blue-light: #e3f2fd;
-            --bg: #fafafa;
+            --bg: #ffffff;
             --white: #ffffff;
             --text: #212121;
             --text-muted: #555;
@@ -28,14 +28,15 @@
             font-size: 16px;
             line-height: 1.6;
             color: var(--text);
-            background: var(--bg);
+            background: #ffffff;
             padding: 1.25rem 2.5rem;
         }
+
         /* ── Skip link ── */
         .skip-link { position: absolute; top: -100px; left: 0; background: var(--blue-deep); color: #fff; padding: .5rem 1rem; z-index: 1000; font-size: .875rem; border-radius: 0 0 8px 0; text-decoration: none; }
         .skip-link:focus { top: 0; }
 
-        /* ── Container — wider ── */
+        /* ── Container ── */
         .container { max-width: 1200px; margin: 0 auto; }
 
         /* ── Header ── */
@@ -90,13 +91,12 @@
         .loc-grid { display: grid; grid-template-columns: 1fr; gap: .6rem; margin-top: .75rem; }
         @media (min-width: 520px) { .loc-grid { grid-template-columns: 1fr 1fr; } }
         @media (min-width: 900px) { .loc-grid { grid-template-columns: 1fr 1fr 1fr; } }
-        .loc-card { background: var(--bg); border: 1px solid #e0e0e0; border-radius: 8px; padding: .85rem 1rem; }
+        .loc-card { background: #f9f9f9; border: 1px solid #e0e0e0; border-radius: 8px; padding: .85rem 1rem; }
         .loc-card .campus { font-weight: 700; font-size: .88rem; color: var(--blue-deep); }
         .loc-card .te-reo { font-size: .78rem; color: var(--text-muted); margin-bottom: .3rem; }
         .loc-card ul { list-style: none; padding: 0; font-size: .85rem; }
         .loc-card li { padding: .1rem 0 .1rem 1rem; position: relative; }
         .loc-card li::before { content: "→"; position: absolute; left: 0; color: var(--blue-primary); font-size: .8rem; }
-        .loc-unavail { color: var(--text-muted); font-style: italic; font-size: .85rem; }
 
         /* ── Video grid ── */
         .vid-grid { display: grid; grid-template-columns: 1fr; gap: .75rem; margin-top: .75rem; }
@@ -115,7 +115,7 @@
             width: 100%;
             border: 2px solid var(--blue-primary);
             border-radius: var(--radius);
-            overflow: hidden;
+            overflow: visible; /* ← allows fullscreen to break out of container */
             box-shadow: var(--shadow);
             background: var(--white);
         }
@@ -124,13 +124,14 @@
             height: 620px;
             border: none;
             display: block;
+            border-radius: var(--radius);
         }
 
         /* ── DB & support grids ── */
         .card-grid { display: grid; grid-template-columns: 1fr; gap: .6rem; margin-top: .75rem; }
         @media (min-width: 520px) { .card-grid { grid-template-columns: 1fr 1fr; } }
         @media (min-width: 900px) { .card-grid { grid-template-columns: 1fr 1fr 1fr; } }
-        .mini-card { background: var(--bg); border: 1px solid #e0e0e0; border-radius: 8px; padding: .85rem 1rem; }
+        .mini-card { background: #f9f9f9; border: 1px solid #e0e0e0; border-radius: 8px; padding: .85rem 1rem; }
         .mini-card .mc-title { font-weight: 700; font-size: .88rem; color: var(--blue-deep); margin-bottom: .2rem; }
         .mini-card .mc-desc { font-size: .82rem; color: var(--text-muted); line-height: 1.45; }
         .mini-card a { color: var(--blue-primary); text-decoration: none; }
@@ -223,7 +224,8 @@
                         src="https://app.cogniti.ai/agents/698a7380de6974d19bc8d5f7/chat?k=HQOW13vMmeDNRybGalpecEPwzV8aki7ehKtPGfzI3Ds"
                         title="Asteroid chatbot"
                         loading="lazy"
-                        allow="clipboard-write"
+                        allow="clipboard-write; fullscreen"
+                        allowfullscreen
                     ></iframe>
                 </div>
                 <div class="callout callout-orange" style="margin-top:.75rem;">
