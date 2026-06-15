@@ -387,8 +387,8 @@ function getClaimColor(n) { return CLAIM_COLORS[(n-1)%CLAIM_COLORS.length]; }
 const GAME_DATA = {
   meta: {
     title: "Three Checks",
-    subtitle: "Can you spot what\u2019s going well \u2014 and what\u2019s going wrong?",
-    instructions: "You will read conversations between a student and an AI tool. Your job is to spot what the AI gets right, what it gets wrong, and how it behaves. Choose a topic area to start.",
+    subtitle: "Spot what\u2019s going well \u2014 and what\u2019s going wrong",
+    instructions: "Read conversations between a student and an AI tool. Your job is to spot what the AI gets right, what it gets wrong, and how it behaves. Choose a topic area to start.",
     dimensions: [
       { id:"answer", label:"What it says", colour:"#2563EB", description:"Is the information accurate, complete, and relevant?" },
       { id:"reasoning", label:"How it acts", colour:"#D97706", description:"When problems were found, did the AI fix them \u2014 or dodge, repeat, and flatter?" },
@@ -750,7 +750,7 @@ function toggleClaim(n){
 function scrollToHighlight(n){const a=document.querySelector('.claim-anchor[data-claim-num="'+n+'"]');if(a){a.scrollIntoView({behavior:'smooth',block:'center'});a.classList.add('is-active');setTimeout(()=>{if(state.activeClaim!==Number(n))a.classList.remove('is-active');},1500);}}
 
 const REFLECTION_SCAFFOLDING = [
-  { heading:"You\u2019ve completed your first check", checksCompleted:1,
+  { heading:"First check reflection", checksCompleted:1,
     oneLiner:"AI outputs mix accurate and inaccurate information \u2014 and both look equally convincing.",
     prompts:["What clues helped you tell real from fake \u2014 and what made it tricky?","Next time you get information from AI, what\u2019s the first thing you\u2019d check?"] },
   { heading:"You now have two checks", checksCompleted:2,
