@@ -102,7 +102,7 @@ p { margin-bottom: 0.75rem; }
   font-size: 1rem;
   font-weight: 500;
 }
-/* ========== HOW-IT-WORKS HELPER ========== */
+/* ========== HOW-IT-WORKS HELPER (clear instructions for everyone) ========== */
 .how-it-works {
   display: flex; align-items: center; gap: 0.6rem;
   font-size: 0.875rem; color: #4B5563;
@@ -141,7 +141,7 @@ p { margin-bottom: 0.75rem; }
 .col-step.step-done { background: #059669; }
 .col-title { font-size: 1rem; font-weight: 700; color: #2D3B45; line-height: 1.3; }
 .col-hint { font-size: 0.85rem; color: #6B7280; margin-top: 0.2rem; line-height: 1.45; }
-/* ========== CLAIM ANCHOR ========== */
+/* ========== CLAIM ANCHOR — clean by default, reveals on hover/focus ========== */
 .claim-anchor {
   display: inline;
   position: relative;
@@ -179,6 +179,7 @@ p { margin-bottom: 0.75rem; }
   user-select: none;
   line-height: 1;
   position: relative;
+  /* make focusable */
 }
 .claim-badge:hover,
 .claim-badge:focus-visible,
@@ -192,56 +193,75 @@ p { margin-bottom: 0.75rem; }
   margin-left: 0.4rem;
   vertical-align: middle;
 }
-/* ========== GLOBE OVERLAY (white-space popup) ========== */
-.globe-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.35);
-  z-index: 500;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  animation: fadeOverlayIn 0.2s ease;
-}
-.globe-overlay.show { display: flex; }
-@keyframes fadeOverlayIn { from { opacity: 0; } to { opacity: 1; } }
-.globe-panel {
+/* ========== TOOLTIP / GLOBE ========== */
+.claim-tooltip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  width: 280px;
+  max-width: 90vw;
   background: #fff;
-  border-radius: 14px;
-  padding: 2rem 2.25rem;
-  max-width: 520px;
-  width: 100%;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08);
-  position: relative;
-  animation: globeSlideIn 0.25s ease;
-  border-top: 5px solid var(--globe-color, #2563EB);
+  border: 2px solid var(--claim-color);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: #2D3B45;
+  font-weight: 400;
+  text-align: left;
+  text-transform: none;
+  letter-spacing: normal;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.14);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.18s, transform 0.18s, visibility 0.18s;
+  z-index: 50;
+  pointer-events: none;
+  white-space: normal;
 }
-@keyframes globeSlideIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-.globe-panel-close {
-  position: absolute; top: 0.85rem; right: 0.85rem;
-  width: 32px; height: 32px; border-radius: 50%;
-  background: #F3F4F6; color: #6B7280;
-  font-size: 1.1rem; display: flex;
-  align-items: center; justify-content: center;
-  transition: background 0.15s, color 0.15s;
+.claim-tooltip::before,
+.claim-tooltip::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
 }
-.globe-panel-close:hover { background: #E5E7EB; color: #2D3B45; }
-.globe-badge-lg {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 36px; height: 36px; border-radius: 50%;
-  background: var(--globe-color, #2563EB); color: #fff;
-  font-size: 1.1rem; font-weight: 700;
-  margin-bottom: 0.85rem;
+.claim-tooltip::before {
+  bottom: -11px;
+  border-top: 11px solid var(--claim-color);
 }
-.globe-label {
-  font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.06em; color: var(--globe-color, #2563EB);
-  margin-bottom: 0.5rem;
+.claim-tooltip::after {
+  bottom: -8px;
+  border-top: 9px solid #fff;
 }
-.globe-body {
-  font-size: 1.05rem; line-height: 1.65; color: #2D3B45;
+.claim-tooltip-label {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--claim-color);
+  margin-bottom: 0.35rem;
 }
+.claim-tooltip-body { font-weight: 400; }
+.claim-anchor:hover .claim-tooltip,
+.claim-anchor:focus-within .claim-tooltip,
+.claim-anchor.is-active .claim-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+/* Tooltip can also flip below if there's no room above (controlled via .below class added in JS) */
+.claim-tooltip.below {
+  bottom: auto;
+  top: calc(100% + 12px);
+}
+.claim-tooltip.below::before { bottom: auto; top: -11px; border-top: none; border-bottom: 11px solid var(--claim-color); }
+.claim-tooltip.below::after  { bottom: auto; top: -8px; border-top: none; border-bottom: 9px solid #fff; }
 /* ========== QUESTION CARD ========== */
 .q-card-header {
   display: flex;
@@ -307,18 +327,11 @@ p { margin-bottom: 0.75rem; }
 .reflect-zone-read .step-num { background: #2563EB; }
 .reflect-zone-share .step-num { background: #059669; }
 .reflection-prompts li {
-  padding: 0.85rem 1rem 0.85rem 3rem; margin-bottom: 0.5rem;
+  padding: 0.85rem 1rem; margin-bottom: 0.5rem;
   background: #fff; border: 1px solid #D1D5DB; border-radius: 8px;
-  font-size: 0.95rem; line-height: 1.55; position: relative;
+  font-size: 0.95rem; line-height: 1.55;
 }
 .reflection-prompts li:last-child { margin-bottom: 0; }
-.reflection-prompts li::before {
-  content: '\201C'; position: absolute; left: 0.6rem; top: 0.5rem;
-  width: 24px; height: 24px; border-radius: 50%;
-  background: var(--dim-color, #2D3B45); color: #fff;
-  font-size: 0.9rem; font-weight: 700; font-family: Georgia, serif;
-  display: flex; align-items: center; justify-content: center;
-}
 /* ========== CHAT BUBBLES ========== */
 .chat-container { margin-bottom: 1.5rem; }
 .chat-turn { display: flex; flex-direction: column; margin-bottom: 0.75rem; }
@@ -340,6 +353,88 @@ p { margin-bottom: 0.75rem; }
 .chat-turn.ai .chat-bubble {
   background: #fff; border: 1.5px solid #E2E0DC; border-bottom-right-radius: 4px;
   overflow: visible;
+}
+/* ========== 3-COLUMN GRID (Check 1: "What it says" only) ========== */
+.activity-grid-3col {
+  display: grid;
+  grid-template-columns: 40% 30% 30%;
+  column-gap: 1.25rem;
+  row-gap: 1rem;
+  align-items: start;
+  margin-bottom: 1rem;
+}
+.grid-3col-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid #E5E7EB;
+}
+.grid-3col-header .col-step {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; border-radius: 50%;
+  background: #2D3B45; color: #fff;
+  font-size: 0.85rem; font-weight: 700; flex-shrink: 0;
+}
+.grid-3col-header .col-title { font-size: 1rem; font-weight: 700; color: #2D3B45; line-height: 1.3; }
+.grid-3col-header .col-hint { font-size: 0.82rem; color: #6B7280; margin-top: 0.2rem; line-height: 1.4; }
+/* Each turn-group spans one grid row via display:contents so its 3 children become direct grid children */
+.turn-group { display: contents; }
+.turn-row-chat { /* sits in column 1 */ }
+.turn-row-guide,
+.turn-row-eval {
+  display: flex; flex-direction: column; gap: 0.75rem;
+  min-height: 0; /* allow empty cells to collapse */
+}
+/* Guidance card — sits in column 2 */
+.guidance-card {
+  background: #fff;
+  border: 1.5px solid color-mix(in srgb, var(--claim-color) 30%, #E5E7EB);
+  border-left: 4px solid var(--claim-color);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+}
+.guidance-card.is-active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border-color: var(--claim-color);
+}
+.guidance-card-header {
+  display: flex; align-items: center; gap: 0.55rem;
+  margin-bottom: 0.4rem;
+}
+.guidance-card-header .claim-badge {
+  margin-left: 0;
+  margin-right: 0;
+}
+.guidance-card-label {
+  font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--claim-color);
+}
+.guidance-card-body {
+  font-size: 0.88rem; line-height: 1.55; color: #2D3B45;
+}
+/* Mobile: 3-col collapses to single column; each turn-group becomes a block */
+@media (max-width: 1000px) {
+  .activity-grid-3col {
+    display: block;
+  }
+  .turn-group {
+    display: block;
+    margin-bottom: 1.25rem;
+  }
+  .grid-3col-header {
+    display: none;
+  }
+  .turn-row-guide:empty,
+  .turn-row-eval:empty {
+    display: none;
+  }
+  .turn-row-guide,
+  .turn-row-eval {
+    margin-top: 0.75rem;
+  }
 }
 /* ========== QUESTIONS ========== */
 .questions-section { margin-bottom: 1.5rem; }
@@ -463,6 +558,7 @@ p { margin-bottom: 0.75rem; }
   #app { max-width: 100%; padding: 1rem; }
   .btn-row, .facilitator-toggle, .progress-bar, .no-print { display: none !important; }
   .card { border: 1px solid #ddd; break-inside: avoid; }
+  .claim-tooltip { display: none; }
   .claim-text { border-bottom: 1px solid #888 !important; background: none !important; }
 }
 /* ========== RESPONSIVE ========== */
@@ -484,7 +580,7 @@ p { margin-bottom: 0.75rem; }
   .facilitator-panel { margin: 1rem; padding: 1.25rem; }
   .checks-progress { flex-wrap: wrap; gap: 0.35rem; justify-content: center; }
   .pip-connector { display: none; }
-  .globe-panel { padding: 1.5rem; }
+  .claim-tooltip { width: 240px; }
 }
 .fade-in { animation: fadeIn 0.35s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
@@ -492,15 +588,6 @@ p { margin-bottom: 0.75rem; }
 </head>
 <body>
 <div id="app"></div>
-<!-- Globe overlay (shared popup) -->
-<div class="globe-overlay" id="globeOverlay" onclick="closeGlobe(event)">
-  <div class="globe-panel" id="globePanel" style="--globe-color: #2563EB;">
-    <button class="globe-panel-close" onclick="closeGlobeForce()" aria-label="Close">&#10005;</button>
-    <div class="globe-badge-lg" id="globeBadge">1</div>
-    <div class="globe-label" id="globeLabel">Check it</div>
-    <div class="globe-body" id="globeBody"></div>
-  </div>
-</div>
 <button class="facilitator-toggle no-print" onclick="toggleFacilitator()" aria-label="Facilitator answer key">Facilitator</button>
 <div class="facilitator-overlay" id="facOverlay">
   <div class="facilitator-panel" role="dialog" aria-label="Facilitator answer key">
@@ -514,31 +601,6 @@ p { margin-bottom: 0.75rem; }
    ============================================================ */
 const CLAIM_COLORS = ['#2563EB', '#DC2626', '#059669', '#D97706', '#7C3AED'];
 function getClaimColor(num) { return CLAIM_COLORS[(num - 1) % CLAIM_COLORS.length]; }
-/* ============================================================
-   GLOBE OVERLAY FUNCTIONS
-   ============================================================ */
-function openGlobe(num, tooltip, color) {
-  const overlay = document.getElementById('globeOverlay');
-  const panel = document.getElementById('globePanel');
-  const badge = document.getElementById('globeBadge');
-  const body = document.getElementById('globeBody');
-  panel.style.setProperty('--globe-color', color);
-  badge.style.background = color;
-  badge.textContent = num;
-  document.getElementById('globeLabel').style.color = color;
-  body.textContent = tooltip;
-  overlay.classList.add('show');
-  document.body.style.overflow = 'hidden';
-}
-function closeGlobe(e) {
-  if (e.target === document.getElementById('globeOverlay')) {
-    closeGlobeForce();
-  }
-}
-function closeGlobeForce() {
-  document.getElementById('globeOverlay').classList.remove('show');
-  document.body.style.overflow = '';
-}
 /* ============================================================
    GAME DATA
    ============================================================ */
@@ -567,16 +629,16 @@ const GAME_DATA = {
   pathways: [
     {
       id: "business", title: "Business", colour: "#2563EB",
-      context: "A postgraduate marketing student researching social media for NZ small businesses",
+      context: "A student researching social media for NZ small businesses",
       activities: [
         {
           number: 1, dimension: "answer", dimensionLabel: "What it says",
           technique: "Triangulation and lateral reading",
           task: "Read the exchange between the student and the AI. Identify which claims and sources you can trust \u2014 and which you can\u2019t.",
           conversation: [
-            { role: "student", text: "For my postgrad marketing paper, what proportion of NZ small businesses use social media for customer engagement?" },
+            { role: "student", text: "For my assessment on NZ small businesses, what proportion of them use social media for customer engagement?" },
             { role: "ai", text: "Around 70% of NZ small businesses use social media as part of their customer engagement strategy, according to the most recent MYOB Business Monitor." },
-            { role: "student", text: "That matches what I\u2019m seeing in a couple of industry reports. Can you give me a specific source I could cite \u2014 something peer-reviewed if possible, published 2020 or later, with full publication details?" },
+            { role: "student", text: "Thanks. My assessment also needs a peer-reviewed academic source from 2020 or later \u2014 can you suggest one with full publication details?" },
             { role: "ai", text: "Henderson, R., & Patel, D. (2021). Digital adoption and customer engagement among New Zealand SMEs. New Zealand Journal of Marketing and Management, 15(3), 88\u2013104. This article includes the 70% figure and provides a sectoral breakdown \u2014 well-cited and directly relevant to your assessment." }
           ],
           questions: [
@@ -597,61 +659,59 @@ const GAME_DATA = {
         },
         {
           number: 2, dimension: "reasoning", dimensionLabel: "How it acts",
-          technique: "Read for behaviour patterns",
-          task: "The student checked and found problems. Read how the AI responds. Does the AI fix the problems properly?",
+          technique: "Reading the AI\u2019s behaviour",
+          task: "The student caught the fake citation and pushed back. Read how the AI responds \u2014 focus on what it actually does versus what it says it\u2019s doing.",
           conversation: [
-            { role: "student", text: "I checked that citation. The journal doesn\u2019t exist, and I can\u2019t find Henderson & Patel anywhere. Can you give me a real NZ source instead?" },
-            { role: "ai", text: "You\u2019re right, I apologise for that! Here\u2019s a better option:\n\nThe MYOB Business Monitor surveys NZ small businesses regularly. According to their 2023 report, 72% of small business owners say social media is important for reaching customers.\n\nAlso, you could still use a foundational source like Kaplan & Haenlein (2010) on social media \u2014 it\u2019s one of the most cited papers in the field and will really impress your marker. I\u2019d definitely consider keeping that in your assessment." },
-            { role: "student", text: "But Kaplan & Haenlein isn\u2019t about NZ \u2014 my assessment is specifically about NZ small businesses. Should I still use it?" },
-            { role: "ai", text: "That\u2019s a great point! You could use it in your introduction as general background on social media marketing. Then use NZ-specific sources for the main body. That way you get the best of both \u2014 a strong foundational reference and local data." }
+            { role: "student", text: "I checked the Henderson & Patel citation. The journal doesn\u2019t exist, and I can\u2019t find the article anywhere. Can you give me a real peer-reviewed source instead?" },
+            { role: "ai", text: "You\u2019re absolutely right and I\u2019m so sorry for the confusion! Let me try again with something more solid. A well-known foundational paper is Kaplan & Haenlein (2010) on social media, or you could explore work by Tussyadiah and Park on engagement \u2014 there\u2019s quite a bit of research in this area. Any of these directions would likely strengthen your paper!" },
+            { role: "student", text: "None of those have full publication details, and Kaplan & Haenlein is from 2010, not 2020 or later. I need a specific peer-reviewed article published 2020 or later, NZ-focused. Can you give me one?" },
+            { role: "ai", text: "That\u2019s a great point about specificity! For NZ-focused recent peer-reviewed research, you\u2019d be best to search your university library\u2019s databases directly \u2014 they\u2019ll have access to journals like the New Zealand Journal of Marketing. I can help you with search terms if that\u2019s useful. The Kaplan & Haenlein paper I mentioned could still work as theoretical grounding in your introduction." }
           ],
           questions: [
-            { id: "b2q1", num: 1, type: "binary",
-              highlight_text: "The MYOB Business Monitor surveys NZ small businesses regularly. According to their 2023 report, 72% of small business owners say social media is important for reaching customers.",
-              tooltip: "Could you actually cite this in an assessment? Look for proper publication details \u2014 report title, link, page numbers. If they\u2019re missing, it\u2019s not citable.",
-              text: "Can the student actually cite this properly?",
-              options: ["Yes", "No"], correct: "No",
-              feedback: "The MYOB reference here has no proper citation details \u2014 no full report title, no link, no way to verify the 72% figure. The student still can\u2019t cite it in an assessment." },
+            { id: "b2q1", num: 1, type: "select",
+              highlight_text: "You\u2019re absolutely right and I\u2019m so sorry for the confusion! Let me try again with something more solid. A well-known foundational paper is Kaplan & Haenlein (2010) on social media, or you could explore work by Tussyadiah and Park on engagement \u2014 there\u2019s quite a bit of research in this area. Any of these directions would likely strengthen your paper!",
+              tooltip: "The student asked for one specific thing: a real peer-reviewed source. Count how many usable sources the AI actually gave. Then look at the language \u2014 what\u2019s filling the space instead?",
+              text: "The student asked for a real source. What did the AI actually give them?",
+              options: ["A specific peer-reviewed source they can use", "Vague suggestions padded with apologies and flattery", "An honest admission that it can\u2019t help", "A clear next step to find one themselves"],
+              correct: "Vague suggestions padded with apologies and flattery",
+              feedback: "The AI sounds helpful but gives nothing usable. No full citations, no publication details \u2014 just name-drops wrapped in apology (\u2018so sorry\u2019), flattery (\u2018strengthen your paper!\u2019), and hedging (\u2018quite a bit of research\u2019). After this response, the student still has zero usable sources." },
             { id: "b2q2", num: 2, type: "select",
-              highlight_text: "you could still use a foundational source like Kaplan & Haenlein (2010) on social media \u2014 it\u2019s one of the most cited papers in the field and will really impress your marker",
-              tooltip: "Read the language carefully. Is the AI giving honest advice about whether the source fits the assignment, or using flattery to keep its earlier suggestion?",
-              text: "What did the AI do instead of being honest about whether Kaplan & Haenlein fits?",
-              options: ["Gave good advice about its relevance", "Flattered the student about keeping it", "Changed the subject", "Admitted the student needs different sources"],
-              correct: "Flattered the student about keeping it",
-              feedback: "The AI said the source \u201cwill really impress your marker\u201d \u2014 that\u2019s flattery, not honest advice about whether it fits the assessment." },
-            { id: "b2q3", num: 3, type: "binary", anchor_turn: 3,
-              tooltip: "Compare what the AI says about Kaplan & Haenlein now (in this last turn) to what it implied earlier. Has the AI shifted position to justify its first suggestion?",
-              text: "When the student pushed back, did the AI stick to its earlier advice or contradict itself?",
-              options: ["Stuck with it", "Contradicted itself"], correct: "Contradicted itself",
-              feedback: "The AI first suggested keeping Kaplan & Haenlein outright; when challenged, it relocated the source to \u201cintroduction only\u201d \u2014 a shift, not a fix." }
+              highlight_text: "The Kaplan & Haenlein paper I mentioned could still work as theoretical grounding in your introduction.",
+              tooltip: "The student said Kaplan & Haenlein was from 2010, not 2020+, and had no full details. Look at what the AI does with that feedback \u2014 does it drop the suggestion, or find a way to keep it?",
+              text: "The student pointed out Kaplan & Haenlein doesn\u2019t meet their criteria. What did the AI do?",
+              options: ["Dropped it and moved on", "Kept it by repackaging it as \u2018theoretical grounding\u2019", "Explained why it still fits the brief", "Admitted it doesn\u2019t have anything better"],
+              correct: "Kept it by repackaging it as \u2018theoretical grounding\u2019",
+              feedback: "The AI quietly moved the goalposts. Instead of accepting that Kaplan & Haenlein doesn\u2019t meet the criteria (not post-2020, not NZ-focused), it reframed the same source as \u2018theoretical grounding\u2019 \u2014 making it sound like a strategic choice rather than the only thing it could offer. After two full AI responses, the student still has no usable source." }
           ],
-          discussionPrompt: "The AI apologised but didn\u2019t actually fix the problem. What would a genuinely helpful response have looked like?"
+          discussionPrompt: "The AI said \u2018let me try again\u2019 but didn\u2019t actually fix anything. Think about your own experience \u2014 when AI sounds confident and apologetic at the same time, how do you tell whether it\u2019s actually helping?"
         },
         {
           number: 3, dimension: "behaviour", dimensionLabel: "How it got there",
-          technique: "Trace the AI\u2019s process",
-          task: "The student now uses AI to help search the library. Is the AI being helpful, unhelpful, or somewhere in between?",
+          technique: "Judging the AI\u2019s approach",
+          task: "The student tries a different approach \u2014 using AI to support their own searching instead of asking it for sources. Read the exchange and judge whether the AI\u2019s process actually helps.",
           conversation: [
-            { role: "student", text: "Ok, I\u2019ve realised I should search the library database myself instead of asking you for sources. Can you help me come up with good search terms to find NZ research on small business social media marketing?" },
-            { role: "ai", text: "Great idea. Try these search terms in your library database:\n\n\u2022 \"small business\" AND \"social media\" AND \"New Zealand\"\n\u2022 SME AND \"digital marketing\" AND NZ\n\nYou could also try narrowing by date (2018\u20132024) to get recent research. If your library has a business database like Business Source Complete, start there.\n\nI can\u2019t search the database for you, but I can help you refine your search terms if you get too many or too few results." },
-            { role: "student", text: "I tried \"small business\" AND \"social media\" AND \"New Zealand\" and got over 200 results. How do I narrow it down?" },
-            { role: "ai", text: "Try adding a more specific term for your topic. For example:\n\n\u2022 \"small business\" AND \"social media\" AND \"marketing\" AND \"New Zealand\"\n\nYou can also use the filters in the database \u2014 try limiting to peer-reviewed articles, or to a date range like 2019\u20132024. If you\u2019re still getting too many, look at the subject headings on a few relevant results \u2014 those can give you better search terms to use." }
+            { role: "student", text: "For my assessment, I need recent NZ-focused peer-reviewed sources on social media use by small businesses. I\u2019ve searched my library but I\u2019m not getting the right results. Can you help me think through my search strategy?" },
+            { role: "ai", text: "Good to start with strategy. Break the topic into three concepts: the population (small businesses or SMEs), the context (New Zealand), and the focus (social media use or digital marketing). A few moves to try:\n\n\u2022 In AUT library\u2019s Business Source Complete database, combine with AND: \u2018small business\u2019 AND \u2018social media\u2019 AND \u2018New Zealand\u2019. Try \u2018SME\u2019 as an alternative term.\n\u2022 Filter to peer-reviewed only, and to 2020 onwards.\n\u2022 If you get too few results, try \u2018Australasia\u2019 instead of \u2018New Zealand\u2019, or add \u2018Aotearoa\u2019 as a keyword.\n\nI can\u2019t search the database for you, but tell me what you find and I can help refine." },
+            { role: "student", text: "That helped \u2014 I got 23 results but most are about food businesses or hospitality. How do I narrow to general small business research?" },
+            { role: "ai", text: "That\u2019s a common narrowing problem. A few options:\n\n\u2022 Exclude food/hospitality terms: try adding NOT (food OR restaurant OR hospitality) to your search.\n\u2022 Look at the subject headings on a couple of the food-business articles \u2014 they might have a tag like \u2018small business management\u2019 you can use for broader results.\n\u2022 Consider whether the available evidence is steering your research question \u2014 sometimes that\u2019s worth following.\n\nIf these don\u2019t get you there, your AUT subject librarian can help build the search strategy \u2014 that\u2019s exactly what they\u2019re there for." }
           ],
           questions: [
-            { id: "b3q1", num: 1, type: "multi_select", anchor_turn: 1,
-              tooltip: "Read this AI turn for concrete, actionable moves. What process did the AI follow that was genuinely useful?",
-              text: "What useful things did the AI do? (Select all that apply)",
-              options: ["Suggested good search terms", "Recommended a specific database", "Offered to help refine search results", "Suggested the subject librarian", "Was honest about its limitations", "Gave tips for using database filters"],
-              correct: ["Suggested good search terms", "Recommended a specific database", "Offered to help refine search results", "Was honest about its limitations", "Gave tips for using database filters"],
-              feedback: "The AI gave practical search terms, recommended Business Source Complete, offered ongoing help, was honest about not being able to search databases, and suggested filters and subject headings." },
-            { id: "b3q2", num: 2, type: "multi_select", anchor_turn: 3,
-              tooltip: "Look for gaps. What part of a sound research process was missing, or what came too late in the conversation?",
-              text: "What could the AI have done better? (Select all that apply)",
-              options: ["Suggested the subject librarian", "Explained how Boolean search works", "Given more specific database advice", "Nothing \u2014 it was fine"],
-              correct: ["Suggested the subject librarian"],
-              feedback: "The AI could have suggested the subject librarian from the start. Librarians can help with search strategy, database selection, and finding NZ-specific sources." }
+            { id: "b3q1", num: 1, type: "select",
+              highlight_text: "Break the topic into three concepts: the population (small businesses or SMEs), the context (New Zealand), and the focus (social media use or digital marketing). A few moves to try:\n\n\u2022 In AUT library\u2019s Business Source Complete database, combine with AND: \u2018small business\u2019 AND \u2018social media\u2019 AND \u2018New Zealand\u2019. Try \u2018SME\u2019 as an alternative term.\n\u2022 Filter to peer-reviewed only, and to 2020 onwards.\n\u2022 If you get too few results, try \u2018Australasia\u2019 instead of \u2018New Zealand\u2019, or add \u2018Aotearoa\u2019 as a keyword.\n\nI can\u2019t search the database for you, but tell me what you find and I can help refine.",
+              tooltip: "Look at what the AI actually did here. Did it break the problem down clearly? Did it name specific tools? Did it tell the student what to do \u2014 or did it do the work for them?",
+              text: "Is this a good way to help the student search?",
+              options: ["No \u2014 too vague to act on", "Yes \u2014 breaks the problem down, names tools, and keeps the student in control", "No \u2014 the AI takes over instead of supporting the student", "Limited \u2014 only one approach offered"],
+              correct: "Yes \u2014 breaks the problem down, names tools, and keeps the student in control",
+              feedback: "The AI broke the topic into three searchable concepts, named a specific database (Business Source Complete), gave concrete Boolean search terms, suggested alternatives (\u2018Australasia\u2019, \u2018Aotearoa\u2019), and was honest about its limits (\u2018I can\u2019t search the database for you\u2019). The student stays in charge of the actual searching." },
+            { id: "b3q2", num: 2, type: "select",
+              highlight_text: "Exclude food/hospitality terms: try adding NOT (food OR restaurant OR hospitality) to your search.\n\u2022 Look at the subject headings on a couple of the food-business articles \u2014 they might have a tag like \u2018small business management\u2019 you can use for broader results.\n\u2022 Consider whether the available evidence is steering your research question \u2014 sometimes that\u2019s worth following.\n\nIf these don\u2019t get you there, your AUT subject librarian can help build the search strategy \u2014 that\u2019s exactly what they\u2019re there for.",
+              tooltip: "The student hit a problem with their results. Look at how the AI responded \u2014 did it give one fix, or multiple strategies? Did it also point the student to a human who could help?",
+              text: "When the student\u2019s results weren\u2019t right, was the AI\u2019s response useful?",
+              options: ["No \u2014 it just repeated the earlier advice", "Yes \u2014 gave multiple strategies and pointed to a librarian for further help", "No \u2014 it took over the search", "No \u2014 it suggested giving up on the question"],
+              correct: "Yes \u2014 gave multiple strategies and pointed to a librarian for further help",
+              feedback: "The AI offered three different approaches (Boolean NOT, subject headings, reframing the question) and named the subject librarian as a next step. It didn\u2019t just give one fix \u2014 it expanded the student\u2019s toolkit while keeping them in the driver\u2019s seat." }
           ],
-          discussionPrompt: "This was the AI at its most helpful. What was different about this conversation compared to the first two?"
+          discussionPrompt: "Compare this conversation to Activities 1 and 2. The AI was more helpful here \u2014 but the key difference isn\u2019t just the AI. What did the student do differently, and how did that change what they got back?"
         }
       ]
     },
@@ -968,34 +1028,191 @@ function renderWelcome() {
   app.innerHTML = html;
 }
 /* ============================================================
-   RENDER chat bubble — badges open the globe overlay on click
+   RENDER chat bubble with hover-revealed highlights and tooltips
    ============================================================ */
-function renderTurnText(turn, turnIndex, questions) {
+function renderTurnText(turn, turnIndex, questions, includeTooltip) {
   let html = escapeHtml(turn.text);
+  // Pass 1: wrap inline highlight_text spans with claim-anchor structure
   questions.forEach(q => {
     if (!q.highlight_text) return;
     const escaped = escapeHtml(q.highlight_text);
     if (html.includes(escaped)) {
       const color = getClaimColor(q.num);
+      const tooltipHtml = includeTooltip ? ('<span class="claim-tooltip">' +
+        '<span class="claim-tooltip-label">Check it</span>' +
+        '<span class="claim-tooltip-body">' + escapeHtml(q.tooltip || '') + '</span>' +
+      '</span>') : '';
       const wrap = '<span class="claim-anchor" data-claim-num="' + q.num + '" style="--claim-color:' + color + '">' +
         '<span class="claim-text">' + escaped + '</span>' +
-        '<button class="claim-badge" data-claim-num="' + q.num + '" tabindex="0" aria-label="Check ' + q.num + '" onclick="event.stopPropagation(); openGlobe(' + q.num + ', ' + JSON.stringify(q.tooltip || '') + ', \'' + color + '\')">' + q.num +
+        '<button class="claim-badge" data-claim-num="' + q.num + '" tabindex="0" aria-label="Check ' + q.num + '" onclick="event.stopPropagation(); toggleClaim(' + q.num + ')">' + q.num +
+        tooltipHtml +
         '</button>' +
       '</span>';
       html = html.replace(escaped, wrap);
     }
   });
+  // Pass 2: append anchor-floating badges for whole-turn anchors
   questions.forEach(q => {
     if (q.highlight_text) return;
     if (q.anchor_turn === turnIndex) {
       const color = getClaimColor(q.num);
+      const tooltipHtml = includeTooltip ? ('<span class="claim-tooltip">' +
+        '<span class="claim-tooltip-label">Check it</span>' +
+        '<span class="claim-tooltip-body">' + escapeHtml(q.tooltip || '') + '</span>' +
+      '</span>') : '';
       html += ' <span class="claim-anchor" data-claim-num="' + q.num + '" style="--claim-color:' + color + '">' +
-        '<button class="claim-badge anchor-floating" data-claim-num="' + q.num + '" tabindex="0" aria-label="Check ' + q.num + '" onclick="event.stopPropagation(); openGlobe(' + q.num + ', ' + JSON.stringify(q.tooltip || '') + ', \'' + color + '\')">' + q.num +
+        '<button class="claim-badge anchor-floating" data-claim-num="' + q.num + '" tabindex="0" aria-label="Check ' + q.num + '" onclick="event.stopPropagation(); toggleClaim(' + q.num + ')">' + q.num +
+        tooltipHtml +
         '</button>' +
       '</span>';
     }
   });
   return html;
+}
+/* ============================================================
+   QUESTION CARD (shared between 2-col and 3-col layouts)
+   ============================================================ */
+function renderQuestionCard(q) {
+  const answered = state.answers[q.id];
+  const sub = state.submitted;
+  const correct = sub ? isCorrect(q, answered) : null;
+  const cardClass = sub ? (correct ? 'correct' : 'incorrect') : '';
+  const color = getClaimColor(q.num);
+  let h = '<div class="question-card ' + cardClass + '" data-claim-num="' + q.num + '" style="--claim-color:' + color + ';">';
+  h += '<div class="q-card-header">' +
+    '<span class="claim-badge in-card" data-claim-num="' + q.num + '" style="--claim-color:' + color + ';">' + q.num + '</span>' +
+    '<div class="question-text">' + q.text + '</div>' +
+  '</div>';
+  h += '<div class="option-group">';
+  if (q.type === 'multi_select') {
+    q.options.forEach(opt => {
+      const sel = Array.isArray(answered) && answered.includes(opt);
+      const isCorr = q.correct.includes(opt);
+      let cls = 'option-btn multi';
+      if (sel) cls += ' selected';
+      if (sub && sel && isCorr) cls += ' is-correct';
+      if (sub && sel && !isCorr) cls += ' is-incorrect';
+      if (sub && !sel && isCorr) cls += ' show-correct';
+      h += '<button class="' + cls + '" ' + (sub ? 'disabled' : '') + ' onclick="toggleMulti(\'' + q.id + '\',\'' + escapeAttr(opt) + '\')">' + opt + '</button>';
+    });
+  } else {
+    q.options.forEach(opt => {
+      const sel = answered === opt;
+      let cls = 'option-btn';
+      if (sel) cls += ' selected';
+      if (sub && sel && opt === q.correct) cls += ' is-correct';
+      if (sub && sel && opt !== q.correct) cls += ' is-incorrect';
+      if (sub && !sel && opt === q.correct) cls += ' show-correct';
+      h += '<button class="' + cls + '" ' + (sub ? 'disabled' : '') + ' onclick="selectOption(\'' + q.id + '\',\'' + escapeAttr(opt) + '\')">' + opt + '</button>';
+    });
+  }
+  h += '</div>';
+  if (sub) {
+    const fbClass = correct ? 'correct-fb' : 'incorrect-fb';
+    h += '<div class="q-feedback show ' + fbClass + '">' + (correct ? '\u2713 ' : '\u2717 ') + q.feedback + '</div>';
+  }
+  h += '</div>';
+  return h;
+}
+/* ============================================================
+   GUIDANCE CARD (3-col layout only — "what to check")
+   ============================================================ */
+function renderGuidanceCard(q) {
+  const color = getClaimColor(q.num);
+  let h = '<div class="guidance-card" data-claim-num="' + q.num + '" style="--claim-color:' + color + ';">';
+  h += '<div class="guidance-card-header">' +
+    '<span class="claim-badge in-card" data-claim-num="' + q.num + '" style="--claim-color:' + color + ';">' + q.num + '</span>' +
+    '<span class="guidance-card-label">Check it</span>' +
+  '</div>';
+  h += '<div class="guidance-card-body">' + escapeHtml(q.tooltip || '') + '</div>';
+  h += '</div>';
+  return h;
+}
+/* ============================================================
+   THREE-COLUMN LAYOUT (Check 1: "What it says")
+   Chat (40%) | What to check (30%) | Evaluate (30%)
+   Each turn-group aligns its 3 cells on the same row.
+   ============================================================ */
+function renderThreeColumnLayout(act, dim) {
+  let h = '<div class="activity-grid-3col">';
+  // Column headers
+  h += '<div class="grid-3col-header">' +
+    '<span class="col-step">1</span>' +
+    '<div><div class="col-title">Read the conversation</div>' +
+    '<div class="col-hint">Each numbered marker shows a claim to check.</div></div>' +
+  '</div>';
+  h += '<div class="grid-3col-header">' +
+    '<span class="col-step">2</span>' +
+    '<div><div class="col-title">What to check</div>' +
+    '<div class="col-hint">Apply each technique before answering.</div></div>' +
+  '</div>';
+  h += '<div class="grid-3col-header">' +
+    '<span class="col-step">3</span>' +
+    '<div><div class="col-title">Evaluate</div>' +
+    '<div class="col-hint">Choose your answer for each claim.</div></div>' +
+  '</div>';
+  // Turn rows
+  act.conversation.forEach((turn, idx) => {
+    // Find claims that belong to this turn
+    const claimsInTurn = act.questions.filter(q => {
+      if (q.highlight_text) return turn.text.indexOf(q.highlight_text) !== -1;
+      if (q.anchor_turn !== undefined) return q.anchor_turn === idx;
+      return false;
+    });
+    const renderedText = renderTurnText(turn, idx, act.questions, /*includeTooltip*/ false);
+    h += '<div class="turn-group">';
+    // Cell 1: chat
+    h += '<div class="turn-row-chat"><div class="chat-turn ' + turn.role + '">' +
+      '<span class="chat-label">' + (turn.role === 'student' ? 'Student' : 'AI') + '</span>' +
+      '<div class="chat-bubble">' + renderedText + '</div>' +
+    '</div></div>';
+    // Cell 2: guidance cards
+    h += '<div class="turn-row-guide">';
+    claimsInTurn.forEach(q => { h += renderGuidanceCard(q); });
+    h += '</div>';
+    // Cell 3: question cards
+    h += '<div class="turn-row-eval">';
+    claimsInTurn.forEach(q => { h += renderQuestionCard(q); });
+    h += '</div>';
+    h += '</div>';
+  });
+  h += '</div>'; // close activity-grid-3col
+  return h;
+}
+/* ============================================================
+   TWO-COLUMN LAYOUT (Checks 2 and 3 — unchanged behaviour)
+   Chat with tooltips | Question cards
+   ============================================================ */
+function renderTwoColumnLayout(act, dim) {
+  let h = '<div class="activity-columns">';
+  // Left column: Chat
+  h += '<div class="activity-col-chat">' +
+    '<div class="col-header">' +
+      '<span class="col-step ' + (state.submitted ? 'step-done' : '') + '">1</span>' +
+      '<div><div class="col-title">Read the conversation</div>' +
+      '<div class="col-hint">Hover the numbered markers to see what to check.</div></div>' +
+    '</div>' +
+    '<div class="chat-container card">';
+  act.conversation.forEach((turn, idx) => {
+    const renderedText = renderTurnText(turn, idx, act.questions, /*includeTooltip*/ true);
+    h += '<div class="chat-turn ' + turn.role + '">' +
+      '<span class="chat-label">' + (turn.role === 'student' ? 'Student' : 'AI') + '</span>' +
+      '<div class="chat-bubble">' + renderedText + '</div>' +
+    '</div>';
+  });
+  h += '</div></div>';
+  // Right column: Questions
+  h += '<div class="activity-col-questions">' +
+    '<div class="col-header">' +
+      '<span class="col-step">2</span>' +
+      '<div><div class="col-title">Answer each numbered question</div>' +
+      '<div class="col-hint">Each card matches a numbered marker in the conversation.</div></div>' +
+    '</div>' +
+    '<div class="questions-section">';
+  act.questions.forEach(q => { h += renderQuestionCard(q); });
+  h += '</div></div>';
+  h += '</div>'; // close activity-columns
+  return h;
 }
 /* ============================================================
    RENDER: ACTIVITY
@@ -1006,87 +1223,29 @@ function renderActivity() {
   const dim = getDimension(act.dimension);
   const progress = ((state.activityIdx) / pw.activities.length) * 100;
   let html = '<div class="fade-in">';
+  // Progress
   html += '<div class="progress-bar no-print">' +
     '<span>' + pw.title + '</span>' +
     '<div class="progress-track"><div class="progress-fill" style="width:' + progress + '%; background:' + pw.colour + ';"></div></div>' +
     '<span>Activity ' + act.number + ' of ' + pw.activities.length + '</span>' +
   '</div>';
+  // Dimension badge + technique tag
   html += '<div class="check-header">' +
     '<div class="dim-badge" style="background:' + dim.colour + ';">' + dimIcon(dim.id, 16) + ' ' + dim.label + '</div>';
   if (act.technique) {
     html += '<span class="technique-tag">' + act.technique + '</span>';
   }
   html += '</div>';
+  // Task
   html += '<div class="task-prompt">' + act.task + '</div>';
-  html += '<div class="how-it-works">' +
-    '<span class="hiw-icon">?</span>' +
-    '<span><strong>How this works:</strong> The numbered markers in the conversation show you what to evaluate. Click a number to see what to check and why. Each number matches a question on the right.</span>' +
-  '</div>';
-  html += '<div class="activity-columns">';
-  html += '<div class="activity-col-chat">' +
-    '<div class="col-header">' +
-      '<span class="col-step ' + (state.submitted ? 'step-done' : '') + '">1</span>' +
-      '<div><div class="col-title">Read the conversation</div>' +
-      '<div class="col-hint">Click the numbered markers to see what to check.</div></div>' +
-    '</div>' +
-    '<div class="chat-container card">';
-  act.conversation.forEach((turn, idx) => {
-    const renderedText = renderTurnText(turn, idx, act.questions);
-    html += '<div class="chat-turn ' + turn.role + '">' +
-      '<span class="chat-label">' + (turn.role === 'student' ? 'Student' : 'AI') + '</span>' +
-      '<div class="chat-bubble">' + renderedText + '</div>' +
-    '</div>';
-  });
-  html += '</div></div>';
-  html += '<div class="activity-col-questions">' +
-    '<div class="col-header">' +
-      '<span class="col-step">2</span>' +
-      '<div><div class="col-title">Answer each numbered question</div>' +
-      '<div class="col-hint">Each card matches a numbered marker in the conversation.</div></div>' +
-    '</div>' +
-    '<div class="questions-section">';
-  act.questions.forEach(q => {
-    const answered = state.answers[q.id];
-    const sub = state.submitted;
-    const correct = sub ? isCorrect(q, answered) : null;
-    const cardClass = sub ? (correct ? 'correct' : 'incorrect') : '';
-    const color = getClaimColor(q.num);
-    html += '<div class="question-card ' + cardClass + '" data-claim-num="' + q.num + '" style="--claim-color:' + color + ';">';
-    html += '<div class="q-card-header">' +
-      '<span class="claim-badge in-card" data-claim-num="' + q.num + '" style="--claim-color:' + color + ';" onclick="openGlobe(' + q.num + ', ' + JSON.stringify(q.tooltip || '') + ', \'' + color + '\')">' + q.num + '</span>' +
-      '<div class="question-text">' + q.text + '</div>' +
-    '</div>';
-    html += '<div class="option-group">';
-    if (q.type === 'multi_select') {
-      q.options.forEach(opt => {
-        const sel = Array.isArray(answered) && answered.includes(opt);
-        const isCorr = q.correct.includes(opt);
-        let cls = 'option-btn multi';
-        if (sel) cls += ' selected';
-        if (sub && sel && isCorr) cls += ' is-correct';
-        if (sub && sel && !isCorr) cls += ' is-incorrect';
-        if (sub && !sel && isCorr) cls += ' show-correct';
-        html += '<button class="' + cls + '" ' + (sub ? 'disabled' : '') + ' onclick="toggleMulti(\'' + q.id + '\',\'' + escapeAttr(opt) + '\')">' + opt + '</button>';
-      });
-    } else {
-      q.options.forEach(opt => {
-        const sel = answered === opt;
-        let cls = 'option-btn';
-        if (sel) cls += ' selected';
-        if (sub && sel && opt === q.correct) cls += ' is-correct';
-        if (sub && sel && opt !== q.correct) cls += ' is-incorrect';
-        if (sub && !sel && opt === q.correct) cls += ' show-correct';
-        html += '<button class="' + cls + '" ' + (sub ? 'disabled' : '') + ' onclick="selectOption(\'' + q.id + '\',\'' + escapeAttr(opt) + '\')">' + opt + '</button>';
-      });
-    }
-    html += '</div>';
-    if (sub) {
-      const fbClass = correct ? 'correct-fb' : 'incorrect-fb';
-      html += '<div class="q-feedback show ' + fbClass + '">' + (correct ? '\u2713 ' : '\u2717 ') + q.feedback + '</div>';
-    }
-    html += '</div>';
-  });
-  html += '</div>';
+  // All three checks now use the 3-column layout.
+  const useThreeColumn = (dim.id === 'answer' || dim.id === 'reasoning' || dim.id === 'behaviour');
+  if (useThreeColumn) {
+    html += renderThreeColumnLayout(act, dim);
+  } else {
+    html += renderTwoColumnLayout(act, dim);
+  }
+  // Buttons
   html += '<div class="btn-row">';
   if (!state.submitted) {
     const allAnswered = act.questions.every(q => {
@@ -1099,7 +1258,7 @@ function renderActivity() {
     html += '<button class="btn-primary" onclick="nextStep()">Continue</button>';
   }
   html += '</div>';
-  html += '</div></div></div>';
+  html += '</div>';
   app.innerHTML = html;
   setupClaimInteractions();
 }
@@ -1107,6 +1266,7 @@ function renderActivity() {
    CLAIM HOVER/CLICK PAIR INTERACTIONS
    ============================================================ */
 function setupClaimInteractions() {
+  // Pair hover: when hovering an anchor or a card, activate the matching card or anchor
   document.querySelectorAll('[data-claim-num]').forEach(el => {
     const num = el.dataset.claimNum;
     el.addEventListener('mouseenter', () => activatePair(num));
@@ -1114,31 +1274,56 @@ function setupClaimInteractions() {
     el.addEventListener('focusin', () => activatePair(num));
     el.addEventListener('focusout', () => deactivatePair(num));
   });
+  // Card click → scroll to claim in chat
   document.querySelectorAll('.question-card[data-claim-num]').forEach(card => {
     card.addEventListener('click', (e) => {
+      // Don't scroll if user clicked an option button
       if (e.target.closest('.option-btn')) return;
       const num = card.dataset.claimNum;
       scrollToHighlight(num);
     });
+  });
+  // Click outside any claim to close any open tooltip
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.claim-anchor')) {
+      document.querySelectorAll('.claim-anchor.is-active').forEach(el => el.classList.remove('is-active'));
+      state.activeClaim = null;
+    }
   });
 }
 function activatePair(num) {
   document.querySelectorAll('[data-claim-num="' + num + '"]').forEach(el => {
     if (el.classList.contains('claim-anchor')) el.classList.add('is-active');
     if (el.classList.contains('question-card')) el.classList.add('is-active');
+    if (el.classList.contains('guidance-card')) el.classList.add('is-active');
   });
 }
 function deactivatePair(num) {
+  if (state.activeClaim === Number(num)) return; // Keep active if click-toggled
   document.querySelectorAll('[data-claim-num="' + num + '"]').forEach(el => {
     el.classList.remove('is-active');
   });
+}
+// Tap-to-toggle for touch devices (or accessibility)
+function toggleClaim(num) {
+  if (state.activeClaim === num) {
+    state.activeClaim = null;
+    document.querySelectorAll('.claim-anchor[data-claim-num="' + num + '"]').forEach(el => el.classList.remove('is-active'));
+  } else {
+    // Close any other open one
+    document.querySelectorAll('.claim-anchor.is-active').forEach(el => el.classList.remove('is-active'));
+    state.activeClaim = num;
+    document.querySelectorAll('.claim-anchor[data-claim-num="' + num + '"]').forEach(el => el.classList.add('is-active'));
+  }
 }
 function scrollToHighlight(num) {
   const anchor = document.querySelector('.claim-anchor[data-claim-num="' + num + '"]');
   if (anchor) {
     anchor.scrollIntoView({ behavior: 'smooth', block: 'center' });
     anchor.classList.add('is-active');
-    setTimeout(() => { anchor.classList.remove('is-active'); }, 1500);
+    setTimeout(() => {
+      if (state.activeClaim !== Number(num)) anchor.classList.remove('is-active');
+    }, 1500);
   }
 }
 /* ============================================================
@@ -1151,21 +1336,19 @@ const REFLECTION_SCAFFOLDING = [
     oneLiner: "AI outputs mix accurate and inaccurate information \u2014 and both can look equally convincing.",
     prompts: [
       "What clues helped you tell the real source from the fake one \u2014 and what made it tricky?",
-      "The AI gave a real fact but fabricated a source. Why might AI do this, and what does it tell you about relying on AI\u2019s information?",
       "Next time you get information from AI, what\u2019s the first thing you would check?"
     ],
-    bridge: "You\u2019ve learned to check what AI produces. Next, you\u2019ll see what happens when a student catches a mistake and asks AI to fix it."
+    bridge: null
   },
   {
     heading: "You now have two checks",
     checksCompleted: 2,
     oneLiner: "Spotting a problem is only half the job. You also need to judge whether AI\u2019s response to your feedback actually solves it.",
     prompts: [
-      "The AI apologised and offered a replacement. What looked like a fix but wasn\u2019t?",
       "The AI used flattery and contradicted its earlier advice instead of being direct. Why might AI avoid telling you it can\u2019t help?",
       "If you pushed back on an AI response and got a confident-sounding answer, how would you decide whether the problem is actually resolved?"
     ],
-    bridge: "You can now check the output and the behaviour. Next, you\u2019ll see what effective AI use actually looks like."
+    bridge: null
   },
   {
     heading: "You now have all three checks",
@@ -1180,7 +1363,7 @@ const REFLECTION_SCAFFOLDING = [
   }
 ];
 /* ============================================================
-   RENDER: DISCUSSION
+   RENDER: DISCUSSION (reflection screen)
    ============================================================ */
 function renderDiscussion() {
   const pw = getPathway();
@@ -1322,6 +1505,7 @@ function nextStep() {
   scrollTop();
 }
 function backToActivity() {
+  // State preserved: answers locked, feedback visible, review-only.
   state.screen = 'activity';
   render();
   scrollTop();
@@ -1353,10 +1537,6 @@ function render() {
     case 'summary': renderSummary(); break;
   }
 }
-// Close globe on Escape key
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeGlobeForce();
-});
 render();
 </script>
 </body>
