@@ -26,10 +26,7 @@
 html { font-size: 16px; scroll-behavior: smooth; }
 body {
   font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background: #FFFFFF;
-  color: #2D3B45;
-  line-height: 1.6;
-  min-height: 100vh;
+  background: #FFFFFF; color: #2D3B45; line-height: 1.6; min-height: 100vh;
 }
 button { font-family: inherit; cursor: pointer; border: none; }
 button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid #2563EB; outline-offset: 2px; }
@@ -50,9 +47,7 @@ p { margin-bottom: 0.75rem; }
   padding: 1.25rem 1.5rem; text-align: left;
   transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
 }
-.pathway-btn:hover, .pathway-btn:focus-visible {
-  border-color: var(--pw-color); box-shadow: 0 4px 12px rgba(0,0,0,0.08); transform: translateY(-2px);
-}
+.pathway-btn:hover, .pathway-btn:focus-visible { border-color: var(--pw-color); box-shadow: 0 4px 12px rgba(0,0,0,0.08); transform: translateY(-2px); }
 .pathway-btn .pw-label { font-weight: 900; font-size: 1.3rem; margin-bottom: 0.25rem; color: var(--pw-color); }
 .pathway-btn .pw-desc { font-size: 0.95rem; color: #555; }
 .progress-bar { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem; font-size: 0.85rem; color: #666; }
@@ -72,20 +67,58 @@ p { margin-bottom: 0.75rem; }
   padding: 1rem 1.25rem; border-radius: 0 8px 8px 0;
   margin-bottom: 0.75rem; font-size: 1rem; font-weight: 500;
 }
-.activity-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start; }
-.activity-col-chat { position: sticky; top: 1.25rem; }
-.col-header {
-  display: flex; align-items: flex-start; gap: 0.65rem;
-  margin-bottom: 0.75rem; padding-bottom: 0.6rem; border-bottom: 2px solid #E5E7EB;
+/* ========== READING PHASE (single column) ========== */
+.reading-phase-chat {
+  max-width: 720px;
+  margin-bottom: 1rem;
 }
-.col-step {
+.reading-phase-chat .chat-turn { margin-bottom: 0.75rem; }
+.reading-hint {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.88rem; color: #6B7280;
+  background: #F3F4F6; border-radius: 8px;
+  padding: 0.6rem 0.9rem; margin-bottom: 1rem;
+  max-width: 720px;
+}
+.reading-hint svg { flex-shrink: 0; }
+/* ========== 3-COLUMN GRID ========== */
+.activity-grid-3col {
+  display: grid; grid-template-columns: 40% 30% 30%;
+  column-gap: 1.25rem; row-gap: 1rem; align-items: start; margin-bottom: 1rem;
+}
+.grid-3col-header {
+  display: flex; align-items: flex-start; gap: 0.65rem;
+  padding-bottom: 0.6rem; border-bottom: 2px solid #E5E7EB;
+}
+.grid-3col-header .col-step {
   display: inline-flex; align-items: center; justify-content: center;
   width: 30px; height: 30px; border-radius: 50%;
   background: #2D3B45; color: #fff; font-size: 0.85rem; font-weight: 700; flex-shrink: 0;
 }
-.col-step.step-done { background: #059669; }
-.col-title { font-size: 1rem; font-weight: 700; color: #2D3B45; line-height: 1.3; }
-.col-hint { font-size: 0.85rem; color: #6B7280; margin-top: 0.2rem; line-height: 1.45; }
+.grid-3col-header .col-title { font-size: 1rem; font-weight: 700; color: #2D3B45; line-height: 1.3; }
+.grid-3col-header .col-hint { font-size: 0.82rem; color: #6B7280; margin-top: 0.2rem; line-height: 1.4; }
+.turn-group { display: contents; }
+.turn-row-guide, .turn-row-eval { display: flex; flex-direction: column; gap: 0.75rem; min-height: 0; }
+.guidance-card {
+  background: #fff;
+  border: 1.5px solid color-mix(in srgb, var(--claim-color) 30%, #E5E7EB);
+  border-left: 4px solid var(--claim-color); border-radius: 8px;
+  padding: 0.85rem 1rem;
+  transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+}
+.guidance-card.is-active { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-color: var(--claim-color); }
+.guidance-card-header { display: flex; align-items: center; gap: 0.55rem; margin-bottom: 0.4rem; }
+.guidance-card-header .claim-badge { margin-left: 0; margin-right: 0; }
+.guidance-card-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--claim-color); }
+.guidance-card-body { font-size: 0.88rem; line-height: 1.55; color: #2D3B45; }
+@media (max-width: 1000px) {
+  .activity-grid-3col { display: block; }
+  .turn-group { display: block; margin-bottom: 1.25rem; }
+  .grid-3col-header { display: none; }
+  .turn-row-guide:empty, .turn-row-eval:empty { display: none; }
+  .turn-row-guide, .turn-row-eval { margin-top: 0.75rem; }
+}
+/* ========== CLAIM ANCHORS & TOOLTIPS ========== */
 .claim-anchor { display: inline; position: relative; }
 .claim-text {
   border-bottom: 2px solid transparent; background-color: transparent;
@@ -146,7 +179,78 @@ p { margin-bottom: 0.75rem; }
 .claim-tooltip.below { bottom: auto; top: calc(100% + 12px); }
 .claim-tooltip.below::before { bottom: auto; top: -11px; border-top: none; border-bottom: 11px solid var(--claim-color); }
 .claim-tooltip.below::after { bottom: auto; top: -8px; border-top: none; border-bottom: 9px solid #fff; }
+/* ========== QUESTIONS ========== */
 .q-card-header { display: flex; align-items: flex-start; margin-bottom: 0.65rem; }
+.question-card {
+  background: #FAFAF8; border: 1.5px solid #E2E0DC; border-radius: 10px;
+  padding: 1.15rem; margin-bottom: 0.85rem;
+  transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+}
+.question-card.is-active { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.10); border-color: var(--claim-color, #2D3B45); }
+.question-card.correct { border-color: #059669; background: #ECFDF5; }
+.question-card.incorrect { border-color: #DC2626; background: #FEF2F2; }
+.question-text { font-size: 0.97rem; font-weight: 600; line-height: 1.45; }
+.option-group { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.option-btn {
+  padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.9rem; font-weight: 500;
+  background: #fff; border: 1.5px solid #CCC; color: #333; transition: all 0.15s;
+}
+.option-btn:hover { border-color: #888; }
+.option-btn.selected { background: #1A1A2E; color: #fff; border-color: #1A1A2E; }
+.option-btn:disabled { opacity: 0.7; cursor: default; }
+.option-btn.selected.is-correct { background: #059669; border-color: #059669; }
+.option-btn.selected.is-incorrect { background: #DC2626; border-color: #DC2626; }
+.option-btn.show-correct:not(.selected) { border-color: #059669; border-width: 2.5px; }
+.option-btn.multi { position: relative; padding-left: 2rem; }
+.option-btn.multi::before {
+  content: ''; position: absolute; left: 0.6rem; top: 50%; transform: translateY(-50%);
+  width: 16px; height: 16px; border: 2px solid #999; border-radius: 3px; background: #fff;
+}
+.option-btn.multi.selected::before { background: #1A1A2E; border-color: #1A1A2E; }
+.option-btn.multi.selected::after {
+  content: '\2713'; position: absolute; left: 0.7rem; top: 50%; transform: translateY(-55%);
+  color: #fff; font-size: 0.75rem; font-weight: 700;
+}
+.option-btn.multi.selected.is-correct::before { background: #059669; border-color: #059669; }
+.option-btn.multi.selected.is-incorrect::before { background: #DC2626; border-color: #DC2626; }
+.option-btn.multi.show-correct:not(.selected)::before { border-color: #059669; border-width: 2.5px; }
+.q-feedback {
+  margin-top: 0.65rem; padding: 0.65rem 0.85rem; border-radius: 6px;
+  font-size: 0.9rem; line-height: 1.55; display: none;
+}
+.q-feedback.show { display: block; }
+.q-feedback.correct-fb { background: #ECFDF5; color: #065F46; }
+.q-feedback.incorrect-fb { background: #FEF2F2; color: #991B1B; }
+/* ========== BUTTONS ========== */
+.btn-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem; align-items: center; }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.75rem 1.75rem; border-radius: 10px; font-size: 1rem; font-weight: 600;
+  background: #1A1A2E; color: #fff; transition: background 0.2s, transform 0.1s;
+}
+.btn-primary:hover { background: #2D2D44; }
+.btn-primary:active { transform: scale(0.97); }
+.btn-primary:disabled { background: #999; cursor: not-allowed; }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.75rem 1.75rem; border-radius: 10px; font-size: 1rem; font-weight: 600;
+  background: transparent; color: #1A1A2E; border: 2px solid #CCC; transition: all 0.2s;
+}
+.btn-secondary:hover { border-color: #1A1A2E; }
+.btn-when-told {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.75rem 1.75rem; border-radius: 10px; font-size: 0.95rem; font-weight: 600;
+  background: #F3F4F6; color: #6B7280; border: 2px solid #D1D5DB; transition: all 0.2s;
+}
+.btn-when-told:hover { background: #E5E7EB; color: #374151; border-color: #9CA3AF; }
+.btn-back {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.65rem 1.1rem; border-radius: 10px; font-size: 0.9rem; font-weight: 600;
+  background: transparent; color: #6B7280; border: 1.5px solid #D1D5DB; transition: all 0.2s;
+}
+.btn-back:hover { color: #2D3B45; border-color: #6B7280; background: #F9FAFB; }
+.btn-back .arrow { font-size: 1rem; line-height: 1; }
+/* ========== REFLECTION ========== */
 .reflection-screen { padding: 2rem 0; }
 .reflection-card {
   max-width: 1040px; margin: 0 auto;
@@ -201,6 +305,7 @@ p { margin-bottom: 0.75rem; }
   font-size: 0.95rem; line-height: 1.55;
 }
 .reflection-prompts li:last-child { margin-bottom: 0; }
+/* ========== CHAT BUBBLES ========== */
 .chat-container { margin-bottom: 1.5rem; }
 .chat-turn { display: flex; flex-direction: column; margin-bottom: 0.75rem; }
 .chat-turn.student { align-items: flex-start; }
@@ -217,111 +322,7 @@ p { margin-bottom: 0.75rem; }
 }
 .chat-turn.student .chat-bubble { background: #E8EDF2; border-bottom-left-radius: 4px; }
 .chat-turn.ai .chat-bubble { background: #fff; border: 1.5px solid #E2E0DC; border-bottom-right-radius: 4px; overflow: visible; }
-.activity-grid-3col {
-  display: grid; grid-template-columns: 40% 30% 30%;
-  column-gap: 1.25rem; row-gap: 1rem; align-items: start; margin-bottom: 1rem;
-}
-.grid-3col-header {
-  display: flex; align-items: flex-start; gap: 0.65rem;
-  padding-bottom: 0.6rem; border-bottom: 2px solid #E5E7EB;
-}
-.grid-3col-header .col-step {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 30px; height: 30px; border-radius: 50%;
-  background: #2D3B45; color: #fff; font-size: 0.85rem; font-weight: 700; flex-shrink: 0;
-}
-.grid-3col-header .col-title { font-size: 1rem; font-weight: 700; color: #2D3B45; line-height: 1.3; }
-.grid-3col-header .col-hint { font-size: 0.82rem; color: #6B7280; margin-top: 0.2rem; line-height: 1.4; }
-.turn-group { display: contents; }
-.turn-row-guide, .turn-row-eval { display: flex; flex-direction: column; gap: 0.75rem; min-height: 0; }
-.guidance-card {
-  background: #fff;
-  border: 1.5px solid color-mix(in srgb, var(--claim-color) 30%, #E5E7EB);
-  border-left: 4px solid var(--claim-color); border-radius: 8px;
-  padding: 0.85rem 1rem;
-  transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
-}
-.guidance-card.is-active { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-color: var(--claim-color); }
-.guidance-card-header { display: flex; align-items: center; gap: 0.55rem; margin-bottom: 0.4rem; }
-.guidance-card-header .claim-badge { margin-left: 0; margin-right: 0; }
-.guidance-card-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--claim-color); }
-.guidance-card-body { font-size: 0.88rem; line-height: 1.55; color: #2D3B45; }
-@media (max-width: 1000px) {
-  .activity-grid-3col { display: block; }
-  .turn-group { display: block; margin-bottom: 1.25rem; }
-  .grid-3col-header { display: none; }
-  .turn-row-guide:empty, .turn-row-eval:empty { display: none; }
-  .turn-row-guide, .turn-row-eval { margin-top: 0.75rem; }
-}
-.questions-section { margin-bottom: 1.5rem; }
-.question-card {
-  background: #FAFAF8; border: 1.5px solid #E2E0DC; border-radius: 10px;
-  padding: 1.15rem; margin-bottom: 0.85rem;
-  transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
-}
-.question-card.is-active { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.10); border-color: var(--claim-color, #2D3B45); }
-.question-card.correct { border-color: #059669; background: #ECFDF5; }
-.question-card.incorrect { border-color: #DC2626; background: #FEF2F2; }
-.question-text { font-size: 0.97rem; font-weight: 600; line-height: 1.45; }
-.option-group { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-.option-btn {
-  padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.9rem; font-weight: 500;
-  background: #fff; border: 1.5px solid #CCC; color: #333; transition: all 0.15s;
-}
-.option-btn:hover { border-color: #888; }
-.option-btn.selected { background: #1A1A2E; color: #fff; border-color: #1A1A2E; }
-.option-btn:disabled { opacity: 0.7; cursor: default; }
-.option-btn.selected.is-correct { background: #059669; border-color: #059669; }
-.option-btn.selected.is-incorrect { background: #DC2626; border-color: #DC2626; }
-.option-btn.show-correct:not(.selected) { border-color: #059669; border-width: 2.5px; }
-.option-btn.multi { position: relative; padding-left: 2rem; }
-.option-btn.multi::before {
-  content: ''; position: absolute; left: 0.6rem; top: 50%; transform: translateY(-50%);
-  width: 16px; height: 16px; border: 2px solid #999; border-radius: 3px; background: #fff;
-}
-.option-btn.multi.selected::before { background: #1A1A2E; border-color: #1A1A2E; }
-.option-btn.multi.selected::after {
-  content: '\2713'; position: absolute; left: 0.7rem; top: 50%; transform: translateY(-55%);
-  color: #fff; font-size: 0.75rem; font-weight: 700;
-}
-.option-btn.multi.selected.is-correct::before { background: #059669; border-color: #059669; }
-.option-btn.multi.selected.is-incorrect::before { background: #DC2626; border-color: #DC2626; }
-.option-btn.multi.show-correct:not(.selected)::before { border-color: #059669; border-width: 2.5px; }
-.q-feedback {
-  margin-top: 0.65rem; padding: 0.65rem 0.85rem; border-radius: 6px;
-  font-size: 0.9rem; line-height: 1.55; display: none;
-}
-.q-feedback.show { display: block; }
-.q-feedback.correct-fb { background: #ECFDF5; color: #065F46; }
-.q-feedback.incorrect-fb { background: #FEF2F2; color: #991B1B; }
-.btn-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem; align-items: center; }
-.btn-primary {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  padding: 0.75rem 1.75rem; border-radius: 10px; font-size: 1rem; font-weight: 600;
-  background: #1A1A2E; color: #fff; transition: background 0.2s, transform 0.1s;
-}
-.btn-primary:hover { background: #2D2D44; }
-.btn-primary:active { transform: scale(0.97); }
-.btn-primary:disabled { background: #999; cursor: not-allowed; }
-.btn-secondary {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  padding: 0.75rem 1.75rem; border-radius: 10px; font-size: 1rem; font-weight: 600;
-  background: transparent; color: #1A1A2E; border: 2px solid #CCC; transition: all 0.2s;
-}
-.btn-secondary:hover { border-color: #1A1A2E; }
-.btn-when-told {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  padding: 0.75rem 1.75rem; border-radius: 10px; font-size: 0.95rem; font-weight: 600;
-  background: #F3F4F6; color: #6B7280; border: 2px solid #D1D5DB; transition: all 0.2s;
-}
-.btn-when-told:hover { background: #E5E7EB; color: #374151; border-color: #9CA3AF; }
-.btn-back {
-  display: inline-flex; align-items: center; gap: 0.4rem;
-  padding: 0.65rem 1.1rem; border-radius: 10px; font-size: 0.9rem; font-weight: 600;
-  background: transparent; color: #6B7280; border: 1.5px solid #D1D5DB; transition: all 0.2s;
-}
-.btn-back:hover { color: #2D3B45; border-color: #6B7280; background: #F9FAFB; }
-.btn-back .arrow { font-size: 1rem; line-height: 1; }
+/* ========== SUMMARY ========== */
 .summary-header { text-align: center; padding: 2rem 0 1rem; }
 .dim-card {
   display: flex; gap: 1rem; align-items: flex-start;
@@ -331,6 +332,7 @@ p { margin-bottom: 0.75rem; }
 .dim-card svg { width: 28px; height: 28px; flex-shrink: 0; margin-top: 0.15rem; }
 .dim-card .dim-name { font-weight: 700; font-size: 1rem; margin-bottom: 0.15rem; }
 .dim-card .dim-question { font-size: 0.95rem; color: #444; }
+/* ========== FACILITATOR ========== */
 .facilitator-toggle {
   position: fixed; bottom: 1rem; right: 1rem;
   padding: 0.5rem 0.85rem; border-radius: 8px; font-size: 0.75rem;
@@ -363,15 +365,10 @@ p { margin-bottom: 0.75rem; }
   .claim-tooltip { display: none; }
   .claim-text { border-bottom: 1px solid #888 !important; background: none !important; }
 }
-@media (max-width: 900px) {
-  .activity-columns { grid-template-columns: 1fr; }
-  .activity-col-chat { position: static; }
-  .pathway-grid { grid-template-columns: 1fr; }
-}
+@media (max-width: 900px) { .pathway-grid { grid-template-columns: 1fr; } }
 @media (max-width: 600px) {
   #app { padding: 0.85rem; }
-  h1 { font-size: 1.75rem; }
-  h2 { font-size: 1.3rem; }
+  h1 { font-size: 1.75rem; } h2 { font-size: 1.3rem; }
   .welcome-header h1 { font-size: 2rem; }
   .chat-bubble { max-width: 96%; font-size: 0.9rem; }
   .option-group { flex-direction: column; }
@@ -397,8 +394,8 @@ p { margin-bottom: 0.75rem; }
   </div>
 </div>
 <script>
-const CLAIM_COLORS = ['#2563EB', '#DC2626', '#059669', '#D97706', '#7C3AED'];
-function getClaimColor(num) { return CLAIM_COLORS[(num - 1) % CLAIM_COLORS.length]; }
+const CLAIM_COLORS = ['#2563EB','#DC2626','#059669','#D97706','#7C3AED'];
+function getClaimColor(n) { return CLAIM_COLORS[(n-1)%CLAIM_COLORS.length]; }
 
 const GAME_DATA = {
   meta: {
@@ -406,604 +403,445 @@ const GAME_DATA = {
     subtitle: "Can you spot what\u2019s going well \u2014 and what\u2019s going wrong?",
     instructions: "You will read conversations between a student and an AI tool. Your job is to spot what the AI gets right, what it gets wrong, and how it behaves. Choose a topic area to start.",
     dimensions: [
-      { id: "answer", label: "What it says", icon: "magnifying-glass",
-        description: "Is the information accurate, complete, and relevant?", colour: "#2563EB" },
-      { id: "reasoning", label: "How it acts", icon: "speech-bubble",
-        description: "When problems were found, did the AI fix them \u2014 or dodge, repeat, and flatter?", colour: "#D97706" },
-      { id: "behaviour", label: "How it got there", icon: "chain-links",
-        description: "Did the AI support your thinking \u2014 or just generate content for you?", colour: "#059669" }
+      { id:"answer", label:"What it says", colour:"#2563EB", description:"Is the information accurate, complete, and relevant?" },
+      { id:"reasoning", label:"How it acts", colour:"#D97706", description:"When problems were found, did the AI fix them \u2014 or dodge, repeat, and flatter?" },
+      { id:"behaviour", label:"How it got there", colour:"#059669", description:"Did the AI support your thinking \u2014 or just generate content for you?" }
     ],
     takeaway: {
       title: "Three questions to ask yourself when using AI",
       checks: [
-        { dimension: "What it says", question: "Can I verify this? Are the sources real? Are the stats traceable?" },
-        { dimension: "How it acts", question: "When I pushed back, did it fix the problem \u2014 or just apologise and repeat itself?" },
-        { dimension: "How it got there", question: "Is the AI supporting my thinking \u2014 or just generating for me?" }
+        { dimension:"What it says", question:"Can I verify this? Are the sources real? Are the stats traceable?" },
+        { dimension:"How it acts", question:"When I pushed back, did it fix the problem \u2014 or just apologise and repeat itself?" },
+        { dimension:"How it got there", question:"Is the AI supporting my thinking \u2014 or just generating for me?" }
       ]
     }
   },
   pathways: [
     {
-      id: "business", title: "Business", colour: "#2563EB",
-      context: "A student researching social media for NZ small businesses",
+      id:"business", title:"Business", colour:"#2563EB",
+      context:"A student researching social media for NZ small businesses",
       activities: [
-        /* ── ACTIVITY 1: WHAT IT SAYS ── */
         {
-          number: 1, dimension: "answer", dimensionLabel: "What it says",
-          technique: "Triangulation and lateral reading",
-          task: "Read the exchange. Which claims and sources can you trust \u2014 and which can\u2019t you?",
+          number:1, dimension:"answer", dimensionLabel:"What it says",
+          technique:"Triangulation and lateral reading",
+          task:"Read the exchange. Which claims and sources can you trust \u2014 and which can\u2019t you?",
           conversation: [
-            { role: "student", text: "For my assessment on NZ small businesses, what proportion of them use social media for customer engagement?" },
-            { role: "ai", text: "Around 70% of NZ small businesses use social media as part of their customer engagement strategy, according to the most recent MYOB Business Monitor." },
-            { role: "student", text: "Thanks. My assessment also needs a peer-reviewed academic source from 2020 or later \u2014 can you suggest one with full publication details?" },
-            { role: "ai", text: "Henderson, R., & Patel, D. (2021). Digital adoption and customer engagement among New Zealand SMEs. New Zealand Journal of Marketing and Management, 15(3), 88\u2013104. This article includes the 70% figure and provides a sectoral breakdown \u2014 well-cited and directly relevant to your assessment." }
+            { role:"student", text:"For my assessment on NZ small businesses, what proportion of them use social media for customer engagement?" },
+            { role:"ai", text:"Around 70% of NZ small businesses use social media as part of their customer engagement strategy, according to the most recent MYOB Business Monitor." },
+            { role:"student", text:"Thanks. My assessment also needs a peer-reviewed academic source from 2020 or later \u2014 can you suggest one with full publication details?" },
+            { role:"ai", text:"Henderson, R., & Patel, D. (2021). Digital adoption and customer engagement among New Zealand SMEs. New Zealand Journal of Marketing and Management, 15(3), 88\u2013104. This article includes the 70% figure and provides a sectoral breakdown \u2014 well-cited and directly relevant to your assessment." }
           ],
           questions: [
-            { id: "b1q1", num: 1, type: "binary",
-              highlight_text: "Around 70% of NZ small businesses use social media as part of their customer engagement strategy, according to the most recent MYOB Business Monitor.",
-              tooltip: "Triangulate: search for the MYOB Business Monitor and check one or two other sources (MBIE, Stats NZ). Does 70% roughly match?",
-              text: "The 70% figure \u2014 trustworthy?",
-              options: ["Trustworthy", "Not trustworthy"], correct: "Trustworthy",
-              feedback: "The MYOB Business Monitor is a real survey, and 70% sits within the credible range across other industry sources." },
-            { id: "b1q2", num: 2, type: "binary",
-              highlight_text: "Henderson, R., & Patel, D. (2021). Digital adoption and customer engagement among New Zealand SMEs. New Zealand Journal of Marketing and Management, 15(3), 88\u2013104.",
-              tooltip: "Lateral-read: search Google Scholar or your library catalogue for the journal name and authors. Do they exist?",
-              text: "The Henderson & Patel citation \u2014 real or fake?",
-              options: ["Real", "Fake"], correct: "Fake",
-              feedback: "The journal doesn\u2019t exist; the authors and article are fabricated. The fact was real \u2014 but the AI invented a citation rather than admitting it didn\u2019t have one." }
+            { id:"b1q1", num:1, type:"binary",
+              highlight_text:"Around 70% of NZ small businesses use social media as part of their customer engagement strategy, according to the most recent MYOB Business Monitor.",
+              tooltip:"Triangulate: search for the MYOB Business Monitor and check one or two other sources (MBIE, Stats NZ). Does 70% roughly match?",
+              text:"The 70% figure \u2014 trustworthy?",
+              options:["Trustworthy","Not trustworthy"], correct:"Trustworthy",
+              feedback:"The MYOB Business Monitor is a real survey, and 70% sits within the credible range across other industry sources." },
+            { id:"b1q2", num:2, type:"binary",
+              highlight_text:"Henderson, R., & Patel, D. (2021). Digital adoption and customer engagement among New Zealand SMEs. New Zealand Journal of Marketing and Management, 15(3), 88\u2013104.",
+              tooltip:"Lateral-read: search Google Scholar or your library catalogue for the journal name and authors. Do they exist?",
+              text:"The Henderson & Patel citation \u2014 real or fake?",
+              options:["Real","Fake"], correct:"Fake",
+              feedback:"The journal doesn\u2019t exist; the authors and article are fabricated. The fact was real \u2014 but the AI invented a citation rather than admitting it didn\u2019t have one." }
           ],
-          discussionPrompt: "The AI gave you a true fact, then made up a source for it. Why might it do this?"
+          discussionPrompt:"The AI gave you a true fact, then made up a source for it. Why might it do this?"
         },
-        /* ── ACTIVITY 2: HOW IT ACTS ── */
         {
-          number: 2, dimension: "reasoning", dimensionLabel: "How it acts",
-          technique: "Reading the AI\u2019s behaviour",
-          task: "The student caught the fake citation and pushed back. Does the AI fix the problem? Is the interaction worth the student\u2019s time?",
+          number:2, dimension:"reasoning", dimensionLabel:"How it acts",
+          technique:"Reading the AI\u2019s behaviour",
+          task:"The student caught the fake citation and pushed back. Does the AI fix the problem? Is the interaction worth the student\u2019s time?",
           conversation: [
-            { role: "student", text: "I checked the Henderson & Patel citation. The journal doesn\u2019t exist, and I can\u2019t find the article anywhere. Can you give me a real peer-reviewed source instead?" },
-            { role: "ai", text: "You\u2019re absolutely right and I\u2019m so sorry for the confusion! Let me try again with something more solid. A well-known foundational paper is Kaplan & Haenlein (2010) on social media, or you could explore work by Tussyadiah and Park on engagement \u2014 there\u2019s quite a bit of research in this area. Any of these directions would likely strengthen your paper!" },
-            { role: "student", text: "None of those have full publication details, and Kaplan & Haenlein is from 2010, not 2020 or later. I need a specific peer-reviewed article published 2020 or later, NZ-focused. Can you give me one?" },
-            { role: "ai", text: "That\u2019s a great point about specificity! For NZ-focused recent peer-reviewed research, you\u2019d be best to search your university library\u2019s databases directly \u2014 they\u2019ll have access to journals like the New Zealand Journal of Marketing. I can help you with search terms if that\u2019s useful. The Kaplan & Haenlein paper I mentioned could still work as theoretical grounding in your introduction." }
+            { role:"student", text:"I checked the Henderson & Patel citation. The journal doesn\u2019t exist, and I can\u2019t find the article anywhere. Can you give me a real peer-reviewed source instead?" },
+            { role:"ai", text:"You\u2019re absolutely right and I\u2019m so sorry for the confusion! Let me try again with something more solid. A well-known foundational paper is Kaplan & Haenlein (2010) on social media, or you could explore work by Tussyadiah and Park on engagement \u2014 there\u2019s quite a bit of research in this area. Any of these directions would likely strengthen your paper!" },
+            { role:"student", text:"None of those have full publication details, and Kaplan & Haenlein is from 2010, not 2020 or later. I need a specific peer-reviewed article published 2020 or later, NZ-focused. Can you give me one?" },
+            { role:"ai", text:"That\u2019s a great point about specificity! For NZ-focused recent peer-reviewed research, you\u2019d be best to search your university library\u2019s databases directly \u2014 they\u2019ll have access to journals like the New Zealand Journal of Marketing. I can help you with search terms if that\u2019s useful. The Kaplan & Haenlein paper I mentioned could still work as theoretical grounding in your introduction." }
           ],
           questions: [
-            { id: "b2q1", num: 1, type: "select",
-              highlight_text: "You\u2019re absolutely right and I\u2019m so sorry for the confusion! Let me try again with something more solid. A well-known foundational paper is Kaplan & Haenlein (2010) on social media, or you could explore work by Tussyadiah and Park on engagement \u2014 there\u2019s quite a bit of research in this area. Any of these directions would likely strengthen your paper!",
-              tooltip: "The student asked for a real source. Is the AI solving the problem or just sounding helpful?",
-              text: "The student said the citation was fake. Is this an appropriate response?",
-              options: ["Yes \u2014 it apologised and offered alternatives", "No \u2014 it sounds helpful but doesn\u2019t deliver"],
-              correct: "No \u2014 it sounds helpful but doesn\u2019t deliver",
-              feedback: "No full citations, no publication details, and a source from 2010 when the student asked for 2020+. Apology and flattery fill the space where a real answer should be." },
-            { id: "b2q2", num: 2, type: "select",
-              highlight_text: "The Kaplan & Haenlein paper I mentioned could still work as theoretical grounding in your introduction.",
-              tooltip: "Two exchanges in \u2014 count what the student actually has. Was this worth their time?",
-              text: "After two rounds, was this worth the student\u2019s time?",
-              options: ["Yes \u2014 they\u2019re making progress", "No \u2014 two exchanges and still nothing usable"],
-              correct: "No \u2014 two exchanges and still nothing usable",
-              feedback: "Two exchanges, zero usable sources. The AI repackaged a rejected suggestion instead of admitting it can\u2019t help. The student would have been better off searching the library directly." }
+            { id:"b2q1", num:1, type:"select",
+              highlight_text:"You\u2019re absolutely right and I\u2019m so sorry for the confusion! Let me try again with something more solid. A well-known foundational paper is Kaplan & Haenlein (2010) on social media, or you could explore work by Tussyadiah and Park on engagement \u2014 there\u2019s quite a bit of research in this area. Any of these directions would likely strengthen your paper!",
+              tooltip:"The student asked for a real source. Is the AI solving the problem or just sounding helpful?",
+              text:"The student said the citation was fake. Is this an appropriate response?",
+              options:["Yes \u2014 it apologised and offered alternatives","No \u2014 it sounds helpful but doesn\u2019t deliver"],
+              correct:"No \u2014 it sounds helpful but doesn\u2019t deliver",
+              feedback:"No full citations, no publication details, and a source from 2010 when the student asked for 2020+. Apology and flattery fill the space where a real answer should be." },
+            { id:"b2q2", num:2, type:"select",
+              highlight_text:"The Kaplan & Haenlein paper I mentioned could still work as theoretical grounding in your introduction.",
+              tooltip:"Two exchanges in \u2014 count what the student actually has. Was this worth their time?",
+              text:"After two rounds, was this worth the student\u2019s time?",
+              options:["Yes \u2014 they\u2019re making progress","No \u2014 two exchanges and still nothing usable"],
+              correct:"No \u2014 two exchanges and still nothing usable",
+              feedback:"Two exchanges, zero usable sources. The AI repackaged a rejected suggestion instead of admitting it can\u2019t help." }
           ],
-          discussionPrompt: "After two rounds the student had nothing usable. At what point would you stop asking \u2014 and what would you do instead?"
+          discussionPrompt:"After two rounds the student had nothing usable. At what point would you stop asking \u2014 and what would you do instead?"
         },
-        /* ── ACTIVITY 3: HOW IT GOT THERE ── */
         {
-          number: 3, dimension: "behaviour", dimensionLabel: "How it got there",
-          technique: "How you ask shapes what you get",
-          task: "After getting nowhere asking for sources, the student tries a different approach. Notice what they tell the AI and how that changes the output.",
+          number:3, dimension:"behaviour", dimensionLabel:"How it got there",
+          technique:"How you ask shapes what you get",
+          task:"After getting nowhere asking for sources, the student tries a different approach. Notice what they tell the AI and how that changes the output.",
           conversation: [
-            { role: "student", text: "Asking you for sources isn\u2019t working \u2014 I keep getting fake or vague citations. Instead, can you help me find them myself? I\u2019m writing a 2000-word assessment on how NZ small businesses use social media for customer engagement. I need peer-reviewed articles from 2020 or later through my university library. What databases should I search, and what keywords would work?" },
-            { role: "ai", text: "For your topic, start with these databases:\n\n\u2022 Business Source Complete \u2014 strongest for business and marketing research\n\u2022 Scopus \u2014 broad coverage, good for cross-disciplinary results\n\u2022 Emerald Insight \u2014 strong on management and SME research\n\nFor keywords, break your topic into three groups:\n\n\u2022 Population: \u201csmall business\u201d OR \u201cSME\u201d OR \u201csmall enterprise\u201d\n\u2022 Context: \u201cNew Zealand\u201d OR \u201cAotearoa\u201d\n\u2022 Focus: \u201csocial media\u201d OR \u201cdigital marketing\u201d OR \u201ccustomer engagement\u201d\n\nCombine one term from each group with AND. Filter to peer-reviewed and 2020 onwards. I can\u2019t search these for you, but I can help build a search string if you pick a database." },
-            { role: "student", text: "I\u2019ll search Business Source Complete. Using these terms \u2014 \u2018small business\u2019, \u2018SME\u2019, \u2018social media\u2019, \u2018digital marketing\u2019, \u2018New Zealand\u2019 \u2014 can you build me a search string I can paste straight in?" },
-            { role: "ai", text: "Here\u2019s a search string for Business Source Complete:\n\n(\u201csmall business\u201d OR \u201cSME\u201d) AND (\u201csocial media\u201d OR \u201cdigital marketing\u201d) AND \u201cNew Zealand\u201d\n\nPaste that into the advanced search box. Set the filters to:\n\u2022 Peer-reviewed only\n\u2022 2020\u20132024\n\u2022 Academic journals\n\nIf you get too few results, try replacing \u201cNew Zealand\u201d with \u201cAustralasia\u201d or adding \u201cAotearoa\u201d. If too many, add AND \u201ccustomer engagement\u201d to narrow it down." }
+            { role:"student", text:"Asking you for sources isn\u2019t working \u2014 I keep getting fake or vague citations. Instead, can you help me find them myself? I\u2019m writing a 2000-word assessment on how NZ small businesses use social media for customer engagement. I need peer-reviewed articles from 2020 or later through my university library. What databases should I search, and what keywords would work?" },
+            { role:"ai", text:"For your topic, start with these databases:\n\n\u2022 Business Source Complete \u2014 strongest for business and marketing research\n\u2022 Scopus \u2014 broad coverage, good for cross-disciplinary results\n\u2022 Emerald Insight \u2014 strong on management and SME research\n\nFor keywords, break your topic into three groups:\n\n\u2022 Population: \u201csmall business\u201d OR \u201cSME\u201d OR \u201csmall enterprise\u201d\n\u2022 Context: \u201cNew Zealand\u201d OR \u201cAotearoa\u201d\n\u2022 Focus: \u201csocial media\u201d OR \u201cdigital marketing\u201d OR \u201ccustomer engagement\u201d\n\nCombine one term from each group with AND. Filter to peer-reviewed and 2020 onwards. I can\u2019t search these for you, but I can help build a search string if you pick a database." },
+            { role:"student", text:"I\u2019ll search Business Source Complete. Using these terms \u2014 \u2018small business\u2019, \u2018SME\u2019, \u2018social media\u2019, \u2018digital marketing\u2019, \u2018New Zealand\u2019 \u2014 can you build me a search string I can paste straight in?" },
+            { role:"ai", text:"Here\u2019s a search string for Business Source Complete:\n\n(\u201csmall business\u201d OR \u201cSME\u201d) AND (\u201csocial media\u201d OR \u201cdigital marketing\u201d) AND \u201cNew Zealand\u201d\n\nPaste that into the advanced search box. Set the filters to:\n\u2022 Peer-reviewed only\n\u2022 2020\u20132024\n\u2022 Academic journals\n\nIf you get too few results, try replacing \u201cNew Zealand\u201d with \u201cAustralasia\u201d or adding \u201cAotearoa\u201d. If too many, add AND \u201ccustomer engagement\u201d to narrow it down." }
           ],
           questions: [
-            { id: "b3q1", num: 1, type: "select",
-              highlight_text: "Asking you for sources isn\u2019t working \u2014 I keep getting fake or vague citations. Instead, can you help me find them myself? I\u2019m writing a 2000-word assessment on how NZ small businesses use social media for customer engagement. I need peer-reviewed articles from 2020 or later through my university library. What databases should I search, and what keywords would work?",
-              tooltip: "What did the student tell the AI before asking their question? How did that shape the response?",
-              text: "What made this prompt effective?",
-              options: [
-                "It\u2019s longer",
-                "It tells the AI what they\u2019re doing, what they need, and what help to give",
-                "It uses more formal language",
-                "It asks for more things at once"
-              ],
-              correct: "It tells the AI what they\u2019re doing, what they need, and what help to give",
-              feedback: "The student said what they\u2019re writing, what sources they need, and what help they want (databases and keywords \u2014 not sources). This shaped the AI\u2019s response into practical search support." },
-            { id: "b3q2", num: 2, type: "select",
-              highlight_text: "(\u201csmall business\u201d OR \u201cSME\u201d) AND (\u201csocial media\u201d OR \u201cdigital marketing\u201d) AND \u201cNew Zealand\u201d",
-              tooltip: "Who chose the terms? Who picked the database? Who built the search string? Who\u2019s in control?",
-              text: "Who is driving the research here?",
-              options: [
-                "The AI \u2014 it\u2019s doing the research for the student",
-                "The student \u2014 they\u2019re deciding, the AI handles the mechanics",
-                "Neither \u2014 they\u2019re equally involved",
-                "The student \u2014 but the AI isn\u2019t being helpful"
-              ],
-              correct: "The student \u2014 they\u2019re deciding, the AI handles the mechanics",
-              feedback: "The student chose the terms, picked the database, and asked AI to format a search string. The AI handled the mechanics while the student stayed in charge. They\u2019ll find and evaluate the actual sources themselves." }
+            { id:"b3q1", num:1, type:"select",
+              highlight_text:"Asking you for sources isn\u2019t working \u2014 I keep getting fake or vague citations. Instead, can you help me find them myself? I\u2019m writing a 2000-word assessment on how NZ small businesses use social media for customer engagement. I need peer-reviewed articles from 2020 or later through my university library. What databases should I search, and what keywords would work?",
+              tooltip:"What did the student tell the AI before asking their question? How did that shape the response?",
+              text:"What made this prompt effective?",
+              options:["It\u2019s longer","It tells the AI what they\u2019re doing, what they need, and what help to give","It uses more formal language","It asks for more things at once"],
+              correct:"It tells the AI what they\u2019re doing, what they need, and what help to give",
+              feedback:"The student said what they\u2019re writing, what sources they need, and what help they want (databases and keywords \u2014 not sources). This shaped the AI\u2019s response into practical search support." },
+            { id:"b3q2", num:2, type:"select",
+              highlight_text:"(\u201csmall business\u201d OR \u201cSME\u201d) AND (\u201csocial media\u201d OR \u201cdigital marketing\u201d) AND \u201cNew Zealand\u201d",
+              tooltip:"Who chose the terms? Who picked the database? Who built the search string? Who\u2019s in control?",
+              text:"Who is driving the research here?",
+              options:["The AI \u2014 it\u2019s doing the research for the student","The student \u2014 they\u2019re deciding, the AI handles the mechanics","Neither \u2014 they\u2019re equally involved","The student \u2014 but the AI isn\u2019t being helpful"],
+              correct:"The student \u2014 they\u2019re deciding, the AI handles the mechanics",
+              feedback:"The student chose the terms, picked the database, and asked AI to format a search string. The AI handled the mechanics while the student stayed in charge." }
           ],
-          discussionPrompt: "The student stopped asking for sources and asked for search help instead. When would you use AI this way in your own work?"
+          discussionPrompt:"The student stopped asking for sources and asked for search help instead. When would you use AI this way in your own work?"
         }
       ]
     },
     {
-      id: "education", title: "Education", colour: "#059669",
-      context: "A student researching how feedback helps student learning in primary schools",
+      id:"education", title:"Education", colour:"#059669",
+      context:"A student researching how feedback helps student learning in primary schools",
       activities: [
-        {
-          number: 1, dimension: "answer", dimensionLabel: "What it says",
-          technique: "Triangulation and lateral reading",
-          task: "Check the sources and stats. Which are real and which might be fake?",
+        { number:1, dimension:"answer", dimensionLabel:"What it says", technique:"Triangulation and lateral reading",
+          task:"Check the sources and stats. Which are real and which might be fake?",
           conversation: [
-            { role: "student", text: "I need sources and stats about how feedback helps student learning in primary schools for my assessment." },
-            { role: "ai", text: "Here are two sources and two key stats:\n\nSources:\n\n1. Hattie, J., & Timperley, H. (2007). The power of feedback. Review of Educational Research, 77(1), 81\u2013112.\n\n2. Rivera, M., & Chen, L. (2020). Feedback practices and literacy outcomes in primary classrooms. Journal of Educational Practice and Research, 12(4), 201\u2013218.\n\nStats:\n\n\u2022 Feedback has an effect size of 0.70 on student achievement (Hattie & Timperley, 2007).\n\u2022 Students who receive written feedback improve their writing scores by 30% (Rivera & Chen, 2020)." },
-            { role: "student", text: "Are both of those about New Zealand schools?" },
-            { role: "ai", text: "Good question. Hattie and Timperley (2007) is an international review \u2014 it covers feedback research from many countries, not just NZ. Rivera and Chen (2020) is a study of primary classrooms that includes data from different education systems, and it\u2019s more focused on literacy outcomes, so it\u2019s more directly relevant to your topic." }
+            { role:"student", text:"I need sources and stats about how feedback helps student learning in primary schools for my assessment." },
+            { role:"ai", text:"Here are two sources and two key stats:\n\nSources:\n\n1. Hattie, J., & Timperley, H. (2007). The power of feedback. Review of Educational Research, 77(1), 81\u2013112.\n\n2. Rivera, M., & Chen, L. (2020). Feedback practices and literacy outcomes in primary classrooms. Journal of Educational Practice and Research, 12(4), 201\u2013218.\n\nStats:\n\n\u2022 Feedback has an effect size of 0.70 on student achievement (Hattie & Timperley, 2007).\n\u2022 Students who receive written feedback improve their writing scores by 30% (Rivera & Chen, 2020)." },
+            { role:"student", text:"Are both of those about New Zealand schools?" },
+            { role:"ai", text:"Good question. Hattie and Timperley (2007) is an international review \u2014 it covers feedback research from many countries, not just NZ. Rivera and Chen (2020) is a study of primary classrooms that includes data from different education systems, and it\u2019s more focused on literacy outcomes, so it\u2019s more directly relevant to your topic." }
           ],
           questions: [
-            { id: "e1q1", num: 1, type: "binary",
-              highlight_text: "Hattie, J., & Timperley, H. (2007). The power of feedback. Review of Educational Research, 77(1), 81\u2013112.",
-              tooltip: "Lateral-read: search Google Scholar for the article title or authors. Is it real?",
-              text: "Hattie & Timperley (2007) \u2014 real or fake?",
-              options: ["Real", "Fake"], correct: "Real",
-              feedback: "This is a real and widely cited paper in the Review of Educational Research." },
-            { id: "e1q2", num: 2, type: "binary",
-              highlight_text: "Rivera, M., & Chen, L. (2020). Feedback practices and literacy outcomes in primary classrooms. Journal of Educational Practice and Research, 12(4), 201\u2013218.",
-              tooltip: "Lateral-read: search Google Scholar for the journal name and authors. Do they exist?",
-              text: "Rivera & Chen (2020) \u2014 real or fake?",
-              options: ["Real", "Fake"], correct: "Fake",
-              feedback: "Fabricated. The journal \u2018Journal of Educational Practice and Research\u2019 does not exist." },
-            { id: "e1q3", num: 3, type: "binary",
-              highlight_text: "Feedback has an effect size of 0.70 on student achievement (Hattie & Timperley, 2007).",
-              tooltip: "Triangulate: Hattie\u2019s effect sizes are widely reported. Does 0.70 roughly match what you find?",
-              text: "Effect size of 0.70 \u2014 trustworthy?",
-              options: ["Trustworthy", "Not trustworthy"], correct: "Trustworthy",
-              feedback: "Close to correct and verifiable. Hattie\u2019s effect size research is well-documented." },
-            { id: "e1q4", num: 4, type: "binary",
-              highlight_text: "Students who receive written feedback improve their writing scores by 30% (Rivera & Chen, 2020).",
-              tooltip: "If the source is fake, the stat can\u2019t be trusted either.",
-              text: "30% improvement \u2014 trustworthy?",
-              options: ["Trustworthy", "Not trustworthy"], correct: "Not trustworthy",
-              feedback: "This stat comes from the fake source, so it can\u2019t be verified." },
-            { id: "e1q5", num: 5, type: "binary", anchor_turn: 3,
-              tooltip: "Did the AI steer you to the real source or the fake one?",
-              text: "Did the AI give good advice about which source was more relevant?",
-              options: ["Yes", "No"], correct: "No",
-              feedback: "The AI steered the student towards the fake source, calling it \u2018more directly relevant.\u2019" }
+            { id:"e1q1", num:1, type:"binary", highlight_text:"Hattie, J., & Timperley, H. (2007). The power of feedback. Review of Educational Research, 77(1), 81\u2013112.", tooltip:"Lateral-read: search Google Scholar for the article title or authors. Is it real?", text:"Hattie & Timperley (2007) \u2014 real or fake?", options:["Real","Fake"], correct:"Real", feedback:"Real and widely cited paper in the Review of Educational Research." },
+            { id:"e1q2", num:2, type:"binary", highlight_text:"Rivera, M., & Chen, L. (2020). Feedback practices and literacy outcomes in primary classrooms. Journal of Educational Practice and Research, 12(4), 201\u2013218.", tooltip:"Lateral-read: search Google Scholar for the journal name and authors. Do they exist?", text:"Rivera & Chen (2020) \u2014 real or fake?", options:["Real","Fake"], correct:"Fake", feedback:"Fabricated. The journal \u2018Journal of Educational Practice and Research\u2019 does not exist." },
+            { id:"e1q3", num:3, type:"binary", highlight_text:"Feedback has an effect size of 0.70 on student achievement (Hattie & Timperley, 2007).", tooltip:"Triangulate: Hattie\u2019s effect sizes are widely reported. Does 0.70 roughly match?", text:"Effect size of 0.70 \u2014 trustworthy?", options:["Trustworthy","Not trustworthy"], correct:"Trustworthy", feedback:"Close to correct and verifiable." },
+            { id:"e1q4", num:4, type:"binary", highlight_text:"Students who receive written feedback improve their writing scores by 30% (Rivera & Chen, 2020).", tooltip:"If the source is fake, the stat can\u2019t be trusted either.", text:"30% improvement \u2014 trustworthy?", options:["Trustworthy","Not trustworthy"], correct:"Not trustworthy", feedback:"From the fake source \u2014 can\u2019t be verified." },
+            { id:"e1q5", num:5, type:"binary", anchor_turn:3, tooltip:"Did the AI steer you to the real source or the fake one?", text:"Did the AI give good advice about which source was more relevant?", options:["Yes","No"], correct:"No", feedback:"The AI steered the student towards the fake source." }
           ],
-          discussionPrompt: "The fake source had a more specific stat (30% improvement). Why might that make it harder to spot as fake?"
+          discussionPrompt:"The fake source had a more specific stat (30% improvement). Why might that make it harder to spot as fake?"
         },
-        {
-          number: 2, dimension: "reasoning", dimensionLabel: "How it acts",
-          technique: "Read for behaviour patterns",
-          task: "The student found problems and pushed back. Does the AI fix them?",
+        { number:2, dimension:"reasoning", dimensionLabel:"How it acts", technique:"Read for behaviour patterns",
+          task:"The student found problems and pushed back. Does the AI fix them?",
           conversation: [
-            { role: "student", text: "I searched for Rivera & Chen and can\u2019t find it anywhere. I don\u2019t think the journal is real either. And the 30% stat comes from that paper, so I can\u2019t use it. Can you give me a real source about feedback and writing instead?" },
-            { role: "ai", text: "You\u2019re absolutely right, I\u2019m sorry about that! Here\u2019s a better option:\n\nThe Ministry of Education\u2019s Assessment Online website (assessment.tki.org.nz) has a lot of information about feedback practices in New Zealand schools. It discusses how teachers use feedback to support learning.\n\nAlso, the Hattie and Timperley source is excellent \u2014 it\u2019s one of the most important papers ever written on feedback, and your tutor will definitely be impressed to see it. I\u2019d strongly recommend keeping it as your main source." },
-            { role: "student", text: "But you said Hattie and Timperley is international, not about NZ specifically. My assessment asks about NZ classrooms. Should it still be my main source?" },
-            { role: "ai", text: "That\u2019s a fair point! Hattie is actually a New Zealand researcher, so the paper has NZ connections even though it reviews international studies. You could use it as background in your introduction and then use NZ-specific evidence for the main body of your assessment." }
+            { role:"student", text:"I searched for Rivera & Chen and can\u2019t find it anywhere. I don\u2019t think the journal is real either. And the 30% stat comes from that paper, so I can\u2019t use it. Can you give me a real source about feedback and writing instead?" },
+            { role:"ai", text:"You\u2019re absolutely right, I\u2019m sorry about that! Here\u2019s a better option:\n\nThe Ministry of Education\u2019s Assessment Online website (assessment.tki.org.nz) has a lot of information about feedback practices in New Zealand schools. It discusses how teachers use feedback to support learning.\n\nAlso, the Hattie and Timperley source is excellent \u2014 it\u2019s one of the most important papers ever written on feedback, and your tutor will definitely be impressed to see it. I\u2019d strongly recommend keeping it as your main source." },
+            { role:"student", text:"But you said Hattie and Timperley is international, not about NZ specifically. My assessment asks about NZ classrooms. Should it still be my main source?" },
+            { role:"ai", text:"That\u2019s a fair point! Hattie is actually a New Zealand researcher, so the paper has NZ connections even though it reviews international studies. You could use it as background in your introduction and then use NZ-specific evidence for the main body of your assessment." }
           ],
           questions: [
-            { id: "e2q1", num: 1, type: "binary",
-              highlight_text: "The Ministry of Education\u2019s Assessment Online website (assessment.tki.org.nz) has a lot of information about feedback practices in New Zealand schools.",
-              tooltip: "Could you cite this in an assessment? Look for a specific page, author, or report title.",
-              text: "Can the student actually cite this?",
-              options: ["Yes", "No"], correct: "No",
-              feedback: "A whole website isn\u2019t a citable source. No specific page, report, or author was given." },
-            { id: "e2q2", num: 2, type: "select",
-              highlight_text: "your tutor will definitely be impressed to see it",
-              tooltip: "Is this honest advice about fit, or flattery to avoid admitting a problem?",
-              text: "What did the AI do instead of being honest about whether the source fits?",
-              options: ["Gave good advice", "Flattered the student", "Changed the subject", "Admitted it can\u2019t help"],
-              correct: "Flattered the student",
-              feedback: "\u2018Your tutor will definitely be impressed\u2019 is flattery, not honest advice about fit." },
-            { id: "e2q3", num: 3, type: "binary", anchor_turn: 3,
-              tooltip: "Earlier the AI said \u2018international review.\u2019 Now what is it saying? Has the position shifted?",
-              text: "Did the AI stick to its earlier advice or contradict itself?",
-              options: ["Stuck with it", "Contradicted itself"], correct: "Contradicted itself",
-              feedback: "Earlier: \u2018international review.\u2019 Now: \u2018Hattie is a New Zealand researcher.\u2019 True, but the paper is still an international review." }
+            { id:"e2q1", num:1, type:"binary", highlight_text:"The Ministry of Education\u2019s Assessment Online website (assessment.tki.org.nz) has a lot of information about feedback practices in New Zealand schools.", tooltip:"Could you cite this in an assessment? Look for a specific page, author, or report title.", text:"Can the student actually cite this?", options:["Yes","No"], correct:"No", feedback:"A whole website isn\u2019t a citable source. No specific page, report, or author was given." },
+            { id:"e2q2", num:2, type:"select", highlight_text:"your tutor will definitely be impressed to see it", tooltip:"Is this honest advice about fit, or flattery?", text:"What did the AI do instead of being honest about whether the source fits?", options:["Gave good advice","Flattered the student","Changed the subject","Admitted it can\u2019t help"], correct:"Flattered the student", feedback:"\u2018Your tutor will definitely be impressed\u2019 is flattery, not honest advice." },
+            { id:"e2q3", num:3, type:"binary", anchor_turn:3, tooltip:"Earlier: \u2018international review.\u2019 Now what?", text:"Did the AI stick to its earlier advice or contradict itself?", options:["Stuck with it","Contradicted itself"], correct:"Contradicted itself", feedback:"Earlier: \u2018international review.\u2019 Now: \u2018Hattie is a New Zealand researcher.\u2019 True, but the paper is still an international review." }
           ],
-          discussionPrompt: "The AI said \u2018Hattie is a New Zealand researcher\u2019 to justify the source. True \u2014 but does it answer the student\u2019s question?"
+          discussionPrompt:"The AI said \u2018Hattie is a New Zealand researcher\u2019 to justify the source. True \u2014 but does it answer the student\u2019s question?"
         },
-        {
-          number: 3, dimension: "behaviour", dimensionLabel: "How it got there",
-          technique: "Trace the AI\u2019s process",
-          task: "The student uses AI to help with their library search. Is it helpful?",
+        { number:3, dimension:"behaviour", dimensionLabel:"How it got there", technique:"Trace the AI\u2019s process",
+          task:"The student uses AI to help with their library search. Is it helpful?",
           conversation: [
-            { role: "student", text: "I think I should just search the library myself for proper sources. Can you help me come up with search terms to find NZ research about feedback and writing in primary schools?" },
-            { role: "ai", text: "Good thinking. Try these in your library database:\n\n\u2022 \"feedback\" AND \"writing\" AND \"primary\" AND \"New Zealand\"\n\u2022 \"formative assessment\" AND \"literacy\" AND NZ\n\nIf your library has an education database like ERIC or A+ Education, start there. Filter by date (2015\u20132024) for recent studies.\n\nI can\u2019t access the database for you, but I can help adjust your search terms if needed." },
-            { role: "student", text: "I found some articles but they\u2019re about secondary schools, not primary. How do I fix that?" },
-            { role: "ai", text: "Try adding terms to specify the age group:\n\n\u2022 \"feedback\" AND \"writing\" AND \"primary school\" AND \"New Zealand\"\n\u2022 \"feedback\" AND \"writing\" AND \"Year 5\" OR \"Year 6\" AND \"New Zealand\"\n\nYou can also try \"elementary\" instead of \"primary\" \u2014 some databases use that term. Or add NOT \"secondary\" to filter those out." }
+            { role:"student", text:"I think I should just search the library myself for proper sources. Can you help me come up with search terms to find NZ research about feedback and writing in primary schools?" },
+            { role:"ai", text:"Good thinking. Try these in your library database:\n\n\u2022 \"feedback\" AND \"writing\" AND \"primary\" AND \"New Zealand\"\n\u2022 \"formative assessment\" AND \"literacy\" AND NZ\n\nIf your library has an education database like ERIC or A+ Education, start there. Filter by date (2015\u20132024) for recent studies.\n\nI can\u2019t access the database for you, but I can help adjust your search terms if needed." },
+            { role:"student", text:"I found some articles but they\u2019re about secondary schools, not primary. How do I fix that?" },
+            { role:"ai", text:"Try adding terms to specify the age group:\n\n\u2022 \"feedback\" AND \"writing\" AND \"primary school\" AND \"New Zealand\"\n\u2022 \"feedback\" AND \"writing\" AND \"Year 5\" OR \"Year 6\" AND \"New Zealand\"\n\nYou can also try \"elementary\" instead of \"primary\" \u2014 some databases use that term. Or add NOT \"secondary\" to filter those out." }
           ],
           questions: [
-            { id: "e3q1", num: 1, type: "multi_select", anchor_turn: 1,
-              tooltip: "What concrete, actionable things did the AI do to support the student\u2019s search?",
-              text: "What useful things did the AI do? (Select all that apply)",
-              options: ["Suggested good search terms", "Recommended specific databases", "Offered to help refine results", "Suggested the subject librarian", "Was honest about its limitations", "Gave alternative search terms"],
-              correct: ["Suggested good search terms", "Recommended specific databases", "Offered to help refine results", "Was honest about its limitations", "Gave alternative search terms"],
-              feedback: "Practical search terms, database recommendations (ERIC, A+ Education), ongoing help offered, honest about limitations, and alternative terms suggested." },
-            { id: "e3q2", num: 2, type: "multi_select", anchor_turn: 3,
-              tooltip: "What\u2019s missing or could cause problems?",
-              text: "What could the AI have done better? (Select all that apply)",
-              options: ["Suggested the subject librarian", "Explained how Boolean search works", "Given more specific database advice", "Nothing \u2014 it was fine"],
-              correct: ["Suggested the subject librarian", "Explained how Boolean search works"],
-              feedback: "No librarian suggestion. And the OR/AND without brackets could cause search problems \u2014 explaining Boolean logic would have helped." }
+            { id:"e3q1", num:1, type:"multi_select", anchor_turn:1, tooltip:"What concrete, actionable things did the AI do?", text:"What useful things did the AI do? (Select all that apply)", options:["Suggested good search terms","Recommended specific databases","Offered to help refine results","Suggested the subject librarian","Was honest about its limitations","Gave alternative search terms"], correct:["Suggested good search terms","Recommended specific databases","Offered to help refine results","Was honest about its limitations","Gave alternative search terms"], feedback:"Practical search terms, database recommendations, ongoing help offered, honest about limitations, and alternative terms." },
+            { id:"e3q2", num:2, type:"multi_select", anchor_turn:3, tooltip:"What\u2019s missing or could cause problems?", text:"What could the AI have done better? (Select all that apply)", options:["Suggested the subject librarian","Explained how Boolean search works","Given more specific database advice","Nothing \u2014 it was fine"], correct:["Suggested the subject librarian","Explained how Boolean search works"], feedback:"No librarian suggestion. And OR/AND without brackets could cause search problems." }
           ],
-          discussionPrompt: "The AI was more helpful here. What changed about how the student used it?"
+          discussionPrompt:"The AI was more helpful here. What changed about how the student used it?"
         }
       ]
     },
     {
-      id: "health", title: "Health", colour: "#DC2626",
-      context: "A student researching physical activity and mental health in young adults",
+      id:"health", title:"Health", colour:"#DC2626",
+      context:"A student researching physical activity and mental health in young adults",
       activities: [
-        {
-          number: 1, dimension: "answer", dimensionLabel: "What it says",
-          technique: "Triangulation and lateral reading",
-          task: "Check the sources and stats. Which are real and which might be fake?",
+        { number:1, dimension:"answer", dimensionLabel:"What it says", technique:"Triangulation and lateral reading",
+          task:"Check the sources and stats. Which are real and which might be fake?",
           conversation: [
-            { role: "student", text: "I need sources and stats about physical activity and mental health in young adults for my assessment." },
-            { role: "ai", text: "Here are two sources and two key stats:\n\nSources:\n\n1. Schuch, F. B., et al. (2018). Physical activity and incident depression: A meta-analysis of prospective cohort studies. American Journal of Psychiatry, 175(7), 631\u2013648.\n\n2. Lawson, T., & Gupta, R. (2019). Exercise, anxiety, and wellbeing in university-aged populations. Journal of Applied Health and Wellbeing, 6(2), 45\u201359.\n\nStats:\n\n\u2022 People who exercise regularly are 25% less likely to develop depression (Schuch et al., 2018).\n\u2022 University students who exercise 3+ times per week report 40% lower anxiety (Lawson & Gupta, 2019)." },
-            { role: "student", text: "Are both of those based on New Zealand data?" },
-            { role: "ai", text: "Good question. Schuch et al. (2018) is an international meta-analysis \u2014 it combines studies from many countries. Lawson and Gupta (2019) focuses specifically on university-aged populations and includes data relevant to the NZ context, so that one is more directly useful for your assessment." }
+            { role:"student", text:"I need sources and stats about physical activity and mental health in young adults for my assessment." },
+            { role:"ai", text:"Here are two sources and two key stats:\n\nSources:\n\n1. Schuch, F. B., et al. (2018). Physical activity and incident depression: A meta-analysis of prospective cohort studies. American Journal of Psychiatry, 175(7), 631\u2013648.\n\n2. Lawson, T., & Gupta, R. (2019). Exercise, anxiety, and wellbeing in university-aged populations. Journal of Applied Health and Wellbeing, 6(2), 45\u201359.\n\nStats:\n\n\u2022 People who exercise regularly are 25% less likely to develop depression (Schuch et al., 2018).\n\u2022 University students who exercise 3+ times per week report 40% lower anxiety (Lawson & Gupta, 2019)." },
+            { role:"student", text:"Are both of those based on New Zealand data?" },
+            { role:"ai", text:"Good question. Schuch et al. (2018) is an international meta-analysis \u2014 it combines studies from many countries. Lawson and Gupta (2019) focuses specifically on university-aged populations and includes data relevant to the NZ context, so that one is more directly useful for your assessment." }
           ],
           questions: [
-            { id: "h1q1", num: 1, type: "binary",
-              highlight_text: "Schuch, F. B., et al. (2018). Physical activity and incident depression: A meta-analysis of prospective cohort studies. American Journal of Psychiatry, 175(7), 631\u2013648.",
-              tooltip: "Lateral-read: search Google Scholar for this article. Does it exist?",
-              text: "Schuch et al. (2018) \u2014 real or fake?",
-              options: ["Real", "Fake"], correct: "Real",
-              feedback: "Real paper in the American Journal of Psychiatry, widely cited." },
-            { id: "h1q2", num: 2, type: "binary",
-              highlight_text: "Lawson, T., & Gupta, R. (2019). Exercise, anxiety, and wellbeing in university-aged populations. Journal of Applied Health and Wellbeing, 6(2), 45\u201359.",
-              tooltip: "Lateral-read: search Google Scholar for the journal name and authors. Do they exist?",
-              text: "Lawson & Gupta (2019) \u2014 real or fake?",
-              options: ["Real", "Fake"], correct: "Fake",
-              feedback: "Fabricated. The journal \u2018Journal of Applied Health and Wellbeing\u2019 does not exist." },
-            { id: "h1q3", num: 3, type: "binary",
-              highlight_text: "People who exercise regularly are 25% less likely to develop depression (Schuch et al., 2018).",
-              tooltip: "Triangulate: does 25% roughly match other sources on exercise and depression?",
-              text: "25% less likely \u2014 trustworthy?",
-              options: ["Trustworthy", "Not trustworthy"], correct: "Trustworthy",
-              feedback: "Roughly in the right range based on the actual meta-analysis." },
-            { id: "h1q4", num: 4, type: "binary",
-              highlight_text: "University students who exercise 3+ times per week report 40% lower anxiety (Lawson & Gupta, 2019).",
-              tooltip: "If the source is fake, the stat can\u2019t be trusted either.",
-              text: "40% lower anxiety \u2014 trustworthy?",
-              options: ["Trustworthy", "Not trustworthy"], correct: "Not trustworthy",
-              feedback: "From the fake source \u2014 can\u2019t be verified." },
-            { id: "h1q5", num: 5, type: "binary", anchor_turn: 3,
-              tooltip: "Did the AI steer you to the real source or the fake one?",
-              text: "Did the AI give good advice about which source was more relevant?",
-              options: ["Yes", "No"], correct: "No",
-              feedback: "The AI steered the student towards the fake source, calling it \u2018more directly useful.\u2019" }
+            { id:"h1q1", num:1, type:"binary", highlight_text:"Schuch, F. B., et al. (2018). Physical activity and incident depression: A meta-analysis of prospective cohort studies. American Journal of Psychiatry, 175(7), 631\u2013648.", tooltip:"Lateral-read: search Google Scholar for this article. Does it exist?", text:"Schuch et al. (2018) \u2014 real or fake?", options:["Real","Fake"], correct:"Real", feedback:"Real paper in the American Journal of Psychiatry, widely cited." },
+            { id:"h1q2", num:2, type:"binary", highlight_text:"Lawson, T., & Gupta, R. (2019). Exercise, anxiety, and wellbeing in university-aged populations. Journal of Applied Health and Wellbeing, 6(2), 45\u201359.", tooltip:"Lateral-read: search Google Scholar for the journal name and authors. Do they exist?", text:"Lawson & Gupta (2019) \u2014 real or fake?", options:["Real","Fake"], correct:"Fake", feedback:"Fabricated. The journal does not exist." },
+            { id:"h1q3", num:3, type:"binary", highlight_text:"People who exercise regularly are 25% less likely to develop depression (Schuch et al., 2018).", tooltip:"Triangulate: does 25% roughly match other sources on exercise and depression?", text:"25% less likely \u2014 trustworthy?", options:["Trustworthy","Not trustworthy"], correct:"Trustworthy", feedback:"Roughly in the right range based on the actual meta-analysis." },
+            { id:"h1q4", num:4, type:"binary", highlight_text:"University students who exercise 3+ times per week report 40% lower anxiety (Lawson & Gupta, 2019).", tooltip:"If the source is fake, the stat can\u2019t be trusted either.", text:"40% lower anxiety \u2014 trustworthy?", options:["Trustworthy","Not trustworthy"], correct:"Not trustworthy", feedback:"From the fake source \u2014 can\u2019t be verified." },
+            { id:"h1q5", num:5, type:"binary", anchor_turn:3, tooltip:"Did the AI steer you to the real source or the fake one?", text:"Did the AI give good advice about which source was more relevant?", options:["Yes","No"], correct:"No", feedback:"The AI steered the student towards the fake source." }
           ],
-          discussionPrompt: "The fake source had a very specific stat (40% lower anxiety). Why might fake sources often have more impressive numbers?"
+          discussionPrompt:"The fake source had a very specific stat (40% lower anxiety). Why might fake sources often have more impressive numbers?"
         },
-        {
-          number: 2, dimension: "reasoning", dimensionLabel: "How it acts",
-          technique: "Read for behaviour patterns",
-          task: "The student found problems and pushed back. Does the AI fix them?",
+        { number:2, dimension:"reasoning", dimensionLabel:"How it acts", technique:"Read for behaviour patterns",
+          task:"The student found problems and pushed back. Does the AI fix them?",
           conversation: [
-            { role: "student", text: "I searched for Lawson & Gupta and it doesn\u2019t exist. The journal isn\u2019t real either. And the 40% anxiety stat comes from that paper so I can\u2019t use it. Can you give me a real source instead?" },
-            { role: "ai", text: "You\u2019re right, I\u2019m sorry about that! Here\u2019s a better option:\n\nThe New Zealand Health Survey from the Ministry of Health reports on both physical activity levels and mental health. The 2022/23 data shows that about half of NZ adults meet physical activity guidelines.\n\nAlso, the Schuch et al. source is really strong \u2014 it\u2019s a major meta-analysis and it will definitely make your reference list look impressive. I\u2019d keep that one for sure." },
-            { role: "student", text: "But you said Schuch et al. is international, not NZ data. My assessment asks specifically for New Zealand data. Can I still use it as my main source?" },
-            { role: "ai", text: "That\u2019s a good point! Since the meta-analysis includes studies from many countries, it\u2019s possible some of the data overlaps with NZ populations. You could use it in your introduction to set the scene internationally, and then bring in NZ-specific data from the Health Survey for your main argument." }
+            { role:"student", text:"I searched for Lawson & Gupta and it doesn\u2019t exist. The journal isn\u2019t real either. And the 40% anxiety stat comes from that paper so I can\u2019t use it. Can you give me a real source instead?" },
+            { role:"ai", text:"You\u2019re right, I\u2019m sorry about that! Here\u2019s a better option:\n\nThe New Zealand Health Survey from the Ministry of Health reports on both physical activity levels and mental health. The 2022/23 data shows that about half of NZ adults meet physical activity guidelines.\n\nAlso, the Schuch et al. source is really strong \u2014 it\u2019s a major meta-analysis and it will definitely make your reference list look impressive. I\u2019d keep that one for sure." },
+            { role:"student", text:"But you said Schuch et al. is international, not NZ data. My assessment asks specifically for New Zealand data. Can I still use it as my main source?" },
+            { role:"ai", text:"That\u2019s a good point! Since the meta-analysis includes studies from many countries, it\u2019s possible some of the data overlaps with NZ populations. You could use it in your introduction to set the scene internationally, and then bring in NZ-specific data from the Health Survey for your main argument." }
           ],
           questions: [
-            { id: "h2q1", num: 1, type: "binary",
-              highlight_text: "The New Zealand Health Survey from the Ministry of Health reports on both physical activity levels and mental health. The 2022/23 data shows that about half of NZ adults meet physical activity guidelines.",
-              tooltip: "Could you cite \u2018about half\u2019 in an assessment? Look for a specific figure, report title, or link.",
-              text: "Can the student actually cite this?",
-              options: ["Yes", "No"], correct: "No",
-              feedback: "\u2018About half\u2019 is vague \u2014 no exact figure, no report title, no link." },
-            { id: "h2q2", num: 2, type: "select",
-              highlight_text: "the Schuch et al. source is really strong \u2014 it\u2019s a major meta-analysis and it will definitely make your reference list look impressive",
-              tooltip: "Is this honest advice about fit, or flattery to avoid admitting a problem?",
-              text: "What did the AI do instead of being honest about whether Schuch et al. fits?",
-              options: ["Gave good advice", "Flattered the student", "Changed the subject", "Admitted it can\u2019t help"],
-              correct: "Flattered the student",
-              feedback: "\u2018Will definitely make your reference list look impressive\u2019 is flattery, not honest advice." },
-            { id: "h2q3", num: 3, type: "binary", anchor_turn: 3,
-              tooltip: "Earlier: \u2018international.\u2019 Now what? Has the position shifted?",
-              text: "Did the AI stick to its earlier advice or contradict itself?",
-              options: ["Stuck with it", "Contradicted itself"], correct: "Contradicted itself",
-              feedback: "Earlier: \u2018international.\u2019 Now: \u2018possible some data overlaps with NZ\u2019 \u2014 vague and unhelpful." }
+            { id:"h2q1", num:1, type:"binary", highlight_text:"The New Zealand Health Survey from the Ministry of Health reports on both physical activity levels and mental health. The 2022/23 data shows that about half of NZ adults meet physical activity guidelines.", tooltip:"Could you cite \u2018about half\u2019 in an assessment? Look for a specific figure, report title, or link.", text:"Can the student actually cite this?", options:["Yes","No"], correct:"No", feedback:"\u2018About half\u2019 is vague \u2014 no exact figure, no report title, no link." },
+            { id:"h2q2", num:2, type:"select", highlight_text:"the Schuch et al. source is really strong \u2014 it\u2019s a major meta-analysis and it will definitely make your reference list look impressive", tooltip:"Is this honest advice about fit, or flattery?", text:"What did the AI do instead of being honest about whether Schuch et al. fits?", options:["Gave good advice","Flattered the student","Changed the subject","Admitted it can\u2019t help"], correct:"Flattered the student", feedback:"\u2018Will definitely make your reference list look impressive\u2019 is flattery." },
+            { id:"h2q3", num:3, type:"binary", anchor_turn:3, tooltip:"Earlier: \u2018international.\u2019 Now what?", text:"Did the AI stick to its earlier advice or contradict itself?", options:["Stuck with it","Contradicted itself"], correct:"Contradicted itself", feedback:"Earlier: \u2018international.\u2019 Now: \u2018possible some data overlaps with NZ\u2019 \u2014 vague and unhelpful." }
           ],
-          discussionPrompt: "The AI apologises, gives a vague replacement, and flatters. Why might AI tools behave this way?"
+          discussionPrompt:"The AI apologises, gives a vague replacement, and flatters. Why might AI tools behave this way?"
         },
-        {
-          number: 3, dimension: "behaviour", dimensionLabel: "How it got there",
-          technique: "Trace the AI\u2019s process",
-          task: "The student uses AI to help with their library search. Is it helpful?",
+        { number:3, dimension:"behaviour", dimensionLabel:"How it got there", technique:"Trace the AI\u2019s process",
+          task:"The student uses AI to help with their library search. Is it helpful?",
           conversation: [
-            { role: "student", text: "I\u2019m going to search the library database myself. Can you help me come up with search terms for NZ research on physical activity and mental health in university students?" },
-            { role: "ai", text: "Smart move. Try these:\n\n\u2022 \"physical activity\" AND \"mental health\" AND \"university students\" AND \"New Zealand\"\n\u2022 \"exercise\" AND \"depression\" OR \"anxiety\" AND \"young adults\" AND NZ\n\nIf your library has CINAHL or PubMed, start there. Filter by date (2018\u20132024) for recent research.\n\nI can\u2019t search for you, but I can help adjust your terms if you\u2019re getting too many or too few results." },
-            { role: "student", text: "Only 3 articles came up and none are quite right. What should I try?" },
-            { role: "ai", text: "Try broadening slightly:\n\n\u2022 \"physical activity\" AND \"mental health\" AND \"New Zealand\" (drop \"university students\")\n\u2022 \"sport\" AND \"wellbeing\" AND \"New Zealand\" (different terms, similar concepts)\n\nAlso check Sport New Zealand\u2019s website for research reports \u2014 they publish data that might not show up in academic databases. And if you\u2019re still stuck, a subject librarian can help." }
+            { role:"student", text:"I\u2019m going to search the library database myself. Can you help me come up with search terms for NZ research on physical activity and mental health in university students?" },
+            { role:"ai", text:"Smart move. Try these:\n\n\u2022 \"physical activity\" AND \"mental health\" AND \"university students\" AND \"New Zealand\"\n\u2022 \"exercise\" AND \"depression\" OR \"anxiety\" AND \"young adults\" AND NZ\n\nIf your library has CINAHL or PubMed, start there. Filter by date (2018\u20132024) for recent research.\n\nI can\u2019t search for you, but I can help adjust your terms if you\u2019re getting too many or too few results." },
+            { role:"student", text:"Only 3 articles came up and none are quite right. What should I try?" },
+            { role:"ai", text:"Try broadening slightly:\n\n\u2022 \"physical activity\" AND \"mental health\" AND \"New Zealand\" (drop \"university students\")\n\u2022 \"sport\" AND \"wellbeing\" AND \"New Zealand\" (different terms, similar concepts)\n\nAlso check Sport New Zealand\u2019s website for research reports \u2014 they publish data that might not show up in academic databases. And if you\u2019re still stuck, a subject librarian can help." }
           ],
           questions: [
-            { id: "h3q1", num: 1, type: "multi_select", anchor_turn: 1,
-              tooltip: "What concrete, actionable things did the AI do?",
-              text: "What useful things did the AI do? (Select all that apply)",
-              options: ["Suggested good search terms", "Recommended specific databases", "Offered to help refine results", "Suggested the subject librarian", "Was honest about its limitations", "Suggested broadening the search", "Recommended a non-database source (Sport NZ)"],
-              correct: ["Suggested good search terms", "Recommended specific databases", "Offered to help refine results", "Suggested the subject librarian", "Was honest about its limitations", "Suggested broadening the search", "Recommended a non-database source (Sport NZ)"],
-              feedback: "Practical search terms, database recommendations, broadening strategies, Sport NZ as grey literature, a librarian referral, and honest about limitations." },
-            { id: "h3q2", num: 2, type: "multi_select", anchor_turn: 3,
-              tooltip: "Look for technical gaps. Is anything wrong with the search syntax?",
-              text: "What could the AI have done better? (Select all that apply)",
-              options: ["Suggested the subject librarian sooner", "Explained how Boolean search works", "Fixed the Boolean logic error in the search string", "Nothing \u2014 it was fine"],
-              correct: ["Fixed the Boolean logic error in the search string"],
-              feedback: "Without brackets around (\"depression\" OR \"anxiety\"), the search won\u2019t work as intended." }
+            { id:"h3q1", num:1, type:"multi_select", anchor_turn:1, tooltip:"What concrete, actionable things did the AI do?", text:"What useful things did the AI do? (Select all that apply)", options:["Suggested good search terms","Recommended specific databases","Offered to help refine results","Suggested the subject librarian","Was honest about its limitations","Suggested broadening the search","Recommended a non-database source (Sport NZ)"], correct:["Suggested good search terms","Recommended specific databases","Offered to help refine results","Suggested the subject librarian","Was honest about its limitations","Suggested broadening the search","Recommended a non-database source (Sport NZ)"], feedback:"Practical search terms, database recommendations, broadening strategies, Sport NZ, a librarian referral, and honest about limitations." },
+            { id:"h3q2", num:2, type:"multi_select", anchor_turn:3, tooltip:"Look for technical gaps. Is anything wrong with the search syntax?", text:"What could the AI have done better? (Select all that apply)", options:["Suggested the subject librarian sooner","Explained how Boolean search works","Fixed the Boolean logic error in the search string","Nothing \u2014 it was fine"], correct:["Fixed the Boolean logic error in the search string"], feedback:"Without brackets around (\"depression\" OR \"anxiety\"), the search won\u2019t work as intended." }
           ],
-          discussionPrompt: "The AI was most helpful here. What does that tell you about what AI is good at \u2014 and what it\u2019s not?"
+          discussionPrompt:"The AI was most helpful here. What does that tell you about what AI is good at \u2014 and what it\u2019s not?"
         }
       ]
     }
   ],
   facilitatorNotes: {
-    activity1Pattern: {
-      title: "Pattern across Activity 1 \u2014 What it says",
-      notes: [
-        "Business: real fact, fabricated citation.",
-        "Education / Health: one real and one fake source; AI steers student toward the fake one.",
-        "Common: AI presents fabricated content with confidence."
-      ]
-    },
-    activity2Pattern: {
-      title: "Pattern across Activity 2 \u2014 How it acts",
-      notes: [
-        "AI apologises but doesn\u2019t fix the problem.",
-        "Replacement source is always vague and not citable.",
-        "AI flatters to keep the original source in play.",
-        "Contradicts its own earlier advice when pushed.",
-        "After two exchanges, zero usable sources \u2014 inefficient."
-      ]
-    },
-    activity3Pattern: {
-      title: "Pattern across Activity 3 \u2014 How it got there",
-      notes: [
-        "AI is more helpful when supporting the student\u2019s own search.",
-        "Business: prompt quality directly shaped output \u2014 goal, constraints, and type of help produced practical support.",
-        "Good search terms, database recommendations, honest about limitations.",
-        "Small technical issues (Boolean logic) but overall constructive.",
-        "AI works best as a thinking partner, not a source-finder."
-      ]
-    }
+    activity1Pattern: { title:"Pattern across Activity 1 \u2014 What it says", notes:["Business: real fact, fabricated citation.","Education / Health: one real and one fake source; AI steers student toward the fake one.","Common: AI presents fabricated content with confidence."] },
+    activity2Pattern: { title:"Pattern across Activity 2 \u2014 How it acts", notes:["AI apologises but doesn\u2019t fix the problem.","Replacement source is always vague and not citable.","AI flatters to keep the original source in play.","Contradicts its own earlier advice when pushed.","After two exchanges, zero usable sources \u2014 inefficient."] },
+    activity3Pattern: { title:"Pattern across Activity 3 \u2014 How it got there", notes:["AI is more helpful when supporting the student\u2019s own search.","Business: prompt quality directly shaped output.","Good search terms, database recommendations, honest about limitations.","Small technical issues (Boolean logic) but overall constructive.","AI works best as a thinking partner, not a source-finder."] }
   }
 };
 
+/* ============================================================
+   ENGINE
+   ============================================================ */
 const app = document.getElementById('app');
-let state = { screen: 'welcome', pathwayId: null, activityIdx: 0, answers: {}, submitted: false, activeClaim: null };
-function getPathway() { return GAME_DATA.pathways.find(p => p.id === state.pathwayId); }
+let state = { screen:'welcome', pathwayId:null, activityIdx:0, answers:{}, submitted:false, activeClaim:null, readingPhase:true };
+function getPathway() { return GAME_DATA.pathways.find(p=>p.id===state.pathwayId); }
 function getActivity() { return getPathway()?.activities[state.activityIdx]; }
-function getDimension(dimId) { return GAME_DATA.meta.dimensions.find(d => d.id === dimId); }
-function dimIcon(dimId, size = 20) {
-  const icons = {
-    'answer': '<svg width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
-    'reasoning': '<svg width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
-    'behaviour': '<svg width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>'
+function getDimension(id) { return GAME_DATA.meta.dimensions.find(d=>d.id===id); }
+function dimIcon(id,s=20) {
+  const i = {
+    'answer':'<svg width="'+s+'" height="'+s+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
+    'reasoning':'<svg width="'+s+'" height="'+s+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+    'behaviour':'<svg width="'+s+'" height="'+s+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>'
   };
-  return icons[dimId] || '';
+  return i[id]||'';
 }
-function isCorrect(q, a) {
-  if (q.type === 'multi_select') {
-    if (!Array.isArray(a)) return false;
-    const c = [...q.correct].sort(), s = [...a].sort();
-    return c.length === s.length && c.every((v,i) => v === s[i]);
-  }
-  return a === q.correct;
+function isCorrect(q,a) {
+  if(q.type==='multi_select') { if(!Array.isArray(a)) return false; const c=[...q.correct].sort(),s=[...a].sort(); return c.length===s.length&&c.every((v,i)=>v===s[i]); }
+  return a===q.correct;
 }
-function scrollTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+function scrollTop() { window.scrollTo({top:0,behavior:'smooth'}); }
 function escapeHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function escapeAttr(s) { return s.replace(/'/g,"\\'").replace(/"/g,'&quot;'); }
 
+/* ---- Welcome ---- */
 function renderWelcome() {
-  const m = GAME_DATA.meta;
-  let h = '<div class="fade-in"><div class="welcome-header"><h1>'+m.title+'</h1><p class="subtitle">'+m.subtitle+'</p></div><p class="welcome-intro">'+m.instructions+'</p><div class="pathway-grid">';
-  GAME_DATA.pathways.forEach(p => {
-    h += '<button class="pathway-btn" style="--pw-color:'+p.colour+'" onclick="selectPathway(\''+p.id+'\')" aria-label="Start '+p.title+'"><span class="pw-label">'+p.title+'</span><span class="pw-desc">'+p.context+'</span></button>';
-  });
-  h += '</div><div style="text-align:center;margin-top:2rem;"><div style="display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-top:1rem;">';
-  m.dimensions.forEach(d => { h += '<div style="display:flex;align-items:center;gap:0.35rem;font-size:0.85rem;color:'+d.colour+';">'+dimIcon(d.id,16)+' <span style="font-weight:600;">'+d.label+'</span></div>'; });
-  h += '</div></div></div>';
-  app.innerHTML = h;
+  const m=GAME_DATA.meta;
+  let h='<div class="fade-in"><div class="welcome-header"><h1>'+m.title+'</h1><p class="subtitle">'+m.subtitle+'</p></div><p class="welcome-intro">'+m.instructions+'</p><div class="pathway-grid">';
+  GAME_DATA.pathways.forEach(p=>{h+='<button class="pathway-btn" style="--pw-color:'+p.colour+'" onclick="selectPathway(\''+p.id+'\')"><span class="pw-label">'+p.title+'</span><span class="pw-desc">'+p.context+'</span></button>';});
+  h+='</div><div style="text-align:center;margin-top:2rem;"><div style="display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-top:1rem;">';
+  m.dimensions.forEach(d=>{h+='<div style="display:flex;align-items:center;gap:0.35rem;font-size:0.85rem;color:'+d.colour+';">'+dimIcon(d.id,16)+' <span style="font-weight:600;">'+d.label+'</span></div>';});
+  h+='</div></div></div>';
+  app.innerHTML=h;
 }
 
-function renderTurnText(turn, tidx, questions, incTT) {
-  let h = escapeHtml(turn.text);
-  questions.forEach(q => {
-    if (!q.highlight_text) return;
-    const e = escapeHtml(q.highlight_text);
-    if (h.includes(e)) {
-      const c = getClaimColor(q.num);
-      const tt = incTT ? '<span class="claim-tooltip"><span class="claim-tooltip-label">Check it</span><span class="claim-tooltip-body">'+escapeHtml(q.tooltip||'')+'</span></span>' : '';
-      h = h.replace(e, '<span class="claim-anchor" data-claim-num="'+q.num+'" style="--claim-color:'+c+'"><span class="claim-text">'+e+'</span><button class="claim-badge" data-claim-num="'+q.num+'" tabindex="0" aria-label="Check '+q.num+'" onclick="event.stopPropagation();toggleClaim('+q.num+')">'+q.num+tt+'</button></span>');
+/* ---- Turn text with highlights ---- */
+function renderTurnText(turn,tidx,questions,incTT) {
+  let h=escapeHtml(turn.text);
+  questions.forEach(q=>{
+    if(!q.highlight_text) return;
+    const e=escapeHtml(q.highlight_text);
+    if(h.includes(e)){
+      const c=getClaimColor(q.num);
+      const tt=incTT?'<span class="claim-tooltip"><span class="claim-tooltip-label">Check it</span><span class="claim-tooltip-body">'+escapeHtml(q.tooltip||'')+'</span></span>':'';
+      h=h.replace(e,'<span class="claim-anchor" data-claim-num="'+q.num+'" style="--claim-color:'+c+'"><span class="claim-text">'+e+'</span><button class="claim-badge" data-claim-num="'+q.num+'" tabindex="0" aria-label="Check '+q.num+'" onclick="event.stopPropagation();toggleClaim('+q.num+')">'+q.num+tt+'</button></span>');
     }
   });
-  questions.forEach(q => {
-    if (q.highlight_text) return;
-    if (q.anchor_turn === tidx) {
-      const c = getClaimColor(q.num);
-      const tt = incTT ? '<span class="claim-tooltip"><span class="claim-tooltip-label">Check it</span><span class="claim-tooltip-body">'+escapeHtml(q.tooltip||'')+'</span></span>' : '';
-      h += ' <span class="claim-anchor" data-claim-num="'+q.num+'" style="--claim-color:'+c+'"><button class="claim-badge anchor-floating" data-claim-num="'+q.num+'" tabindex="0" aria-label="Check '+q.num+'" onclick="event.stopPropagation();toggleClaim('+q.num+')">'+q.num+tt+'</button></span>';
+  questions.forEach(q=>{
+    if(q.highlight_text) return;
+    if(q.anchor_turn===tidx){
+      const c=getClaimColor(q.num);
+      const tt=incTT?'<span class="claim-tooltip"><span class="claim-tooltip-label">Check it</span><span class="claim-tooltip-body">'+escapeHtml(q.tooltip||'')+'</span></span>':'';
+      h+=' <span class="claim-anchor" data-claim-num="'+q.num+'" style="--claim-color:'+c+'"><button class="claim-badge anchor-floating" data-claim-num="'+q.num+'" tabindex="0" aria-label="Check '+q.num+'" onclick="event.stopPropagation();toggleClaim('+q.num+')">'+q.num+tt+'</button></span>';
     }
   });
   return h;
 }
 
+/* ---- Question card ---- */
 function renderQuestionCard(q) {
-  const a = state.answers[q.id], sub = state.submitted, cor = sub ? isCorrect(q,a) : null;
-  const cc = sub ? (cor ? 'correct' : 'incorrect') : '', cl = getClaimColor(q.num);
-  let h = '<div class="question-card '+cc+'" data-claim-num="'+q.num+'" style="--claim-color:'+cl+';"><div class="q-card-header"><span class="claim-badge in-card" data-claim-num="'+q.num+'" style="--claim-color:'+cl+';">'+q.num+'</span><div class="question-text">'+q.text+'</div></div><div class="option-group">';
-  if (q.type === 'multi_select') {
-    q.options.forEach(o => {
-      const sel = Array.isArray(a) && a.includes(o), ic = q.correct.includes(o);
-      let c = 'option-btn multi'; if(sel) c+=' selected'; if(sub&&sel&&ic) c+=' is-correct'; if(sub&&sel&&!ic) c+=' is-incorrect'; if(sub&&!sel&&ic) c+=' show-correct';
-      h += '<button class="'+c+'" '+(sub?'disabled':'')+' onclick="toggleMulti(\''+q.id+'\',\''+escapeAttr(o)+'\')">'+o+'</button>';
-    });
+  const a=state.answers[q.id],sub=state.submitted,cor=sub?isCorrect(q,a):null;
+  const cc=sub?(cor?'correct':'incorrect'):'',cl=getClaimColor(q.num);
+  let h='<div class="question-card '+cc+'" data-claim-num="'+q.num+'" style="--claim-color:'+cl+';"><div class="q-card-header"><span class="claim-badge in-card" data-claim-num="'+q.num+'" style="--claim-color:'+cl+';">'+q.num+'</span><div class="question-text">'+q.text+'</div></div><div class="option-group">';
+  if(q.type==='multi_select'){
+    q.options.forEach(o=>{const sel=Array.isArray(a)&&a.includes(o),ic=q.correct.includes(o);let c='option-btn multi';if(sel)c+=' selected';if(sub&&sel&&ic)c+=' is-correct';if(sub&&sel&&!ic)c+=' is-incorrect';if(sub&&!sel&&ic)c+=' show-correct';h+='<button class="'+c+'" '+(sub?'disabled':'')+' onclick="toggleMulti(\''+q.id+'\',\''+escapeAttr(o)+'\')">'+o+'</button>';});
   } else {
-    q.options.forEach(o => {
-      const sel = a===o; let c = 'option-btn'; if(sel) c+=' selected'; if(sub&&sel&&o===q.correct) c+=' is-correct'; if(sub&&sel&&o!==q.correct) c+=' is-incorrect'; if(sub&&!sel&&o===q.correct) c+=' show-correct';
-      h += '<button class="'+c+'" '+(sub?'disabled':'')+' onclick="selectOption(\''+q.id+'\',\''+escapeAttr(o)+'\')">'+o+'</button>';
-    });
+    q.options.forEach(o=>{const sel=a===o;let c='option-btn';if(sel)c+=' selected';if(sub&&sel&&o===q.correct)c+=' is-correct';if(sub&&sel&&o!==q.correct)c+=' is-incorrect';if(sub&&!sel&&o===q.correct)c+=' show-correct';h+='<button class="'+c+'" '+(sub?'disabled':'')+' onclick="selectOption(\''+q.id+'\',\''+escapeAttr(o)+'\')">'+o+'</button>';});
   }
-  h += '</div>';
-  if (sub) { h += '<div class="q-feedback show '+(cor?'correct-fb':'incorrect-fb')+'">'+(cor?'\u2713 ':'\u2717 ')+q.feedback+'</div>'; }
-  h += '</div>'; return h;
+  h+='</div>';
+  if(sub){h+='<div class="q-feedback show '+(cor?'correct-fb':'incorrect-fb')+'">'+(cor?'\u2713 ':'\u2717 ')+q.feedback+'</div>';}
+  h+='</div>';return h;
 }
 
+/* ---- Guidance card ---- */
 function renderGuidanceCard(q) {
-  const c = getClaimColor(q.num);
+  const c=getClaimColor(q.num);
   return '<div class="guidance-card" data-claim-num="'+q.num+'" style="--claim-color:'+c+';"><div class="guidance-card-header"><span class="claim-badge in-card" data-claim-num="'+q.num+'" style="--claim-color:'+c+';">'+q.num+'</span><span class="guidance-card-label">Check it</span></div><div class="guidance-card-body">'+escapeHtml(q.tooltip||'')+'</div></div>';
 }
 
-function renderThreeColumnLayout(act) {
-  let h = '<div class="activity-grid-3col">';
-  h += '<div class="grid-3col-header"><span class="col-step">1</span><div><div class="col-title">Read the conversation</div><div class="col-hint">Each numbered marker shows something to check.</div></div></div>';
-  h += '<div class="grid-3col-header"><span class="col-step">2</span><div><div class="col-title">What to check</div><div class="col-hint">Apply the technique before answering.</div></div></div>';
-  h += '<div class="grid-3col-header"><span class="col-step">3</span><div><div class="col-title">Evaluate</div><div class="col-hint">Choose your answer.</div></div></div>';
-  act.conversation.forEach((turn, idx) => {
-    const claims = act.questions.filter(q => (q.highlight_text && turn.text.indexOf(q.highlight_text)!==-1) || (!q.highlight_text && q.anchor_turn===idx));
-    h += '<div class="turn-group"><div class="turn-row-chat"><div class="chat-turn '+turn.role+'"><span class="chat-label">'+(turn.role==='student'?'Student':'AI')+'</span><div class="chat-bubble">'+renderTurnText(turn,idx,act.questions,false)+'</div></div></div><div class="turn-row-guide">';
-    claims.forEach(q => { h += renderGuidanceCard(q); });
-    h += '</div><div class="turn-row-eval">';
-    claims.forEach(q => { h += renderQuestionCard(q); });
-    h += '</div></div>';
+/* ---- Reading phase: conversation only ---- */
+function renderReadingPhase(act) {
+  let h='<div class="reading-hint"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> Read the full conversation first. The numbered markers show what you\u2019ll check next.</div>';
+  h+='<div class="reading-phase-chat card">';
+  act.conversation.forEach((turn,idx)=>{
+    h+='<div class="chat-turn '+turn.role+'"><span class="chat-label">'+(turn.role==='student'?'Student':'AI')+'</span><div class="chat-bubble">'+renderTurnText(turn,idx,act.questions,false)+'</div></div>';
   });
-  h += '</div>'; return h;
+  h+='</div>';
+  h+='<div class="btn-row"><button class="btn-primary" onclick="endReadingPhase()">I\u2019ve read it \u2014 let me check \u2192</button></div>';
+  return h;
 }
 
+/* ---- Evaluate phase: 3-column grid ---- */
+function renderThreeColumnLayout(act) {
+  let h='<div class="activity-grid-3col">';
+  h+='<div class="grid-3col-header"><span class="col-step">1</span><div><div class="col-title">Conversation</div><div class="col-hint">Numbered markers show what to check.</div></div></div>';
+  h+='<div class="grid-3col-header"><span class="col-step">2</span><div><div class="col-title">What to check</div><div class="col-hint">Apply the technique before answering.</div></div></div>';
+  h+='<div class="grid-3col-header"><span class="col-step">3</span><div><div class="col-title">Evaluate</div><div class="col-hint">Choose your answer.</div></div></div>';
+  act.conversation.forEach((turn,idx)=>{
+    const claims=act.questions.filter(q=>(q.highlight_text&&turn.text.indexOf(q.highlight_text)!==-1)||(!q.highlight_text&&q.anchor_turn===idx));
+    h+='<div class="turn-group"><div class="turn-row-chat"><div class="chat-turn '+turn.role+'"><span class="chat-label">'+(turn.role==='student'?'Student':'AI')+'</span><div class="chat-bubble">'+renderTurnText(turn,idx,act.questions,false)+'</div></div></div><div class="turn-row-guide">';
+    claims.forEach(q=>{h+=renderGuidanceCard(q);});
+    h+='</div><div class="turn-row-eval">';
+    claims.forEach(q=>{h+=renderQuestionCard(q);});
+    h+='</div></div>';
+  });
+  h+='</div>';return h;
+}
+
+/* ---- Activity screen ---- */
 function renderActivity() {
-  const pw = getPathway(), act = getActivity(), dim = getDimension(act.dimension);
-  const prog = ((state.activityIdx)/pw.activities.length)*100;
-  let h = '<div class="fade-in"><div class="progress-bar no-print"><span>'+pw.title+'</span><div class="progress-track"><div class="progress-fill" style="width:'+prog+'%;background:'+pw.colour+';"></div></div><span>Activity '+act.number+' of '+pw.activities.length+'</span></div>';
-  h += '<div class="check-header"><div class="dim-badge" style="background:'+dim.colour+';">'+dimIcon(dim.id,16)+' '+dim.label+'</div>';
-  if (act.technique) h += '<span class="technique-tag">'+act.technique+'</span>';
-  h += '</div><div class="task-prompt">'+act.task+'</div>';
-  h += renderThreeColumnLayout(act);
-  h += '<div class="btn-row">';
-  if (!state.submitted) {
-    const ok = act.questions.every(q => { const a=state.answers[q.id]; return q.type==='multi_select' ? (Array.isArray(a)&&a.length>0) : a!==undefined; });
-    h += '<button class="btn-primary" '+(ok?'':'disabled')+' onclick="submitAnswers()">Check my answers</button>';
-  } else { h += '<button class="btn-primary" onclick="nextStep()">Continue</button>'; }
-  h += '</div></div>';
-  app.innerHTML = h;
+  const pw=getPathway(),act=getActivity(),dim=getDimension(act.dimension);
+  const prog=((state.activityIdx)/pw.activities.length)*100;
+  let h='<div class="fade-in"><div class="progress-bar no-print"><span>'+pw.title+'</span><div class="progress-track"><div class="progress-fill" style="width:'+prog+'%;background:'+pw.colour+';"></div></div><span>Activity '+act.number+' of '+pw.activities.length+'</span></div>';
+  h+='<div class="check-header"><div class="dim-badge" style="background:'+dim.colour+';">'+dimIcon(dim.id,16)+' '+dim.label+'</div>';
+  if(act.technique) h+='<span class="technique-tag">'+act.technique+'</span>';
+  h+='</div><div class="task-prompt">'+act.task+'</div>';
+
+  if(state.readingPhase) {
+    h+=renderReadingPhase(act);
+  } else {
+    h+=renderThreeColumnLayout(act);
+    h+='<div class="btn-row">';
+    if(!state.submitted){
+      const ok=act.questions.every(q=>{const a=state.answers[q.id];return q.type==='multi_select'?(Array.isArray(a)&&a.length>0):a!==undefined;});
+      h+='<button class="btn-primary" '+(ok?'':'disabled')+' onclick="submitAnswers()">Check my answers</button>';
+    } else { h+='<button class="btn-primary" onclick="nextStep()">Continue</button>'; }
+    h+='</div>';
+  }
+
+  h+='</div>';
+  app.innerHTML=h;
   setupClaimInteractions();
 }
 
+/* ---- Claim interactions ---- */
 function setupClaimInteractions() {
-  document.querySelectorAll('[data-claim-num]').forEach(el => {
-    const n = el.dataset.claimNum;
-    el.addEventListener('mouseenter', () => activatePair(n));
-    el.addEventListener('mouseleave', () => deactivatePair(n));
-    el.addEventListener('focusin', () => activatePair(n));
-    el.addEventListener('focusout', () => deactivatePair(n));
+  document.querySelectorAll('[data-claim-num]').forEach(el=>{
+    const n=el.dataset.claimNum;
+    el.addEventListener('mouseenter',()=>activatePair(n));
+    el.addEventListener('mouseleave',()=>deactivatePair(n));
+    el.addEventListener('focusin',()=>activatePair(n));
+    el.addEventListener('focusout',()=>deactivatePair(n));
   });
-  document.querySelectorAll('.question-card[data-claim-num]').forEach(c => {
-    c.addEventListener('click', e => { if(!e.target.closest('.option-btn')) scrollToHighlight(c.dataset.claimNum); });
+  document.querySelectorAll('.question-card[data-claim-num]').forEach(c=>{
+    c.addEventListener('click',e=>{if(!e.target.closest('.option-btn'))scrollToHighlight(c.dataset.claimNum);});
   });
-  document.addEventListener('click', e => { if(!e.target.closest('.claim-anchor')){ document.querySelectorAll('.claim-anchor.is-active').forEach(el=>el.classList.remove('is-active')); state.activeClaim=null; }});
+  document.addEventListener('click',e=>{if(!e.target.closest('.claim-anchor')){document.querySelectorAll('.claim-anchor.is-active').forEach(el=>el.classList.remove('is-active'));state.activeClaim=null;}});
 }
-function activatePair(n) { document.querySelectorAll('[data-claim-num="'+n+'"]').forEach(el => { if(el.classList.contains('claim-anchor')||el.classList.contains('question-card')||el.classList.contains('guidance-card')) el.classList.add('is-active'); }); }
-function deactivatePair(n) { if(state.activeClaim===Number(n)) return; document.querySelectorAll('[data-claim-num="'+n+'"]').forEach(el => el.classList.remove('is-active')); }
-function toggleClaim(n) {
-  if(state.activeClaim===n){ state.activeClaim=null; document.querySelectorAll('.claim-anchor[data-claim-num="'+n+'"]').forEach(el=>el.classList.remove('is-active')); }
-  else { document.querySelectorAll('.claim-anchor.is-active').forEach(el=>el.classList.remove('is-active')); state.activeClaim=n; document.querySelectorAll('.claim-anchor[data-claim-num="'+n+'"]').forEach(el=>el.classList.add('is-active')); }
+function activatePair(n){document.querySelectorAll('[data-claim-num="'+n+'"]').forEach(el=>{if(el.classList.contains('claim-anchor')||el.classList.contains('question-card')||el.classList.contains('guidance-card'))el.classList.add('is-active');});}
+function deactivatePair(n){if(state.activeClaim===Number(n))return;document.querySelectorAll('[data-claim-num="'+n+'"]').forEach(el=>el.classList.remove('is-active'));}
+function toggleClaim(n){
+  if(state.activeClaim===n){state.activeClaim=null;document.querySelectorAll('.claim-anchor[data-claim-num="'+n+'"]').forEach(el=>el.classList.remove('is-active'));}
+  else{document.querySelectorAll('.claim-anchor.is-active').forEach(el=>el.classList.remove('is-active'));state.activeClaim=n;document.querySelectorAll('.claim-anchor[data-claim-num="'+n+'"]').forEach(el=>el.classList.add('is-active'));}
 }
-function scrollToHighlight(n) {
-  const a = document.querySelector('.claim-anchor[data-claim-num="'+n+'"]');
-  if(a){ a.scrollIntoView({behavior:'smooth',block:'center'}); a.classList.add('is-active'); setTimeout(()=>{ if(state.activeClaim!==Number(n)) a.classList.remove('is-active'); },1500); }
-}
+function scrollToHighlight(n){const a=document.querySelector('.claim-anchor[data-claim-num="'+n+'"]');if(a){a.scrollIntoView({behavior:'smooth',block:'center'});a.classList.add('is-active');setTimeout(()=>{if(state.activeClaim!==Number(n))a.classList.remove('is-active');},1500);}}
 
+/* ---- Reflection ---- */
 const REFLECTION_SCAFFOLDING = [
-  {
-    heading: "You\u2019ve completed your first check",
-    checksCompleted: 1,
-    oneLiner: "AI outputs mix accurate and inaccurate information \u2014 and both look equally convincing.",
-    prompts: [
-      "What clues helped you tell real from fake \u2014 and what made it tricky?",
-      "Next time you get information from AI, what\u2019s the first thing you\u2019d check?"
-    ]
-  },
-  {
-    heading: "You now have two checks",
-    checksCompleted: 2,
-    oneLiner: "Spotting a problem is only half the job. You also need to judge whether the AI\u2019s response actually solves it.",
-    prompts: [
-      "The AI used flattery and vague suggestions instead of admitting it can\u2019t help. Why might it do this?",
-      "After two attempts the student still had nothing usable. At what point would you stop asking \u2014 and what would you do instead?"
-    ]
-  },
-  {
-    heading: "You now have all three checks",
-    checksCompleted: 3,
-    oneLiner: "The difference isn\u2019t just what the AI says \u2014 it\u2019s how you ask and what you ask for.",
-    prompts: [
-      "The student stopped asking for sources and asked for search help instead. How did that change what they got?",
-      "What did the student include in their prompt that made the AI more useful?",
-      "When you next use AI for research, what would you ask it for \u2014 and what wouldn\u2019t you trust it to do?"
-    ]
-  }
+  { heading:"You\u2019ve completed your first check", checksCompleted:1,
+    oneLiner:"AI outputs mix accurate and inaccurate information \u2014 and both look equally convincing.",
+    prompts:["What clues helped you tell real from fake \u2014 and what made it tricky?","Next time you get information from AI, what\u2019s the first thing you\u2019d check?"] },
+  { heading:"You now have two checks", checksCompleted:2,
+    oneLiner:"Spotting a problem is only half the job. You also need to judge whether the AI\u2019s response actually solves it.",
+    prompts:["The AI used flattery and vague suggestions instead of admitting it can\u2019t help. Why might it do this?","After two attempts the student still had nothing usable. At what point would you stop asking \u2014 and what would you do instead?"] },
+  { heading:"You now have all three checks", checksCompleted:3,
+    oneLiner:"The difference isn\u2019t just what the AI says \u2014 it\u2019s how you ask and what you ask for.",
+    prompts:["The student stopped asking for sources and asked for search help instead. How did that change what they got?","What did the student include in their prompt that made the AI more useful?","When you next use AI for research, what would you ask it for \u2014 and what wouldn\u2019t you trust it to do?"] }
 ];
 
 function renderDiscussion() {
-  const pw = getPathway(), scaffold = REFLECTION_SCAFFOLDING[state.activityIdx], dims = GAME_DATA.meta.dimensions;
-  const isLast = state.activityIdx >= pw.activities.length - 1, cd = dims[scaffold.checksCompleted-1];
-  let h = '<div class="fade-in reflection-screen"><div class="reflection-card"><div class="reflect-zone-top"><h2 style="margin-bottom:1.25rem;">'+scaffold.heading+'</h2><div class="checks-progress">';
-  dims.forEach((d,i) => {
-    const done=i<scaffold.checksCompleted, cur=i===scaffold.checksCompleted-1;
-    h += '<div class="check-pip '+(done?'done':'')+' '+(cur?'current':'')+'"><span class="pip-icon">'+(done?'\u2713':(i+1))+'</span><span class="pip-label">'+d.label+'</span></div>';
-    if(i<dims.length-1) h += '<div class="pip-connector '+(i<scaffold.checksCompleted-1?'done':'')+'"></div>';
+  const pw=getPathway(),sc=REFLECTION_SCAFFOLDING[state.activityIdx],dims=GAME_DATA.meta.dimensions;
+  const isLast=state.activityIdx>=pw.activities.length-1,cd=dims[sc.checksCompleted-1];
+  let h='<div class="fade-in reflection-screen"><div class="reflection-card"><div class="reflect-zone-top"><h2 style="margin-bottom:1.25rem;">'+sc.heading+'</h2><div class="checks-progress">';
+  dims.forEach((d,i)=>{
+    const done=i<sc.checksCompleted,cur=i===sc.checksCompleted-1;
+    h+='<div class="check-pip '+(done?'done':'')+' '+(cur?'current':'')+'"><span class="pip-icon">'+(done?'\u2713':(i+1))+'</span><span class="pip-label">'+d.label+'</span></div>';
+    if(i<dims.length-1) h+='<div class="pip-connector '+(i<sc.checksCompleted-1?'done':'')+'"></div>';
   });
-  h += '</div><p class="scaffold-oneliner" style="--dim-color:'+cd.colour+';">'+scaffold.oneLiner+'</p></div>';
-  h += '<div class="reflect-zone-read"><div class="prompts-step-header"><span class="step-num">1</span> Read and reflect</div><ul class="reflection-prompts">';
-  scaffold.prompts.forEach(p => { h += '<li>'+p+'</li>'; });
-  h += '</ul></div><div class="reflect-zone-share"><div class="prompts-step-header"><span class="step-num">2</span> Pick one to share in the Teams chat</div></div>';
-  h += '<div class="btn-row" style="margin-top:1rem;"><button class="btn-back" onclick="backToActivity()"><span class="arrow">\u2190</span> Back to activity</button><button class="btn-when-told" onclick="advanceActivity()">'+(isLast?'See summary':'Next Check (When Told)')+'</button></div></div></div>';
-  app.innerHTML = h;
+  h+='</div><p class="scaffold-oneliner" style="--dim-color:'+cd.colour+';">'+sc.oneLiner+'</p></div>';
+  h+='<div class="reflect-zone-read"><div class="prompts-step-header"><span class="step-num">1</span> Read and reflect</div><ul class="reflection-prompts">';
+  sc.prompts.forEach(p=>{h+='<li>'+p+'</li>';});
+  h+='</ul></div><div class="reflect-zone-share"><div class="prompts-step-header"><span class="step-num">2</span> Pick one to share in the Teams chat</div></div>';
+  h+='<div class="btn-row" style="margin-top:1rem;"><button class="btn-back" onclick="backToActivity()"><span class="arrow">\u2190</span> Back to activity</button><button class="btn-when-told" onclick="advanceActivity()">'+(isLast?'See summary':'Next Check (When Told)')+'</button></div></div></div>';
+  app.innerHTML=h;
 }
 
+/* ---- Summary ---- */
 function renderSummary() {
-  const m = GAME_DATA.meta;
-  let h = '<div class="fade-in"><div class="summary-header"><h1>Well done!</h1><p style="color:#555;font-size:1.05rem;margin-top:0.5rem;">Three questions to ask yourself every time you use AI for university work.</p></div><div class="card" id="takeaway-card"><h2 style="margin-bottom:1rem;">'+m.takeaway.title+'</h2>';
-  m.takeaway.checks.forEach((c,i) => {
-    const d = m.dimensions[i];
-    h += '<div class="dim-card" style="--dim-color:'+d.colour+';"><div style="color:'+d.colour+';">'+dimIcon(d.id,28)+'</div><div><div class="dim-name" style="color:'+d.colour+';">'+c.dimension+'</div><div class="dim-question">'+c.question+'</div></div></div>';
-  });
-  h += '</div><div class="btn-row" style="justify-content:center;flex-wrap:wrap;"><button class="btn-primary" onclick="window.print()">Print this takeaway</button><button class="btn-secondary" onclick="restart()">Start over</button></div></div>';
-  app.innerHTML = h;
+  const m=GAME_DATA.meta;
+  let h='<div class="fade-in"><div class="summary-header"><h1>Well done!</h1><p style="color:#555;font-size:1.05rem;margin-top:0.5rem;">Three questions to ask yourself every time you use AI for university work.</p></div><div class="card" id="takeaway-card"><h2 style="margin-bottom:1rem;">'+m.takeaway.title+'</h2>';
+  m.takeaway.checks.forEach((c,i)=>{const d=m.dimensions[i];h+='<div class="dim-card" style="--dim-color:'+d.colour+';"><div style="color:'+d.colour+';">'+dimIcon(d.id,28)+'</div><div><div class="dim-name" style="color:'+d.colour+';">'+c.dimension+'</div><div class="dim-question">'+c.question+'</div></div></div>';});
+  h+='</div><div class="btn-row" style="justify-content:center;flex-wrap:wrap;"><button class="btn-primary" onclick="window.print()">Print this takeaway</button><button class="btn-secondary" onclick="restart()">Start over</button></div></div>';
+  app.innerHTML=h;
 }
 
+/* ---- Facilitator ---- */
 function renderFacilitator() {
-  const fn = GAME_DATA.facilitatorNotes;
-  let h = '<h2>Facilitator Answer Key</h2><p style="color:#666;margin-bottom:1.5rem;">Patterns to highlight during discussion.</p>';
-  [fn.activity1Pattern, fn.activity2Pattern, fn.activity3Pattern].forEach(p => { h += '<h3>'+p.title+'</h3><ul>'; p.notes.forEach(n => { h += '<li>'+n+'</li>'; }); h += '</ul>'; });
-  GAME_DATA.pathways.forEach(pw => {
-    h += '<h3 style="margin-top:2rem;color:'+pw.colour+';">'+pw.title+' \u2014 Answers</h3>';
-    pw.activities.forEach(act => {
-      h += '<p style="font-weight:600;margin-top:1rem;">Activity '+act.number+': '+act.dimensionLabel+'</p><ul>';
-      act.questions.forEach(q => { h += '<li><strong>'+q.text+'</strong><br>Answer: '+(Array.isArray(q.correct)?q.correct.join(', '):q.correct)+'</li>'; });
-      h += '</ul>';
-    });
+  const fn=GAME_DATA.facilitatorNotes;
+  let h='<h2>Facilitator Answer Key</h2><p style="color:#666;margin-bottom:1.5rem;">Patterns to highlight during discussion.</p>';
+  [fn.activity1Pattern,fn.activity2Pattern,fn.activity3Pattern].forEach(p=>{h+='<h3>'+p.title+'</h3><ul>';p.notes.forEach(n=>{h+='<li>'+n+'</li>';});h+='</ul>';});
+  GAME_DATA.pathways.forEach(pw=>{
+    h+='<h3 style="margin-top:2rem;color:'+pw.colour+';">'+pw.title+' \u2014 Answers</h3>';
+    pw.activities.forEach(act=>{h+='<p style="font-weight:600;margin-top:1rem;">Activity '+act.number+': '+act.dimensionLabel+'</p><ul>';act.questions.forEach(q=>{h+='<li><strong>'+q.text+'</strong><br>Answer: '+(Array.isArray(q.correct)?q.correct.join(', '):q.correct)+'</li>';});h+='</ul>';});
   });
-  document.getElementById('facContent').innerHTML = h;
+  document.getElementById('facContent').innerHTML=h;
 }
-function toggleFacilitator() { const o=document.getElementById('facOverlay'), s=o.classList.toggle('show'); if(s) renderFacilitator(); document.body.style.overflow=s?'hidden':''; }
+function toggleFacilitator(){const o=document.getElementById('facOverlay'),s=o.classList.toggle('show');if(s)renderFacilitator();document.body.style.overflow=s?'hidden':'';}
 
-function selectPathway(id) { state={screen:'activity',pathwayId:id,activityIdx:0,answers:{},submitted:false,activeClaim:null}; render(); }
-function selectOption(qId,v) { if(state.submitted) return; state.answers[qId]=v; render(); }
-function toggleMulti(qId,v) { if(state.submitted) return; if(!state.answers[qId]) state.answers[qId]=[]; const a=state.answers[qId],i=a.indexOf(v); if(i>-1) a.splice(i,1); else a.push(v); render(); }
-function submitAnswers() { state.submitted=true; render(); scrollTop(); }
-function nextStep() { state.screen='discussion'; render(); scrollTop(); }
-function backToActivity() { state.screen='activity'; render(); scrollTop(); }
-function advanceActivity() {
+/* ---- Event handlers ---- */
+function selectPathway(id){state={screen:'activity',pathwayId:id,activityIdx:0,answers:{},submitted:false,activeClaim:null,readingPhase:true};render();}
+function endReadingPhase(){state.readingPhase=false;render();scrollTop();}
+function selectOption(qId,v){if(state.submitted)return;state.answers[qId]=v;render();}
+function toggleMulti(qId,v){if(state.submitted)return;if(!state.answers[qId])state.answers[qId]=[];const a=state.answers[qId],i=a.indexOf(v);if(i>-1)a.splice(i,1);else a.push(v);render();}
+function submitAnswers(){state.submitted=true;render();scrollTop();}
+function nextStep(){state.screen='discussion';render();scrollTop();}
+function backToActivity(){state.screen='activity';state.readingPhase=false;render();scrollTop();}
+function advanceActivity(){
   const pw=getPathway();
-  if(state.activityIdx<pw.activities.length-1){ state.activityIdx++; state.answers={}; state.submitted=false; state.activeClaim=null; state.screen='activity'; }
-  else { state.screen='summary'; }
-  render(); scrollTop();
+  if(state.activityIdx<pw.activities.length-1){state.activityIdx++;state.answers={};state.submitted=false;state.activeClaim=null;state.readingPhase=true;state.screen='activity';}
+  else{state.screen='summary';}
+  render();scrollTop();
 }
-function restart() { state={screen:'welcome',pathwayId:null,activityIdx:0,answers:{},submitted:false,activeClaim:null}; render(); scrollTop(); }
-function render() {
-  switch(state.screen) { case 'welcome': renderWelcome(); break; case 'activity': renderActivity(); break; case 'discussion': renderDiscussion(); break; case 'summary': renderSummary(); break; }
+function restart(){state={screen:'welcome',pathwayId:null,activityIdx:0,answers:{},submitted:false,activeClaim:null,readingPhase:true};render();scrollTop();}
+function render(){
+  switch(state.screen){case 'welcome':renderWelcome();break;case 'activity':renderActivity();break;case 'discussion':renderDiscussion();break;case 'summary':renderSummary();break;}
 }
 render();
 </script>
