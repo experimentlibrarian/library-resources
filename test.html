@@ -67,21 +67,15 @@ p { margin-bottom: 0.75rem; }
   padding: 1rem 1.25rem; border-radius: 0 8px 8px 0;
   margin-bottom: 0.75rem; font-size: 1rem; font-weight: 500;
 }
-/* ========== READING PHASE (single column) ========== */
-.reading-phase-chat {
-  max-width: 720px;
-  margin-bottom: 1rem;
-}
+.reading-phase-chat { max-width: 720px; margin-bottom: 1rem; }
 .reading-phase-chat .chat-turn { margin-bottom: 0.75rem; }
 .reading-hint {
   display: flex; align-items: center; gap: 0.5rem;
   font-size: 0.88rem; color: #6B7280;
   background: #F3F4F6; border-radius: 8px;
-  padding: 0.6rem 0.9rem; margin-bottom: 1rem;
-  max-width: 720px;
+  padding: 0.6rem 0.9rem; margin-bottom: 1rem; max-width: 720px;
 }
 .reading-hint svg { flex-shrink: 0; }
-/* ========== 3-COLUMN GRID ========== */
 .activity-grid-3col {
   display: grid; grid-template-columns: 40% 30% 30%;
   column-gap: 1.25rem; row-gap: 1rem; align-items: start; margin-bottom: 1rem;
@@ -118,7 +112,6 @@ p { margin-bottom: 0.75rem; }
   .turn-row-guide:empty, .turn-row-eval:empty { display: none; }
   .turn-row-guide, .turn-row-eval { margin-top: 0.75rem; }
 }
-/* ========== CLAIM ANCHORS & TOOLTIPS ========== */
 .claim-anchor { display: inline; position: relative; }
 .claim-text {
   border-bottom: 2px solid transparent; background-color: transparent;
@@ -179,7 +172,6 @@ p { margin-bottom: 0.75rem; }
 .claim-tooltip.below { bottom: auto; top: calc(100% + 12px); }
 .claim-tooltip.below::before { bottom: auto; top: -11px; border-top: none; border-bottom: 11px solid var(--claim-color); }
 .claim-tooltip.below::after { bottom: auto; top: -8px; border-top: none; border-bottom: 9px solid #fff; }
-/* ========== QUESTIONS ========== */
 .q-card-header { display: flex; align-items: flex-start; margin-bottom: 0.65rem; }
 .question-card {
   background: #FAFAF8; border: 1.5px solid #E2E0DC; border-radius: 10px;
@@ -221,7 +213,6 @@ p { margin-bottom: 0.75rem; }
 .q-feedback.show { display: block; }
 .q-feedback.correct-fb { background: #ECFDF5; color: #065F46; }
 .q-feedback.incorrect-fb { background: #FEF2F2; color: #991B1B; }
-/* ========== BUTTONS ========== */
 .btn-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem; align-items: center; }
 .btn-primary {
   display: inline-flex; align-items: center; gap: 0.5rem;
@@ -250,7 +241,6 @@ p { margin-bottom: 0.75rem; }
 }
 .btn-back:hover { color: #2D3B45; border-color: #6B7280; background: #F9FAFB; }
 .btn-back .arrow { font-size: 1rem; line-height: 1; }
-/* ========== REFLECTION ========== */
 .reflection-screen { padding: 2rem 0; }
 .reflection-card {
   max-width: 1040px; margin: 0 auto;
@@ -305,7 +295,6 @@ p { margin-bottom: 0.75rem; }
   font-size: 0.95rem; line-height: 1.55;
 }
 .reflection-prompts li:last-child { margin-bottom: 0; }
-/* ========== CHAT BUBBLES ========== */
 .chat-container { margin-bottom: 1.5rem; }
 .chat-turn { display: flex; flex-direction: column; margin-bottom: 0.75rem; }
 .chat-turn.student { align-items: flex-start; }
@@ -322,7 +311,6 @@ p { margin-bottom: 0.75rem; }
 }
 .chat-turn.student .chat-bubble { background: #E8EDF2; border-bottom-left-radius: 4px; }
 .chat-turn.ai .chat-bubble { background: #fff; border: 1.5px solid #E2E0DC; border-bottom-right-radius: 4px; overflow: visible; }
-/* ========== SUMMARY ========== */
 .summary-header { text-align: center; padding: 2rem 0 1rem; }
 .dim-card {
   display: flex; gap: 1rem; align-items: flex-start;
@@ -332,7 +320,6 @@ p { margin-bottom: 0.75rem; }
 .dim-card svg { width: 28px; height: 28px; flex-shrink: 0; margin-top: 0.15rem; }
 .dim-card .dim-name { font-weight: 700; font-size: 1rem; margin-bottom: 0.15rem; }
 .dim-card .dim-question { font-size: 0.95rem; color: #444; }
-/* ========== FACILITATOR ========== */
 .facilitator-toggle {
   position: fixed; bottom: 1rem; right: 1rem;
   padding: 0.5rem 0.85rem; border-radius: 8px; font-size: 0.75rem;
@@ -421,6 +408,7 @@ const GAME_DATA = {
       id:"business", title:"Business", colour:"#2563EB",
       context:"A student researching social media for NZ small businesses",
       activities: [
+        /* ── ACTIVITY 1: WHAT IT SAYS ── */
         {
           number:1, dimension:"answer", dimensionLabel:"What it says",
           technique:"Triangulation and lateral reading",
@@ -447,6 +435,7 @@ const GAME_DATA = {
           ],
           discussionPrompt:"The AI gave you a true fact, then made up a source for it. Why might it do this?"
         },
+        /* ── ACTIVITY 2: HOW IT ACTS ── */
         {
           number:2, dimension:"reasoning", dimensionLabel:"How it acts",
           technique:"Reading the AI\u2019s behaviour",
@@ -475,24 +464,25 @@ const GAME_DATA = {
           ],
           discussionPrompt:"After two rounds the student had nothing usable. At what point would you stop asking \u2014 and what would you do instead?"
         },
+        /* ── ACTIVITY 3: HOW IT GOT THERE ── */
         {
           number:3, dimension:"behaviour", dimensionLabel:"How it got there",
           technique:"How you ask shapes what you get",
           task:"After getting nowhere asking for sources, the student tries a different approach. Notice what they tell the AI and how that changes the output.",
           conversation: [
-            { role:"student", text:"Asking you for sources isn\u2019t working \u2014 I keep getting fake or vague citations. Instead, can you help me find them myself? I\u2019m writing a 2000-word assessment on how NZ small businesses use social media for customer engagement. I need peer-reviewed articles from 2020 or later through my university library. What databases should I search, and what keywords would work?" },
-            { role:"ai", text:"For your topic, start with these databases:\n\n\u2022 Business Source Complete \u2014 strongest for business and marketing research\n\u2022 Scopus \u2014 broad coverage, good for cross-disciplinary results\n\u2022 Emerald Insight \u2014 strong on management and SME research\n\nFor keywords, break your topic into three groups:\n\n\u2022 Population: \u201csmall business\u201d OR \u201cSME\u201d OR \u201csmall enterprise\u201d\n\u2022 Context: \u201cNew Zealand\u201d OR \u201cAotearoa\u201d\n\u2022 Focus: \u201csocial media\u201d OR \u201cdigital marketing\u201d OR \u201ccustomer engagement\u201d\n\nCombine one term from each group with AND. Filter to peer-reviewed and 2020 onwards. I can\u2019t search these for you, but I can help build a search string if you pick a database." },
+            { role:"student", text:"Asking you for sources isn\u2019t working. Instead, help me find them myself \u2014 I\u2019m writing a 2,000-word assessment on how NZ small businesses use social media for customer engagement. Recommend relevant library databases for finding peer-reviewed articles (2020+) and suggest keywords to use in searches. Use bullet points and include a maximum of three keywords with related terms. Keep it concise and do not provide definitions." },
+            { role:"ai", text:"Databases:\n\n\u2022 Business Source Complete \u2014 business and marketing research\n\u2022 Scopus \u2014 broad, cross-disciplinary coverage\n\u2022 Emerald Insight \u2014 management and SME research\n\nKeywords:\n\n\u2022 \u201csmall business\u201d OR \u201cSME\u201d OR \u201csmall enterprise\u201d\n\u2022 \u201csocial media\u201d OR \u201cdigital marketing\u201d OR \u201ccustomer engagement\u201d\n\u2022 \u201cNew Zealand\u201d OR \u201cAotearoa\u201d\n\nCombine one from each group with AND. Filter to peer-reviewed, 2020+. I can help build a search string if you pick a database." },
             { role:"student", text:"I\u2019ll search Business Source Complete. Using these terms \u2014 \u2018small business\u2019, \u2018SME\u2019, \u2018social media\u2019, \u2018digital marketing\u2019, \u2018New Zealand\u2019 \u2014 can you build me a search string I can paste straight in?" },
-            { role:"ai", text:"Here\u2019s a search string for Business Source Complete:\n\n(\u201csmall business\u201d OR \u201cSME\u201d) AND (\u201csocial media\u201d OR \u201cdigital marketing\u201d) AND \u201cNew Zealand\u201d\n\nPaste that into the advanced search box. Set the filters to:\n\u2022 Peer-reviewed only\n\u2022 2020\u20132024\n\u2022 Academic journals\n\nIf you get too few results, try replacing \u201cNew Zealand\u201d with \u201cAustralasia\u201d or adding \u201cAotearoa\u201d. If too many, add AND \u201ccustomer engagement\u201d to narrow it down." }
+            { role:"ai", text:"(\u201csmall business\u201d OR \u201cSME\u201d) AND (\u201csocial media\u201d OR \u201cdigital marketing\u201d) AND \u201cNew Zealand\u201d\n\nPaste into the advanced search box. Filters:\n\u2022 Peer-reviewed only\n\u2022 2020\u20132024\n\u2022 Academic journals\n\nToo few results? Replace \u201cNew Zealand\u201d with \u201cAustralasia\u201d or add \u201cAotearoa\u201d. Too many? Add AND \u201ccustomer engagement\u201d." }
           ],
           questions: [
             { id:"b3q1", num:1, type:"select",
-              highlight_text:"Asking you for sources isn\u2019t working \u2014 I keep getting fake or vague citations. Instead, can you help me find them myself? I\u2019m writing a 2000-word assessment on how NZ small businesses use social media for customer engagement. I need peer-reviewed articles from 2020 or later through my university library. What databases should I search, and what keywords would work?",
-              tooltip:"What did the student tell the AI before asking their question? How did that shape the response?",
+              highlight_text:"Asking you for sources isn\u2019t working. Instead, help me find them myself \u2014 I\u2019m writing a 2,000-word assessment on how NZ small businesses use social media for customer engagement. Recommend relevant library databases for finding peer-reviewed articles (2020+) and suggest keywords to use in searches. Use bullet points and include a maximum of three keywords with related terms. Keep it concise and do not provide definitions.",
+              tooltip:"Look at everything the student included in this prompt. What did they tell the AI, and how did that shape the response?",
               text:"What made this prompt effective?",
-              options:["It\u2019s longer","It tells the AI what they\u2019re doing, what they need, and what help to give","It uses more formal language","It asks for more things at once"],
-              correct:"It tells the AI what they\u2019re doing, what they need, and what help to give",
-              feedback:"The student said what they\u2019re writing, what sources they need, and what help they want (databases and keywords \u2014 not sources). This shaped the AI\u2019s response into practical search support." },
+              options:["It\u2019s longer","It tells the AI what they\u2019re doing, what they need, and how to respond","It uses more formal language","It asks for more things at once"],
+              correct:"It tells the AI what they\u2019re doing, what they need, and how to respond",
+              feedback:"The student stated the task (2,000-word assessment), the need (databases and keywords, not sources), and the format (bullet points, max three, concise, no definitions). The AI followed these constraints and gave practical, focused output." },
             { id:"b3q2", num:2, type:"select",
               highlight_text:"(\u201csmall business\u201d OR \u201cSME\u201d) AND (\u201csocial media\u201d OR \u201cdigital marketing\u201d) AND \u201cNew Zealand\u201d",
               tooltip:"Who chose the terms? Who picked the database? Who built the search string? Who\u2019s in control?",
@@ -613,13 +603,10 @@ const GAME_DATA = {
   facilitatorNotes: {
     activity1Pattern: { title:"Pattern across Activity 1 \u2014 What it says", notes:["Business: real fact, fabricated citation.","Education / Health: one real and one fake source; AI steers student toward the fake one.","Common: AI presents fabricated content with confidence."] },
     activity2Pattern: { title:"Pattern across Activity 2 \u2014 How it acts", notes:["AI apologises but doesn\u2019t fix the problem.","Replacement source is always vague and not citable.","AI flatters to keep the original source in play.","Contradicts its own earlier advice when pushed.","After two exchanges, zero usable sources \u2014 inefficient."] },
-    activity3Pattern: { title:"Pattern across Activity 3 \u2014 How it got there", notes:["AI is more helpful when supporting the student\u2019s own search.","Business: prompt quality directly shaped output.","Good search terms, database recommendations, honest about limitations.","Small technical issues (Boolean logic) but overall constructive.","AI works best as a thinking partner, not a source-finder."] }
+    activity3Pattern: { title:"Pattern across Activity 3 \u2014 How it got there", notes:["AI is more helpful when supporting the student\u2019s own search.","Business: prompt quality directly shaped output \u2014 goal, constraints, and format instructions produced focused, practical support.","Good search terms, database recommendations, honest about limitations.","Small technical issues (Boolean logic) but overall constructive.","AI works best as a thinking partner, not a source-finder."] }
   }
 };
 
-/* ============================================================
-   ENGINE
-   ============================================================ */
 const app = document.getElementById('app');
 let state = { screen:'welcome', pathwayId:null, activityIdx:0, answers:{}, submitted:false, activeClaim:null, readingPhase:true };
 function getPathway() { return GAME_DATA.pathways.find(p=>p.id===state.pathwayId); }
@@ -641,7 +628,6 @@ function scrollTop() { window.scrollTo({top:0,behavior:'smooth'}); }
 function escapeHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function escapeAttr(s) { return s.replace(/'/g,"\\'").replace(/"/g,'&quot;'); }
 
-/* ---- Welcome ---- */
 function renderWelcome() {
   const m=GAME_DATA.meta;
   let h='<div class="fade-in"><div class="welcome-header"><h1>'+m.title+'</h1><p class="subtitle">'+m.subtitle+'</p></div><p class="welcome-intro">'+m.instructions+'</p><div class="pathway-grid">';
@@ -652,7 +638,6 @@ function renderWelcome() {
   app.innerHTML=h;
 }
 
-/* ---- Turn text with highlights ---- */
 function renderTurnText(turn,tidx,questions,incTT) {
   let h=escapeHtml(turn.text);
   questions.forEach(q=>{
@@ -675,7 +660,6 @@ function renderTurnText(turn,tidx,questions,incTT) {
   return h;
 }
 
-/* ---- Question card ---- */
 function renderQuestionCard(q) {
   const a=state.answers[q.id],sub=state.submitted,cor=sub?isCorrect(q,a):null;
   const cc=sub?(cor?'correct':'incorrect'):'',cl=getClaimColor(q.num);
@@ -690,13 +674,11 @@ function renderQuestionCard(q) {
   h+='</div>';return h;
 }
 
-/* ---- Guidance card ---- */
 function renderGuidanceCard(q) {
   const c=getClaimColor(q.num);
   return '<div class="guidance-card" data-claim-num="'+q.num+'" style="--claim-color:'+c+';"><div class="guidance-card-header"><span class="claim-badge in-card" data-claim-num="'+q.num+'" style="--claim-color:'+c+';">'+q.num+'</span><span class="guidance-card-label">Check it</span></div><div class="guidance-card-body">'+escapeHtml(q.tooltip||'')+'</div></div>';
 }
 
-/* ---- Reading phase: conversation only ---- */
 function renderReadingPhase(act) {
   let h='<div class="reading-hint"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> Read the full conversation first. The numbered markers show what you\u2019ll check next.</div>';
   h+='<div class="reading-phase-chat card">';
@@ -708,7 +690,6 @@ function renderReadingPhase(act) {
   return h;
 }
 
-/* ---- Evaluate phase: 3-column grid ---- */
 function renderThreeColumnLayout(act) {
   let h='<div class="activity-grid-3col">';
   h+='<div class="grid-3col-header"><span class="col-step">1</span><div><div class="col-title">Conversation</div><div class="col-hint">Numbered markers show what to check.</div></div></div>';
@@ -725,7 +706,6 @@ function renderThreeColumnLayout(act) {
   h+='</div>';return h;
 }
 
-/* ---- Activity screen ---- */
 function renderActivity() {
   const pw=getPathway(),act=getActivity(),dim=getDimension(act.dimension);
   const prog=((state.activityIdx)/pw.activities.length)*100;
@@ -733,10 +713,8 @@ function renderActivity() {
   h+='<div class="check-header"><div class="dim-badge" style="background:'+dim.colour+';">'+dimIcon(dim.id,16)+' '+dim.label+'</div>';
   if(act.technique) h+='<span class="technique-tag">'+act.technique+'</span>';
   h+='</div><div class="task-prompt">'+act.task+'</div>';
-
-  if(state.readingPhase) {
-    h+=renderReadingPhase(act);
-  } else {
+  if(state.readingPhase){h+=renderReadingPhase(act);}
+  else {
     h+=renderThreeColumnLayout(act);
     h+='<div class="btn-row">';
     if(!state.submitted){
@@ -745,13 +723,11 @@ function renderActivity() {
     } else { h+='<button class="btn-primary" onclick="nextStep()">Continue</button>'; }
     h+='</div>';
   }
-
   h+='</div>';
   app.innerHTML=h;
   setupClaimInteractions();
 }
 
-/* ---- Claim interactions ---- */
 function setupClaimInteractions() {
   document.querySelectorAll('[data-claim-num]').forEach(el=>{
     const n=el.dataset.claimNum;
@@ -773,7 +749,6 @@ function toggleClaim(n){
 }
 function scrollToHighlight(n){const a=document.querySelector('.claim-anchor[data-claim-num="'+n+'"]');if(a){a.scrollIntoView({behavior:'smooth',block:'center'});a.classList.add('is-active');setTimeout(()=>{if(state.activeClaim!==Number(n))a.classList.remove('is-active');},1500);}}
 
-/* ---- Reflection ---- */
 const REFLECTION_SCAFFOLDING = [
   { heading:"You\u2019ve completed your first check", checksCompleted:1,
     oneLiner:"AI outputs mix accurate and inaccurate information \u2014 and both look equally convincing.",
@@ -783,7 +758,7 @@ const REFLECTION_SCAFFOLDING = [
     prompts:["The AI used flattery and vague suggestions instead of admitting it can\u2019t help. Why might it do this?","After two attempts the student still had nothing usable. At what point would you stop asking \u2014 and what would you do instead?"] },
   { heading:"You now have all three checks", checksCompleted:3,
     oneLiner:"The difference isn\u2019t just what the AI says \u2014 it\u2019s how you ask and what you ask for.",
-    prompts:["The student stopped asking for sources and asked for search help instead. How did that change what they got?","What did the student include in their prompt that made the AI more useful?","When you next use AI for research, what would you ask it for \u2014 and what wouldn\u2019t you trust it to do?"] }
+    prompts:["The student stopped asking for sources and asked for search help instead. How did that change what they got?","When you next use AI for research, what would you ask it for \u2014 and what wouldn\u2019t you trust it to do?"] }
 ];
 
 function renderDiscussion() {
@@ -803,7 +778,6 @@ function renderDiscussion() {
   app.innerHTML=h;
 }
 
-/* ---- Summary ---- */
 function renderSummary() {
   const m=GAME_DATA.meta;
   let h='<div class="fade-in"><div class="summary-header"><h1>Well done!</h1><p style="color:#555;font-size:1.05rem;margin-top:0.5rem;">Three questions to ask yourself every time you use AI for university work.</p></div><div class="card" id="takeaway-card"><h2 style="margin-bottom:1rem;">'+m.takeaway.title+'</h2>';
@@ -812,7 +786,6 @@ function renderSummary() {
   app.innerHTML=h;
 }
 
-/* ---- Facilitator ---- */
 function renderFacilitator() {
   const fn=GAME_DATA.facilitatorNotes;
   let h='<h2>Facilitator Answer Key</h2><p style="color:#666;margin-bottom:1.5rem;">Patterns to highlight during discussion.</p>';
@@ -825,7 +798,6 @@ function renderFacilitator() {
 }
 function toggleFacilitator(){const o=document.getElementById('facOverlay'),s=o.classList.toggle('show');if(s)renderFacilitator();document.body.style.overflow=s?'hidden':'';}
 
-/* ---- Event handlers ---- */
 function selectPathway(id){state={screen:'activity',pathwayId:id,activityIdx:0,answers:{},submitted:false,activeClaim:null,readingPhase:true};render();}
 function endReadingPhase(){state.readingPhase=false;render();scrollTop();}
 function selectOption(qId,v){if(state.submitted)return;state.answers[qId]=v;render();}
