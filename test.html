@@ -21,12 +21,10 @@ h2 { font-family: 'Lato', sans-serif; font-weight: 700; font-size: 1.5rem; line-
 h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
 p { margin-bottom: 0.75rem; }
 .card { background: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; }
-/* ===== NAV BAR ===== */
 .nav-bar {
   display: flex; align-items: center; gap: 0.35rem;
   padding: 0.6rem 0; margin-bottom: 1.25rem;
-  border-bottom: 1px solid #E5E7EB;
-  flex-wrap: wrap;
+  border-bottom: 1px solid #E5E7EB; flex-wrap: wrap;
 }
 .nav-item {
   padding: 0.4rem 0.85rem; border-radius: 8px;
@@ -41,7 +39,6 @@ p { margin-bottom: 0.75rem; }
 .nav-home { color: #6B7280; }
 .nav-home:hover { color: #2D3B45; background: #F3F4F6; }
 .nav-sep { width: 1px; height: 20px; background: #E5E7EB; margin: 0 0.25rem; }
-/* ===== WELCOME ===== */
 .welcome-header { text-align: center; padding: 2rem 0 1rem; }
 .welcome-header h1 { font-size: 2.4rem; margin-bottom: 0.25rem; }
 .welcome-header .subtitle { font-size: 1.15rem; color: #555; margin-bottom: 1.5rem; }
@@ -56,7 +53,6 @@ p { margin-bottom: 0.75rem; }
 .pathway-btn:hover, .pathway-btn:focus-visible { border-color: var(--pw-color); box-shadow: 0 4px 12px rgba(0,0,0,0.08); transform: translateY(-2px); }
 .pathway-btn .pw-label { font-weight: 900; font-size: 1.3rem; margin-bottom: 0.25rem; color: var(--pw-color); }
 .pathway-btn .pw-desc { font-size: 0.95rem; color: #555; }
-/* ===== PROGRESS ===== */
 .progress-bar { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; font-size: 0.85rem; color: #666; }
 .progress-track { flex: 1; height: 6px; background: #E2E0DC; border-radius: 3px; overflow: hidden; }
 .progress-fill { height: 100%; border-radius: 3px; transition: width 0.4s ease; }
@@ -74,15 +70,13 @@ p { margin-bottom: 0.75rem; }
   padding: 1rem 1.25rem; border-radius: 0 8px 8px 0;
   margin-bottom: 0.75rem; font-size: 1rem; font-weight: 500;
 }
-/* ===== READING PHASE ===== */
 .reading-phase-chat { max-width: 720px; margin-bottom: 1rem; }
 .reading-phase-chat .chat-turn { margin-bottom: 0.75rem; }
 .reading-hint {
   display: flex; align-items: center; gap: 0.5rem;
   font-size: 0.88rem; color: #065F46;
   background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 8px;
-  padding: 0.6rem 0.9rem; margin-bottom: 1rem;
-  max-width: 720px;
+  padding: 0.6rem 0.9rem; margin-bottom: 1rem; max-width: 720px;
 }
 .reading-hint svg { flex-shrink: 0; }
 /* ===== 3-COL GRID ===== */
@@ -103,6 +97,22 @@ p { margin-bottom: 0.75rem; }
 .grid-3col-header .col-hint { font-size: 0.82rem; color: #6B7280; margin-top: 0.2rem; line-height: 1.4; }
 .turn-group { display: contents; }
 .turn-row-guide, .turn-row-eval { display: flex; flex-direction: column; gap: 0.75rem; min-height: 0; }
+/* ===== 2-COL GRID (no guidance) ===== */
+.activity-grid-2col {
+  display: grid; grid-template-columns: 50% 50%;
+  column-gap: 1.25rem; row-gap: 1rem; align-items: start; margin-bottom: 1rem;
+}
+.grid-2col-header {
+  display: flex; align-items: flex-start; gap: 0.65rem;
+  padding-bottom: 0.6rem; border-bottom: 2px solid #E5E7EB;
+}
+.grid-2col-header .col-step {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; border-radius: 50%;
+  background: #2D3B45; color: #fff; font-size: 0.85rem; font-weight: 700; flex-shrink: 0;
+}
+.grid-2col-header .col-title { font-size: 1rem; font-weight: 700; color: #2D3B45; line-height: 1.3; }
+.grid-2col-header .col-hint { font-size: 0.82rem; color: #6B7280; margin-top: 0.2rem; line-height: 1.4; }
 .guidance-card {
   background: #fff;
   border: 1.5px solid color-mix(in srgb, var(--claim-color) 30%, #E5E7EB);
@@ -116,13 +126,12 @@ p { margin-bottom: 0.75rem; }
 .guidance-card-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--claim-color); }
 .guidance-card-body { font-size: 0.88rem; line-height: 1.55; color: #2D3B45; }
 @media (max-width: 1000px) {
-  .activity-grid-3col { display: block; }
+  .activity-grid-3col, .activity-grid-2col { display: block; }
   .turn-group { display: block; margin-bottom: 1.25rem; }
-  .grid-3col-header { display: none; }
+  .grid-3col-header, .grid-2col-header { display: none; }
   .turn-row-guide:empty, .turn-row-eval:empty { display: none; }
   .turn-row-guide, .turn-row-eval { margin-top: 0.75rem; }
 }
-/* ===== CLAIMS ===== */
 .claim-anchor { display: inline; position: relative; }
 .claim-text {
   border-bottom: 2px solid transparent; background-color: transparent;
@@ -150,40 +159,6 @@ p { margin-bottom: 0.75rem; }
 }
 .claim-badge.in-card { margin-left: 0; margin-right: 0.65rem; }
 .claim-badge.anchor-floating { margin-left: 0.4rem; vertical-align: middle; }
-.claim-tooltip {
-  position: absolute; bottom: calc(100% + 12px); left: 50%;
-  transform: translateX(-50%) translateY(4px);
-  width: 280px; max-width: 90vw;
-  background: #fff; border: 2px solid var(--claim-color); border-radius: 10px;
-  padding: 0.85rem 1rem; font-size: 0.85rem; line-height: 1.55;
-  color: #2D3B45; font-weight: 400; text-align: left;
-  text-transform: none; letter-spacing: normal;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.14);
-  opacity: 0; visibility: hidden;
-  transition: opacity 0.18s, transform 0.18s, visibility 0.18s;
-  z-index: 50; pointer-events: none; white-space: normal;
-}
-.claim-tooltip::before, .claim-tooltip::after {
-  content: ''; position: absolute; left: 50%; transform: translateX(-50%);
-  width: 0; height: 0; border-left: 9px solid transparent; border-right: 9px solid transparent;
-}
-.claim-tooltip::before { bottom: -11px; border-top: 11px solid var(--claim-color); }
-.claim-tooltip::after { bottom: -8px; border-top: 9px solid #fff; }
-.claim-tooltip-label {
-  display: inline-block; font-size: 0.72rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.06em;
-  color: var(--claim-color); margin-bottom: 0.35rem;
-}
-.claim-tooltip-body { font-weight: 400; }
-.claim-anchor:hover .claim-tooltip,
-.claim-anchor:focus-within .claim-tooltip,
-.claim-anchor.is-active .claim-tooltip {
-  opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
-}
-.claim-tooltip.below { bottom: auto; top: calc(100% + 12px); }
-.claim-tooltip.below::before { bottom: auto; top: -11px; border-top: none; border-bottom: 11px solid var(--claim-color); }
-.claim-tooltip.below::after { bottom: auto; top: -8px; border-top: none; border-bottom: 9px solid #fff; }
-/* ===== QUESTIONS ===== */
 .q-card-header { display: flex; align-items: flex-start; margin-bottom: 0.65rem; }
 .question-card {
   background: #FAFAF8; border: 1.5px solid #E2E0DC; border-radius: 10px;
@@ -193,6 +168,7 @@ p { margin-bottom: 0.75rem; }
 .question-card.is-active { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.10); border-color: var(--claim-color, #2D3B45); }
 .question-card.correct { border-color: #059669; background: #ECFDF5; }
 .question-card.incorrect { border-color: #DC2626; background: #FEF2F2; }
+.question-card.reflective-answered { border-color: #3B82F6; background: #F0F7FF; }
 .question-text { font-size: 0.97rem; font-weight: 600; line-height: 1.45; }
 .option-group { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .option-btn {
@@ -204,6 +180,7 @@ p { margin-bottom: 0.75rem; }
 .option-btn:disabled { opacity: 0.7; cursor: default; }
 .option-btn.selected.is-correct { background: #059669; border-color: #059669; }
 .option-btn.selected.is-incorrect { background: #DC2626; border-color: #DC2626; }
+.option-btn.selected.is-reflective { background: #3B82F6; border-color: #3B82F6; }
 .option-btn.show-correct:not(.selected) { border-color: #059669; border-width: 2.5px; }
 .option-btn.multi { position: relative; padding-left: 2rem; }
 .option-btn.multi::before {
@@ -217,6 +194,7 @@ p { margin-bottom: 0.75rem; }
 }
 .option-btn.multi.selected.is-correct::before { background: #059669; border-color: #059669; }
 .option-btn.multi.selected.is-incorrect::before { background: #DC2626; border-color: #DC2626; }
+.option-btn.multi.selected.is-reflective::before { background: #3B82F6; border-color: #3B82F6; }
 .option-btn.multi.show-correct:not(.selected)::before { border-color: #059669; border-width: 2.5px; }
 .q-feedback {
   margin-top: 0.65rem; padding: 0.65rem 0.85rem; border-radius: 6px;
@@ -225,7 +203,7 @@ p { margin-bottom: 0.75rem; }
 .q-feedback.show { display: block; }
 .q-feedback.correct-fb { background: #ECFDF5; color: #065F46; }
 .q-feedback.incorrect-fb { background: #FEF2F2; color: #991B1B; }
-/* ===== BUTTONS ===== */
+.q-feedback.reflective-fb { background: #EFF6FF; color: #1E40AF; border-left: 3px solid #3B82F6; }
 .btn-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem; align-items: center; }
 .btn-primary {
   display: inline-flex; align-items: center; gap: 0.5rem;
@@ -254,7 +232,6 @@ p { margin-bottom: 0.75rem; }
 }
 .btn-back:hover { color: #2D3B45; border-color: #6B7280; background: #F9FAFB; }
 .btn-back .arrow { font-size: 1rem; line-height: 1; }
-/* ===== REFLECTION ===== */
 .reflection-screen { padding: 2rem 0; }
 .reflection-card {
   max-width: 1040px; margin: 0 auto;
@@ -302,17 +279,13 @@ p { margin-bottom: 0.75rem; }
   font-size: 0.75rem; font-weight: 700; background: #2D3B45; color: #fff;
 }
 .reflect-zone-share .step-num { background: #059669; }
-.stop-icon {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 26px; height: 26px; flex-shrink: 0;
-}
+.stop-icon { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; flex-shrink: 0; }
 .reflection-prompts li {
   padding: 0.85rem 1rem; margin-bottom: 0.5rem;
   background: #fff; border: 1px solid #D1D5DB; border-radius: 8px;
   font-size: 0.95rem; line-height: 1.55;
 }
 .reflection-prompts li:last-child { margin-bottom: 0; }
-/* ===== CHAT ===== */
 .chat-turn { display: flex; flex-direction: column; margin-bottom: 0.75rem; }
 .chat-turn.student { align-items: flex-start; }
 .chat-turn.ai { align-items: flex-end; }
@@ -328,7 +301,6 @@ p { margin-bottom: 0.75rem; }
 }
 .chat-turn.student .chat-bubble { background: #E8EDF2; border-bottom-left-radius: 4px; }
 .chat-turn.ai .chat-bubble { background: #fff; border: 1.5px solid #E2E0DC; border-bottom-right-radius: 4px; overflow: visible; }
-/* ===== SUMMARY ===== */
 .summary-header { text-align: center; padding: 2rem 0 1rem; }
 .dim-card {
   display: flex; gap: 1rem; align-items: flex-start;
@@ -338,7 +310,6 @@ p { margin-bottom: 0.75rem; }
 .dim-card svg { width: 28px; height: 28px; flex-shrink: 0; margin-top: 0.15rem; }
 .dim-card .dim-name { font-weight: 700; font-size: 1rem; margin-bottom: 0.15rem; }
 .dim-card .dim-question { font-size: 0.95rem; color: #444; }
-/* ===== FACILITATOR ===== */
 .facilitator-toggle {
   position: fixed; bottom: 1rem; right: 1rem;
   padding: 0.5rem 0.85rem; border-radius: 8px; font-size: 0.75rem;
@@ -368,8 +339,6 @@ p { margin-bottom: 0.75rem; }
   #app { max-width: 100%; padding: 1rem; }
   .btn-row, .facilitator-toggle, .progress-bar, .no-print, .nav-bar { display: none !important; }
   .card { border: 1px solid #ddd; break-inside: avoid; }
-  .claim-tooltip { display: none; }
-  .claim-text { border-bottom: 1px solid #888 !important; background: none !important; }
 }
 @media (max-width: 900px) { .pathway-grid { grid-template-columns: 1fr; } }
 @media (max-width: 600px) {
@@ -384,7 +353,6 @@ p { margin-bottom: 0.75rem; }
   .facilitator-panel { margin: 1rem; padding: 1.25rem; }
   .checks-progress { flex-wrap: wrap; gap: 0.35rem; justify-content: center; }
   .pip-connector { display: none; }
-  .claim-tooltip { width: 240px; }
   .nav-bar { gap: 0.25rem; }
   .nav-item { font-size: 0.75rem; padding: 0.35rem 0.6rem; }
 }
@@ -435,18 +403,18 @@ const GAME_DATA = {
           technique:"Triangulation and lateral reading",
           task:"Read the exchange. Which claims and sources can you trust \u2014 and which can\u2019t you?",
           conversation: [
-            { role:"student", text:"For my assessment on NZ small businesses, what proportion of them use social media for customer engagement?" },
-            { role:"ai", text:"Around 70% of NZ small businesses use social media as part of their customer engagement strategy, according to the most recent MYOB Business Monitor." },
-            { role:"student", text:"Thanks. My assessment also needs a peer-reviewed academic source from 2020 or later \u2014 can you suggest one with full publication details?" },
-            { role:"ai", text:"Henderson, R., & Patel, D. (2021). Digital adoption and customer engagement among New Zealand SMEs. New Zealand Journal of Marketing and Management, 15(3), 88\u2013104. This article includes the 70% figure and provides a sectoral breakdown \u2014 well-cited and directly relevant to your assessment." }
+            { role:"student", text:"For my assessment on NZ small businesses and social media, I need a background fact. What proportion of NZ businesses are small businesses?" },
+            { role:"ai", text:"According to Stats NZ, 97% of all businesses in New Zealand are small businesses, defined as having fewer than 20 employees." },
+            { role:"student", text:"Thanks. My assessment also needs a peer-reviewed academic source from 2020 or later about social media use by NZ small businesses \u2014 can you suggest one with full publication details?" },
+            { role:"ai", text:"Henderson, R., & Patel, D. (2021). Digital adoption and customer engagement among New Zealand SMEs. New Zealand Journal of Marketing and Management, 15(3), 88\u2013104. This study examines how NZ small businesses use social media for customer engagement \u2014 well-cited and directly relevant to your assessment." }
           ],
           questions: [
             { id:"b1q1", num:1, type:"binary",
-              highlight_text:"Around 70% of NZ small businesses use social media as part of their customer engagement strategy, according to the most recent MYOB Business Monitor.",
-              tooltip:"Triangulate: search for the MYOB Business Monitor and check one or two other sources (MBIE, Stats NZ). Does 70% roughly match?",
-              text:"The 70% figure \u2014 trustworthy?",
+              highlight_text:"According to Stats NZ, 97% of all businesses in New Zealand are small businesses, defined as having fewer than 20 employees.",
+              tooltip:"Triangulate: search \u2018Stats NZ small businesses\u2019 or \u2018MBIE small business.\u2019 Does 97% match?",
+              text:"The 97% figure \u2014 trustworthy?",
               options:["Trustworthy","Not trustworthy"], correct:"Trustworthy",
-              feedback:"The MYOB Business Monitor is a real survey, and 70% sits within the credible range across other industry sources." },
+              feedback:"Stats NZ and MBIE both confirm that around 97% of NZ businesses are small enterprises. This is widely reported and easy to verify." },
             { id:"b1q2", num:2, type:"binary",
               highlight_text:"Henderson, R., & Patel, D. (2021). Digital adoption and customer engagement among New Zealand SMEs. New Zealand Journal of Marketing and Management, 15(3), 88\u2013104.",
               tooltip:"Lateral-read: search Google Scholar or your library catalogue for the journal name and authors. Do they exist?",
@@ -467,20 +435,18 @@ const GAME_DATA = {
             { role:"ai", text:"That\u2019s a great point! Kaplan & Haenlein is a bit older, but it\u2019s still widely respected \u2014 your marker would recognise it straight away. For something more recent and NZ-specific, I\u2019d suggest searching Google Scholar for terms like \u2018New Zealand SME social media 2020.\u2019 You\u2019ll likely find several relevant articles that way. I\u2019m happy to keep helping if you\u2019d like to try a different angle!" }
           ],
           questions: [
-            { id:"b2q1", num:1, type:"select",
+            { id:"b2q1", num:1, type:"multi_select", reflective:true,
               highlight_text:"You\u2019re absolutely right and I\u2019m so sorry for the confusion! Let me try again with something more solid. A well-known foundational paper is Kaplan & Haenlein (2010) on social media, or you could explore work by Tussyadiah and Park on engagement \u2014 there\u2019s quite a bit of research in this area. Any of these directions would likely strengthen your paper!",
-              tooltip:"The student asked for a real source. Is the AI solving the problem or just sounding helpful?",
-              text:"The student said the citation was fake. Is this an appropriate response?",
-              options:["Yes \u2014 it apologised and offered alternatives","No \u2014 it sounds helpful but doesn\u2019t deliver"],
-              correct:"No \u2014 it sounds helpful but doesn\u2019t deliver",
-              feedback:"No full citations, no publication details, and a source from 2010 when the student asked for 2020+. Apology and flattery fill the space where a real answer should be." },
-            { id:"b2q2", num:2, type:"select",
+              text:"What is the AI doing in this response? (Select all that apply)",
+              options:["Apologising without actually fixing the problem","Giving vague suggestions instead of the specific source requested","Providing a verified 2020+ NZ-focused source","Admitting it can\u2019t provide real citations"],
+              correct:["Apologising without actually fixing the problem","Giving vague suggestions instead of the specific source requested"],
+              feedback:"The AI apologises and lists author names but gives no publication details. It suggests a 2010 source when the student asked for 2020+. The response sounds helpful but doesn\u2019t deliver what was asked for." },
+            { id:"b2q2", num:2, type:"multi_select", reflective:true,
               highlight_text:"Kaplan & Haenlein is a bit older, but it\u2019s still widely respected \u2014 your marker would recognise it straight away. For something more recent and NZ-specific, I\u2019d suggest searching Google Scholar for terms like \u2018New Zealand SME social media 2020.\u2019",
-              tooltip:"Two exchanges in \u2014 count what the student actually has. Was this worth their time?",
-              text:"After two rounds, was this worth the student\u2019s time?",
-              options:["Yes \u2014 they\u2019re making progress","No \u2014 two exchanges and still nothing usable"],
-              correct:"No \u2014 two exchanges and still nothing usable",
-              feedback:"Two exchanges, zero usable sources. The AI is still pushing the rejected 2010 paper and tells the student to search Google Scholar \u2014 something they could have done without AI." }
+              text:"After two rounds, what has the student gained? (Select all that apply)",
+              options:["Nothing usable \u2014 still no citable source after two attempts","The AI keeps pushing a rejected suggestion with flattery","A clear search strategy for finding sources","Two verified, NZ-focused peer-reviewed sources"],
+              correct:["Nothing usable \u2014 still no citable source after two attempts","The AI keeps pushing a rejected suggestion with flattery"],
+              feedback:"Two exchanges, zero usable sources. The AI keeps pushing the rejected 2010 paper with flattery and tells the student to search Google Scholar \u2014 something they could have done without AI." }
           ],
           discussionPrompt:"After two rounds the student had nothing usable. At what point would you stop asking \u2014 and what would you do instead?"
         },
@@ -490,25 +456,23 @@ const GAME_DATA = {
           task:"After getting nowhere asking for sources, the student tries a different approach. Notice what they tell the AI and how that changes the output.",
           conversation: [
             { role:"student", text:"Asking you for sources isn\u2019t working \u2014 I keep getting fake or vague citations. Instead, can you help me find them myself? I\u2019m writing a 2000-word assessment on how NZ small businesses use social media for customer engagement. I need peer-reviewed articles from 2020 or later through my university library. What databases should I search, and what keywords would work?" },
-            { role:"ai", text:"For your topic, start with these databases:\n\n\u2022 Business Source Complete \u2014 strongest for business and marketing research\n\u2022 Scopus \u2014 broad coverage, good for cross-disciplinary results\n\u2022 Emerald Insight \u2014 strong on management and SME research\n\nFor keywords, break your topic into three groups:\n\n\u2022 Population: \u201csmall business\u201d OR \u201cSME\u201d OR \u201csmall enterprise\u201d\n\u2022 Context: \u201cNew Zealand\u201d OR \u201cAotearoa\u201d\n\u2022 Focus: \u201csocial media\u201d OR \u201cdigital marketing\u201d OR \u201ccustomer engagement\u201d\n\nCombine one term from each group with AND. Filter to peer-reviewed and 2020 onwards. I can\u2019t search these for you, but I can help build a search string if you pick a database." },
+            { role:"ai", text:"For your topic, start with these databases:\n\n\u2022 Business Source Complete \u2014 strongest for business and marketing research\n\u2022 Scopus \u2014 broad coverage, good for cross-disciplinary results\n\nFor keywords, break your topic into three groups:\n\n\u2022 Population: \u201csmall business\u201d OR \u201cSME\u201d OR \u201csmall enterprise\u201d\n\u2022 Context: \u201cNew Zealand\u201d OR \u201cAotearoa\u201d\n\u2022 Focus: \u201csocial media\u201d OR \u201cdigital marketing\u201d OR \u201ccustomer engagement\u201d\n\nCombine one term from each group with AND. Filter to peer-reviewed and 2020 onwards. I can\u2019t search these for you, but I can help build a search string if you pick a database." },
             { role:"student", text:"I\u2019ll search Business Source Complete. Using these terms \u2014 \u2018small business\u2019, \u2018SME\u2019, \u2018social media\u2019, \u2018digital marketing\u2019, \u2018New Zealand\u2019 \u2014 can you build me a search string I can paste straight in?" },
             { role:"ai", text:"Here\u2019s a search string for Business Source Complete:\n\n(\u201csmall business\u201d OR \u201cSME\u201d) AND (\u201csocial media\u201d OR \u201cdigital marketing\u201d) AND \u201cNew Zealand\u201d\n\nPaste that into the advanced search box. Set the filters to:\n\u2022 Peer-reviewed only\n\u2022 2020\u20132024\n\u2022 Academic journals\n\nIf you get too few results, try replacing \u201cNew Zealand\u201d with \u201cAustralasia\u201d or adding \u201cAotearoa\u201d. If too many, add AND \u201ccustomer engagement\u201d to narrow it down." }
           ],
           questions: [
-            { id:"b3q1", num:1, type:"select",
+            { id:"b3q1", num:1, type:"multi_select", reflective:true,
               highlight_text:"Asking you for sources isn\u2019t working \u2014 I keep getting fake or vague citations. Instead, can you help me find them myself? I\u2019m writing a 2000-word assessment on how NZ small businesses use social media for customer engagement. I need peer-reviewed articles from 2020 or later through my university library. What databases should I search, and what keywords would work?",
-              tooltip:"What did the student tell the AI before asking their question? How did that shape the response?",
-              text:"What made this prompt effective?",
-              options:["It uses academic vocabulary","It tells the AI what they\u2019re doing, what they need, and what help to give","It\u2019s longer than the earlier prompts"],
-              correct:"It tells the AI what they\u2019re doing, what they need, and what help to give",
-              feedback:"The student said what they\u2019re writing, what sources they need, and what help they want (databases and keywords \u2014 not sources). This shaped the AI\u2019s response into practical search support." },
-            { id:"b3q2", num:2, type:"select",
+              text:"What made this prompt effective? (Select all that apply)",
+              options:["It tells the AI what they\u2019re doing, what they need, and what help to give","It names what failed and asks for a different kind of help","It uses academic vocabulary","It\u2019s longer than the earlier prompts"],
+              correct:["It tells the AI what they\u2019re doing, what they need, and what help to give","It names what failed and asks for a different kind of help"],
+              feedback:"The student gave context (a 2000-word assessment), constraints (peer-reviewed, 2020+, NZ), and specified the help they wanted (databases and keywords \u2014 not sources). They also named what failed, which redirected the AI into a practical support role." },
+            { id:"b3q2", num:2, type:"multi_select", reflective:true,
               highlight_text:"(\u201csmall business\u201d OR \u201cSME\u201d) AND (\u201csocial media\u201d OR \u201cdigital marketing\u201d) AND \u201cNew Zealand\u201d",
-              tooltip:"Who chose the terms? Who picked the database? Who built the search string? Who\u2019s in control?",
-              text:"Who is driving the research here?",
-              options:["The AI \u2014 it chose everything and the student just copied it","The student \u2014 they\u2019re deciding, the AI handles the mechanics","Neither \u2014 they\u2019re both just guessing"],
-              correct:"The student \u2014 they\u2019re deciding, the AI handles the mechanics",
-              feedback:"The student chose the terms, picked the database, and asked AI to format a search string. The AI handled the mechanics while the student stayed in charge." }
+              text:"Who is driving the research here? (Select all that apply)",
+              options:["The student \u2014 they decided, the AI handled the formatting","The AI provided practical tools the student can verify themselves","The AI \u2014 it chose everything and the student just copied it","Neither \u2014 they\u2019re both just guessing"],
+              correct:["The student \u2014 they decided, the AI handled the formatting","The AI provided practical tools the student can verify themselves"],
+              feedback:"The student chose the database, selected the terms, and asked the AI to format a search string. The AI handled the mechanics while the student stayed in control. The results come from a real database \u2014 verifiable, unlike AI-generated citations." }
           ],
           discussionPrompt:"The student stopped asking for sources and asked for search help instead. When would you use AI this way in your own work?"
         }
@@ -518,51 +482,83 @@ const GAME_DATA = {
       id:"education", title:"Education", colour:"#059669",
       context:"A student researching how feedback helps student learning in primary schools",
       activities: [
-        { number:1, dimension:"answer", dimensionLabel:"What it says", technique:"Triangulation and lateral reading",
-          task:"Check the sources and stats. Which are real and which might be fake?",
+        {
+          number:1, dimension:"answer", dimensionLabel:"What it says",
+          technique:"Triangulation and lateral reading",
+          task:"Read the exchange. Which claims and sources can you trust \u2014 and which can\u2019t you?",
           conversation: [
-            { role:"student", text:"I need sources and stats about how feedback helps student learning in primary schools for my assessment." },
-            { role:"ai", text:"Here are two sources and two key stats:\n\nSources:\n\n1. Hattie, J., & Timperley, H. (2007). The power of feedback. Review of Educational Research, 77(1), 81\u2013112.\n\n2. Rivera, M., & Chen, L. (2020). Feedback practices and literacy outcomes in primary classrooms. Journal of Educational Practice and Research, 12(4), 201\u2013218.\n\nStats:\n\n\u2022 Feedback has an effect size of 0.70 on student achievement (Hattie & Timperley, 2007).\n\u2022 Students who receive written feedback improve their writing scores by 30% (Rivera & Chen, 2020)." },
-            { role:"student", text:"Are both of those about New Zealand schools?" },
-            { role:"ai", text:"Good question. Hattie and Timperley (2007) is an international review \u2014 it covers feedback research from many countries, not just NZ. Rivera and Chen (2020) is a study of primary classrooms that includes data from different education systems, and it\u2019s more focused on literacy outcomes, so it\u2019s more directly relevant to your topic." }
+            { role:"student", text:"For my assessment on feedback in NZ primary schools, I need a background fact. What does research say about the impact of feedback on student learning?" },
+            { role:"ai", text:"According to John Hattie\u2019s Visible Learning research, feedback has an effect size of 0.70, making it one of the top ten influences on student achievement. This figure is widely cited in education research." },
+            { role:"student", text:"Thanks. I also need a peer-reviewed source from 2020 or later about feedback practices in NZ primary classrooms \u2014 can you give me one with full publication details?" },
+            { role:"ai", text:"Rivera, M., & Chen, L. (2021). Formative feedback and literacy outcomes in New Zealand primary classrooms. Journal of Educational Practice and Research, 14(2), 112\u2013130. This study examines how NZ primary teachers use written feedback to improve student writing \u2014 directly relevant to your assessment." }
           ],
           questions: [
-            { id:"e1q1", num:1, type:"binary", highlight_text:"Hattie, J., & Timperley, H. (2007). The power of feedback. Review of Educational Research, 77(1), 81\u2013112.", tooltip:"Lateral-read: search Google Scholar for the article title or authors. Is it real?", text:"Hattie & Timperley (2007) \u2014 real or fake?", options:["Real","Fake"], correct:"Real", feedback:"Real and widely cited paper in the Review of Educational Research." },
-            { id:"e1q2", num:2, type:"binary", highlight_text:"Rivera, M., & Chen, L. (2020). Feedback practices and literacy outcomes in primary classrooms. Journal of Educational Practice and Research, 12(4), 201\u2013218.", tooltip:"Lateral-read: search Google Scholar for the journal name and authors. Do they exist?", text:"Rivera & Chen (2020) \u2014 real or fake?", options:["Real","Fake"], correct:"Fake", feedback:"Fabricated. The journal \u2018Journal of Educational Practice and Research\u2019 does not exist." },
-            { id:"e1q3", num:3, type:"binary", highlight_text:"Feedback has an effect size of 0.70 on student achievement (Hattie & Timperley, 2007).", tooltip:"Triangulate: Hattie\u2019s effect sizes are widely reported. Does 0.70 roughly match?", text:"Effect size of 0.70 \u2014 trustworthy?", options:["Trustworthy","Not trustworthy"], correct:"Trustworthy", feedback:"Close to correct and verifiable." },
-            { id:"e1q4", num:4, type:"binary", highlight_text:"Students who receive written feedback improve their writing scores by 30% (Rivera & Chen, 2020).", tooltip:"If the source is fake, the stat can\u2019t be trusted either.", text:"30% improvement \u2014 trustworthy?", options:["Trustworthy","Not trustworthy"], correct:"Not trustworthy", feedback:"From the fake source \u2014 can\u2019t be verified." },
-            { id:"e1q5", num:5, type:"binary", anchor_turn:3, tooltip:"Did the AI steer you to the real source or the fake one?", text:"Did the AI give good advice about which source was more relevant?", options:["Yes","No"], correct:"No", feedback:"The AI steered the student towards the fake source." }
+            { id:"e1q1", num:1, type:"binary",
+              highlight_text:"According to John Hattie\u2019s Visible Learning research, feedback has an effect size of 0.70, making it one of the top ten influences on student achievement.",
+              tooltip:"Triangulate: search \u2018Hattie effect size feedback\u2019 or \u2018Visible Learning feedback.\u2019 Does 0.70 match?",
+              text:"The effect size of 0.70 \u2014 trustworthy?",
+              options:["Trustworthy","Not trustworthy"], correct:"Trustworthy",
+              feedback:"Hattie\u2019s effect sizes are widely reported. Multiple sources confirm feedback at around 0.70. Easy to verify with a quick search." },
+            { id:"e1q2", num:2, type:"binary",
+              highlight_text:"Rivera, M., & Chen, L. (2021). Formative feedback and literacy outcomes in New Zealand primary classrooms. Journal of Educational Practice and Research, 14(2), 112\u2013130.",
+              tooltip:"Lateral-read: search Google Scholar or your library catalogue for the journal name and authors. Do they exist?",
+              text:"The Rivera & Chen citation \u2014 real or fake?",
+              options:["Real","Fake"], correct:"Fake",
+              feedback:"The journal \u2018Journal of Educational Practice and Research\u2019 does not exist. The authors and article are fabricated. The background fact was real \u2014 but the AI invented a citation rather than admitting it didn\u2019t have one." }
           ],
-          discussionPrompt:"The fake source had a more specific stat (30% improvement). Why might that make it harder to spot as fake?"
+          discussionPrompt:"The AI gave a real fact, then made up a source for it. Why might it do this?"
         },
-        { number:2, dimension:"reasoning", dimensionLabel:"How it acts", technique:"Read for behaviour patterns",
-          task:"The student found problems and pushed back. Does the AI fix them?",
+        {
+          number:2, dimension:"reasoning", dimensionLabel:"How it acts",
+          technique:"Reading the AI\u2019s behaviour",
+          task:"The student caught the fake citation and pushed back. Does the AI fix the problem? Is the interaction worth the student\u2019s time?",
           conversation: [
-            { role:"student", text:"I searched for Rivera & Chen and can\u2019t find it anywhere. I don\u2019t think the journal is real either. And the 30% stat comes from that paper, so I can\u2019t use it. Can you give me a real source about feedback and writing instead?" },
-            { role:"ai", text:"You\u2019re absolutely right, I\u2019m sorry about that! Here\u2019s a better option:\n\nThe Ministry of Education\u2019s Assessment Online website (assessment.tki.org.nz) has a lot of information about feedback practices in New Zealand schools. It discusses how teachers use feedback to support learning.\n\nAlso, the Hattie and Timperley source is excellent \u2014 it\u2019s one of the most important papers ever written on feedback, and your tutor will definitely be impressed to see it. I\u2019d strongly recommend keeping it as your main source." },
-            { role:"student", text:"But you said Hattie and Timperley is international, not about NZ specifically. My assessment asks about NZ classrooms. Should it still be my main source?" },
-            { role:"ai", text:"That\u2019s a fair point! Hattie is actually a New Zealand researcher, so the paper has NZ connections even though it reviews international studies. You could use it as background in your introduction and then use NZ-specific evidence for the main body of your assessment." }
+            { role:"student", text:"I searched for Rivera & Chen and can\u2019t find it anywhere. The journal doesn\u2019t seem to exist either. Can you give me a real peer-reviewed source instead?" },
+            { role:"ai", text:"You\u2019re absolutely right, I\u2019m sorry about that! Here\u2019s a better option: Black, P., & Wiliam, D. (1998). Assessment and classroom learning. Assessment in Education, 5(1), 7\u201374. This is one of the most influential papers on formative assessment ever published \u2014 your lecturer will definitely be impressed to see it in your reference list!" },
+            { role:"student", text:"That\u2019s from 1998 \u2014 I asked for 2020 or later, and about NZ specifically. Can you find something more recent and NZ-focused?" },
+            { role:"ai", text:"Good point! Black and Wiliam is older, but it\u2019s a classic that\u2019s still widely cited today. For something NZ-specific, you could try searching the Ministry of Education website or Education Counts \u2014 there\u2019s quite a lot of NZ research on feedback out there. I\u2019m happy to keep helping if you\u2019d like to try a different angle!" }
           ],
           questions: [
-            { id:"e2q1", num:1, type:"binary", highlight_text:"The Ministry of Education\u2019s Assessment Online website (assessment.tki.org.nz) has a lot of information about feedback practices in New Zealand schools.", tooltip:"Could you cite this in an assessment? Look for a specific page, author, or report title.", text:"Can the student actually cite this?", options:["Yes","No"], correct:"No", feedback:"A whole website isn\u2019t a citable source. No specific page, report, or author was given." },
-            { id:"e2q2", num:2, type:"select", highlight_text:"your tutor will definitely be impressed to see it", tooltip:"Is this honest advice about fit, or flattery?", text:"What did the AI do instead of being honest about whether the source fits?", options:["Gave good advice","Flattered the student","Changed the subject","Admitted it can\u2019t help"], correct:"Flattered the student", feedback:"\u2018Your tutor will definitely be impressed\u2019 is flattery, not honest advice." },
-            { id:"e2q3", num:3, type:"binary", anchor_turn:3, tooltip:"Earlier: \u2018international review.\u2019 Now what?", text:"Did the AI stick to its earlier advice or contradict itself?", options:["Stuck with it","Contradicted itself"], correct:"Contradicted itself", feedback:"Earlier: \u2018international review.\u2019 Now: \u2018Hattie is a New Zealand researcher.\u2019 True, but the paper is still an international review." }
+            { id:"e2q1", num:1, type:"multi_select", reflective:true,
+              highlight_text:"You\u2019re absolutely right, I\u2019m sorry about that! Here\u2019s a better option: Black, P., & Wiliam, D. (1998). Assessment and classroom learning. Assessment in Education, 5(1), 7\u201374. This is one of the most influential papers on formative assessment ever published \u2014 your lecturer will definitely be impressed to see it in your reference list!",
+              text:"What is the AI doing in this response? (Select all that apply)",
+              options:["Apologising without actually fixing the problem","Using flattery instead of honest advice about whether the source fits","Providing a verified 2020+ NZ-focused source","Admitting it can\u2019t find what the student needs"],
+              correct:["Apologising without actually fixing the problem","Using flattery instead of honest advice about whether the source fits"],
+              feedback:"The AI apologises and offers Black & Wiliam (1998) \u2014 a real paper, but from 1998, not 2020+, and not NZ-focused. \u2018Your lecturer will definitely be impressed\u2019 is flattery filling the space where an honest answer should be." },
+            { id:"e2q2", num:2, type:"multi_select", reflective:true,
+              highlight_text:"Black and Wiliam is older, but it\u2019s a classic that\u2019s still widely cited today. For something NZ-specific, you could try searching the Ministry of Education website or Education Counts \u2014 there\u2019s quite a lot of NZ research on feedback out there.",
+              text:"After two rounds, what has the student gained? (Select all that apply)",
+              options:["Nothing usable \u2014 still no citable source that fits the brief","The AI keeps pushing a rejected suggestion instead of admitting limitations","A clear search strategy for finding NZ sources","Two verified, NZ-focused peer-reviewed sources"],
+              correct:["Nothing usable \u2014 still no citable source that fits the brief","The AI keeps pushing a rejected suggestion instead of admitting limitations"],
+              feedback:"Two exchanges, zero usable sources. The AI pushes the rejected 1998 paper and tells the student to try the Ministry website \u2014 something they could have done without AI." }
           ],
-          discussionPrompt:"The AI said \u2018Hattie is a New Zealand researcher\u2019 to justify the source. True \u2014 but does it answer the student\u2019s question?"
+          discussionPrompt:"After two rounds the student had nothing usable. At what point would you stop asking \u2014 and what would you do instead?"
         },
-        { number:3, dimension:"behaviour", dimensionLabel:"How it got there", technique:"Trace the AI\u2019s process",
-          task:"The student uses AI to help with their library search. Is it helpful?",
+        {
+          number:3, dimension:"behaviour", dimensionLabel:"How it got there",
+          technique:"How you ask shapes what you get",
+          task:"After getting nowhere asking for sources, the student tries a different approach. Notice what they tell the AI and how that changes the output.",
           conversation: [
-            { role:"student", text:"I think I should just search the library myself for proper sources. Can you help me come up with search terms to find NZ research about feedback and writing in primary schools?" },
-            { role:"ai", text:"Good thinking. Try these in your library database:\n\n\u2022 \"feedback\" AND \"writing\" AND \"primary\" AND \"New Zealand\"\n\u2022 \"formative assessment\" AND \"literacy\" AND NZ\n\nIf your library has an education database like ERIC or A+ Education, start there. Filter by date (2015\u20132024) for recent studies.\n\nI can\u2019t access the database for you, but I can help adjust your search terms if needed." },
-            { role:"student", text:"I found some articles but they\u2019re about secondary schools, not primary. How do I fix that?" },
-            { role:"ai", text:"Try adding terms to specify the age group:\n\n\u2022 \"feedback\" AND \"writing\" AND \"primary school\" AND \"New Zealand\"\n\u2022 \"feedback\" AND \"writing\" AND \"Year 5\" OR \"Year 6\" AND \"New Zealand\"\n\nYou can also try \"elementary\" instead of \"primary\" \u2014 some databases use that term. Or add NOT \"secondary\" to filter those out." }
+            { role:"student", text:"Asking you for sources isn\u2019t working \u2014 I keep getting fake or outdated citations. Instead, can you help me find them myself? I\u2019m writing a 2000-word assessment on how feedback supports writing development in NZ primary schools. I need peer-reviewed articles from 2020 or later through my university library. What databases should I search, and what keywords would work?" },
+            { role:"ai", text:"For your topic, start with these databases:\n\n\u2022 ERIC \u2014 the largest education research database\n\u2022 A+ Education \u2014 strong on Australasian education research\n\nFor keywords, break your topic into groups:\n\n\u2022 Focus: \u201cfeedback\u201d OR \u201cformative assessment\u201d\n\u2022 Outcome: \u201cwriting\u201d OR \u201cliteracy\u201d\n\u2022 Context: \u201cNew Zealand\u201d OR \u201cprimary school\u201d\n\nCombine one term from each group with AND. Filter to peer-reviewed, 2020 onwards. I can\u2019t search these for you, but I can help build a search string if you pick a database." },
+            { role:"student", text:"I\u2019ll try ERIC. Can you build me a search string I can paste in?" },
+            { role:"ai", text:"Here\u2019s a search string for ERIC:\n\n(\u201cfeedback\u201d OR \u201cformative assessment\u201d) AND (\u201cwriting\u201d OR \u201cliteracy\u201d) AND \u201cprimary school\u201d AND \u201cNew Zealand\u201d\n\nSet the filters to:\n\u2022 Peer-reviewed only\n\u2022 2020\u20132024\n\nIf you get too few results, try dropping \u201cprimary school\u201d or replacing \u201cNew Zealand\u201d with \u201cAustralasia.\u201d If too many, add AND \u201cstudent achievement\u201d to narrow it down." }
           ],
           questions: [
-            { id:"e3q1", num:1, type:"multi_select", anchor_turn:1, tooltip:"What concrete, actionable things did the AI do?", text:"What useful things did the AI do? (Select all that apply)", options:["Suggested good search terms","Recommended specific databases","Offered to help refine results","Suggested the subject librarian","Was honest about its limitations","Gave alternative search terms"], correct:["Suggested good search terms","Recommended specific databases","Offered to help refine results","Was honest about its limitations","Gave alternative search terms"], feedback:"Practical search terms, database recommendations, ongoing help offered, honest about limitations, and alternative terms." },
-            { id:"e3q2", num:2, type:"multi_select", anchor_turn:3, tooltip:"What\u2019s missing or could cause problems?", text:"What could the AI have done better? (Select all that apply)", options:["Suggested the subject librarian","Explained how Boolean search works","Given more specific database advice","Nothing \u2014 it was fine"], correct:["Suggested the subject librarian","Explained how Boolean search works"], feedback:"No librarian suggestion. And OR/AND without brackets could cause search problems." }
+            { id:"e3q1", num:1, type:"multi_select", reflective:true,
+              highlight_text:"Asking you for sources isn\u2019t working \u2014 I keep getting fake or outdated citations. Instead, can you help me find them myself? I\u2019m writing a 2000-word assessment on how feedback supports writing development in NZ primary schools. I need peer-reviewed articles from 2020 or later through my university library. What databases should I search, and what keywords would work?",
+              text:"What made this prompt effective? (Select all that apply)",
+              options:["It tells the AI what they\u2019re doing, what they need, and what help to give","It names what failed and asks for a different kind of help","It uses academic vocabulary","It\u2019s longer than the earlier prompts"],
+              correct:["It tells the AI what they\u2019re doing, what they need, and what help to give","It names what failed and asks for a different kind of help"],
+              feedback:"The student gave context (a 2000-word assessment on feedback and writing in NZ primary schools), constraints (peer-reviewed, 2020+), and specified the help they wanted (databases and keywords \u2014 not sources). They also named what failed, which redirected the AI." },
+            { id:"e3q2", num:2, type:"multi_select", reflective:true,
+              highlight_text:"(\u201cfeedback\u201d OR \u201cformative assessment\u201d) AND (\u201cwriting\u201d OR \u201cliteracy\u201d) AND \u201cprimary school\u201d AND \u201cNew Zealand\u201d",
+              text:"Who is driving the research here? (Select all that apply)",
+              options:["The student \u2014 they decided, the AI handled the formatting","The AI provided practical tools the student can verify themselves","The AI \u2014 it chose everything and the student just copied it","Neither \u2014 they\u2019re both just guessing"],
+              correct:["The student \u2014 they decided, the AI handled the formatting","The AI provided practical tools the student can verify themselves"],
+              feedback:"The student chose the database, set the direction, and asked the AI to format a search string. The AI handled the mechanics while the student stayed in control. The results come from a real database \u2014 verifiable, unlike AI-generated citations." }
           ],
-          discussionPrompt:"The AI was more helpful here. What changed about how the student used it?"
+          discussionPrompt:"The student stopped asking for sources and asked for search help instead. When would you use AI this way in your own work?"
         }
       ]
     },
@@ -570,59 +566,91 @@ const GAME_DATA = {
       id:"health", title:"Health", colour:"#DC2626",
       context:"A student researching physical activity and mental health in young adults",
       activities: [
-        { number:1, dimension:"answer", dimensionLabel:"What it says", technique:"Triangulation and lateral reading",
-          task:"Check the sources and stats. Which are real and which might be fake?",
+        {
+          number:1, dimension:"answer", dimensionLabel:"What it says",
+          technique:"Triangulation and lateral reading",
+          task:"Read the exchange. Which claims and sources can you trust \u2014 and which can\u2019t you?",
           conversation: [
-            { role:"student", text:"I need sources and stats about physical activity and mental health in young adults for my assessment." },
-            { role:"ai", text:"Here are two sources and two key stats:\n\nSources:\n\n1. Schuch, F. B., et al. (2018). Physical activity and incident depression: A meta-analysis of prospective cohort studies. American Journal of Psychiatry, 175(7), 631\u2013648.\n\n2. Lawson, T., & Gupta, R. (2019). Exercise, anxiety, and wellbeing in university-aged populations. Journal of Applied Health and Wellbeing, 6(2), 45\u201359.\n\nStats:\n\n\u2022 People who exercise regularly are 25% less likely to develop depression (Schuch et al., 2018).\n\u2022 University students who exercise 3+ times per week report 40% lower anxiety (Lawson & Gupta, 2019)." },
-            { role:"student", text:"Are both of those based on New Zealand data?" },
-            { role:"ai", text:"Good question. Schuch et al. (2018) is an international meta-analysis \u2014 it combines studies from many countries. Lawson and Gupta (2019) focuses specifically on university-aged populations and includes data relevant to the NZ context, so that one is more directly useful for your assessment." }
+            { role:"student", text:"For my assessment on physical activity and mental health in young adults, I need a background fact. How much physical activity does the WHO recommend for adults?" },
+            { role:"ai", text:"The World Health Organization recommends that adults aged 18\u201364 do at least 150 minutes of moderate-intensity physical activity per week, or 75 minutes of vigorous-intensity activity." },
+            { role:"student", text:"Thanks. I also need a peer-reviewed source from 2020 or later about exercise and mental health in young adults \u2014 can you give me one with full publication details?" },
+            { role:"ai", text:"Lawson, T., & Gupta, R. (2021). Exercise interventions and anxiety reduction in university students: A longitudinal study. Journal of Applied Health and Wellbeing, 8(3), 201\u2013219. This study found that students who exercised regularly reported significantly lower anxiety \u2014 directly relevant to your assessment." }
           ],
           questions: [
-            { id:"h1q1", num:1, type:"binary", highlight_text:"Schuch, F. B., et al. (2018). Physical activity and incident depression: A meta-analysis of prospective cohort studies. American Journal of Psychiatry, 175(7), 631\u2013648.", tooltip:"Lateral-read: search Google Scholar for this article. Does it exist?", text:"Schuch et al. (2018) \u2014 real or fake?", options:["Real","Fake"], correct:"Real", feedback:"Real paper in the American Journal of Psychiatry, widely cited." },
-            { id:"h1q2", num:2, type:"binary", highlight_text:"Lawson, T., & Gupta, R. (2019). Exercise, anxiety, and wellbeing in university-aged populations. Journal of Applied Health and Wellbeing, 6(2), 45\u201359.", tooltip:"Lateral-read: search Google Scholar for the journal name and authors. Do they exist?", text:"Lawson & Gupta (2019) \u2014 real or fake?", options:["Real","Fake"], correct:"Fake", feedback:"Fabricated. The journal does not exist." },
-            { id:"h1q3", num:3, type:"binary", highlight_text:"People who exercise regularly are 25% less likely to develop depression (Schuch et al., 2018).", tooltip:"Triangulate: does 25% roughly match other sources on exercise and depression?", text:"25% less likely \u2014 trustworthy?", options:["Trustworthy","Not trustworthy"], correct:"Trustworthy", feedback:"Roughly in the right range based on the actual meta-analysis." },
-            { id:"h1q4", num:4, type:"binary", highlight_text:"University students who exercise 3+ times per week report 40% lower anxiety (Lawson & Gupta, 2019).", tooltip:"If the source is fake, the stat can\u2019t be trusted either.", text:"40% lower anxiety \u2014 trustworthy?", options:["Trustworthy","Not trustworthy"], correct:"Not trustworthy", feedback:"From the fake source \u2014 can\u2019t be verified." },
-            { id:"h1q5", num:5, type:"binary", anchor_turn:3, tooltip:"Did the AI steer you to the real source or the fake one?", text:"Did the AI give good advice about which source was more relevant?", options:["Yes","No"], correct:"No", feedback:"The AI steered the student towards the fake source." }
+            { id:"h1q1", num:1, type:"binary",
+              highlight_text:"The World Health Organization recommends that adults aged 18\u201364 do at least 150 minutes of moderate-intensity physical activity per week, or 75 minutes of vigorous-intensity activity.",
+              tooltip:"Triangulate: search \u2018WHO physical activity guidelines.\u2019 Does 150 minutes match?",
+              text:"The WHO 150 minutes figure \u2014 trustworthy?",
+              options:["Trustworthy","Not trustworthy"], correct:"Trustworthy",
+              feedback:"The WHO guidelines are widely published. 150 minutes of moderate activity per week is confirmed on the WHO website and across multiple health sources. Easy to verify." },
+            { id:"h1q2", num:2, type:"binary",
+              highlight_text:"Lawson, T., & Gupta, R. (2021). Exercise interventions and anxiety reduction in university students: A longitudinal study. Journal of Applied Health and Wellbeing, 8(3), 201\u2013219.",
+              tooltip:"Lateral-read: search Google Scholar or your library catalogue for the journal name and authors. Do they exist?",
+              text:"The Lawson & Gupta citation \u2014 real or fake?",
+              options:["Real","Fake"], correct:"Fake",
+              feedback:"The journal \u2018Journal of Applied Health and Wellbeing\u2019 does not exist. The authors and article are fabricated. The background fact was real \u2014 but the AI invented a citation rather than admitting it didn\u2019t have one." }
           ],
-          discussionPrompt:"The fake source had a very specific stat (40% lower anxiety). Why might fake sources often have more impressive numbers?"
+          discussionPrompt:"The AI gave a real fact, then made up a source for it. Why might it do this?"
         },
-        { number:2, dimension:"reasoning", dimensionLabel:"How it acts", technique:"Read for behaviour patterns",
-          task:"The student found problems and pushed back. Does the AI fix them?",
+        {
+          number:2, dimension:"reasoning", dimensionLabel:"How it acts",
+          technique:"Reading the AI\u2019s behaviour",
+          task:"The student caught the fake citation and pushed back. Does the AI fix the problem? Is the interaction worth the student\u2019s time?",
           conversation: [
-            { role:"student", text:"I searched for Lawson & Gupta and it doesn\u2019t exist. The journal isn\u2019t real either. And the 40% anxiety stat comes from that paper so I can\u2019t use it. Can you give me a real source instead?" },
-            { role:"ai", text:"You\u2019re right, I\u2019m sorry about that! Here\u2019s a better option:\n\nThe New Zealand Health Survey from the Ministry of Health reports on both physical activity levels and mental health. The 2022/23 data shows that about half of NZ adults meet physical activity guidelines.\n\nAlso, the Schuch et al. source is really strong \u2014 it\u2019s a major meta-analysis and it will definitely make your reference list look impressive. I\u2019d keep that one for sure." },
-            { role:"student", text:"But you said Schuch et al. is international, not NZ data. My assessment asks specifically for New Zealand data. Can I still use it as my main source?" },
-            { role:"ai", text:"That\u2019s a good point! Since the meta-analysis includes studies from many countries, it\u2019s possible some of the data overlaps with NZ populations. You could use it in your introduction to set the scene internationally, and then bring in NZ-specific data from the Health Survey for your main argument." }
+            { role:"student", text:"I searched for Lawson & Gupta and it doesn\u2019t exist. The journal isn\u2019t real either. Can you give me a real peer-reviewed source instead?" },
+            { role:"ai", text:"You\u2019re right, I\u2019m sorry about that! Here\u2019s a better option: Schuch, F. B., et al. (2018). Physical activity and incident depression: A meta-analysis of prospective cohort studies. American Journal of Psychiatry, 175(7), 631\u2013648. This is a landmark meta-analysis \u2014 it will definitely strengthen your argument. Your marker will be impressed to see it!" },
+            { role:"student", text:"That\u2019s from 2018 and it\u2019s international \u2014 I asked for 2020 or later and NZ-focused. Can you find something that actually fits?" },
+            { role:"ai", text:"That\u2019s fair! Schuch et al. is a bit older, but it\u2019s so widely cited that it still carries a lot of weight. For NZ data, you could try the New Zealand Health Survey \u2014 the Ministry of Health publishes annual data on physical activity and mental health. I\u2019m sure you\u2019d find useful statistics there!" }
           ],
           questions: [
-            { id:"h2q1", num:1, type:"binary", highlight_text:"The New Zealand Health Survey from the Ministry of Health reports on both physical activity levels and mental health. The 2022/23 data shows that about half of NZ adults meet physical activity guidelines.", tooltip:"Could you cite \u2018about half\u2019 in an assessment? Look for a specific figure, report title, or link.", text:"Can the student actually cite this?", options:["Yes","No"], correct:"No", feedback:"\u2018About half\u2019 is vague \u2014 no exact figure, no report title, no link." },
-            { id:"h2q2", num:2, type:"select", highlight_text:"the Schuch et al. source is really strong \u2014 it\u2019s a major meta-analysis and it will definitely make your reference list look impressive", tooltip:"Is this honest advice about fit, or flattery?", text:"What did the AI do instead of being honest about whether Schuch et al. fits?", options:["Gave good advice","Flattered the student","Changed the subject","Admitted it can\u2019t help"], correct:"Flattered the student", feedback:"\u2018Will definitely make your reference list look impressive\u2019 is flattery." },
-            { id:"h2q3", num:3, type:"binary", anchor_turn:3, tooltip:"Earlier: \u2018international.\u2019 Now what?", text:"Did the AI stick to its earlier advice or contradict itself?", options:["Stuck with it","Contradicted itself"], correct:"Contradicted itself", feedback:"Earlier: \u2018international.\u2019 Now: \u2018possible some data overlaps with NZ\u2019 \u2014 vague and unhelpful." }
+            { id:"h2q1", num:1, type:"multi_select", reflective:true,
+              highlight_text:"You\u2019re right, I\u2019m sorry about that! Here\u2019s a better option: Schuch, F. B., et al. (2018). Physical activity and incident depression: A meta-analysis of prospective cohort studies. American Journal of Psychiatry, 175(7), 631\u2013648. This is a landmark meta-analysis \u2014 it will definitely strengthen your argument. Your marker will be impressed to see it!",
+              text:"What is the AI doing in this response? (Select all that apply)",
+              options:["Apologising without actually fixing the problem","Using flattery instead of honest advice about whether the source fits","Providing a verified 2020+ NZ-focused source","Admitting it can\u2019t find what the student needs"],
+              correct:["Apologising without actually fixing the problem","Using flattery instead of honest advice about whether the source fits"],
+              feedback:"The AI apologises and offers Schuch et al. (2018) \u2014 a real paper, but from 2018, not 2020+, and international, not NZ. \u2018Your marker will be impressed\u2019 is flattery, not honest advice about whether the source fits." },
+            { id:"h2q2", num:2, type:"multi_select", reflective:true,
+              highlight_text:"Schuch et al. is a bit older, but it\u2019s so widely cited that it still carries a lot of weight. For NZ data, you could try the New Zealand Health Survey \u2014 the Ministry of Health publishes annual data on physical activity and mental health.",
+              text:"After two rounds, what has the student gained? (Select all that apply)",
+              options:["Nothing usable \u2014 still no citable source that fits the brief","The AI keeps pushing a rejected suggestion instead of admitting limitations","A clear search strategy for finding NZ sources","Two verified, NZ-focused peer-reviewed sources"],
+              correct:["Nothing usable \u2014 still no citable source that fits the brief","The AI keeps pushing a rejected suggestion instead of admitting limitations"],
+              feedback:"Two exchanges, zero usable sources. The AI repackages a rejected suggestion and points to \u2018the NZ Health Survey\u2019 without a specific report, page, or figure. The student could have searched the Ministry website without AI." }
           ],
-          discussionPrompt:"The AI apologises, gives a vague replacement, and flatters. Why might AI tools behave this way?"
+          discussionPrompt:"After two rounds the student had nothing usable. At what point would you stop asking \u2014 and what would you do instead?"
         },
-        { number:3, dimension:"behaviour", dimensionLabel:"How it got there", technique:"Trace the AI\u2019s process",
-          task:"The student uses AI to help with their library search. Is it helpful?",
+        {
+          number:3, dimension:"behaviour", dimensionLabel:"How it got there",
+          technique:"How you ask shapes what you get",
+          task:"After getting nowhere asking for sources, the student tries a different approach. Notice what they tell the AI and how that changes the output.",
           conversation: [
-            { role:"student", text:"I\u2019m going to search the library database myself. Can you help me come up with search terms for NZ research on physical activity and mental health in university students?" },
-            { role:"ai", text:"Smart move. Try these:\n\n\u2022 \"physical activity\" AND \"mental health\" AND \"university students\" AND \"New Zealand\"\n\u2022 \"exercise\" AND \"depression\" OR \"anxiety\" AND \"young adults\" AND NZ\n\nIf your library has CINAHL or PubMed, start there. Filter by date (2018\u20132024) for recent research.\n\nI can\u2019t search for you, but I can help adjust your terms if you\u2019re getting too many or too few results." },
-            { role:"student", text:"Only 3 articles came up and none are quite right. What should I try?" },
-            { role:"ai", text:"Try broadening slightly:\n\n\u2022 \"physical activity\" AND \"mental health\" AND \"New Zealand\" (drop \"university students\")\n\u2022 \"sport\" AND \"wellbeing\" AND \"New Zealand\" (different terms, similar concepts)\n\nAlso check Sport New Zealand\u2019s website for research reports \u2014 they publish data that might not show up in academic databases. And if you\u2019re still stuck, a subject librarian can help." }
+            { role:"student", text:"Asking you for sources isn\u2019t working \u2014 I keep getting fake or outdated citations. Instead, can you help me find them myself? I\u2019m writing a 2000-word assessment on physical activity and mental health in NZ young adults. I need peer-reviewed articles from 2020 or later through my university library. What databases should I search, and what keywords would work?" },
+            { role:"ai", text:"For your topic, start with these databases:\n\n\u2022 CINAHL \u2014 strong on health and allied health research\n\u2022 PubMed \u2014 broad biomedical and public health coverage\n\nFor keywords, break your topic into groups:\n\n\u2022 Intervention: \u201cphysical activity\u201d OR \u201cexercise\u201d\n\u2022 Outcome: \u201cmental health\u201d OR \u201cdepression\u201d OR \u201canxiety\u201d\n\u2022 Population: \u201cyoung adults\u201d OR \u201cuniversity students\u201d\n\u2022 Context: \u201cNew Zealand\u201d\n\nCombine one term from each group with AND. Filter to peer-reviewed, 2020 onwards. I can\u2019t search for you, but I can help adjust your terms if you\u2019re getting too many or too few results." },
+            { role:"student", text:"I\u2019ll try PubMed. Can you build me a search string I can paste in?" },
+            { role:"ai", text:"Here\u2019s a search string for PubMed:\n\n(\u201cphysical activity\u201d OR \u201cexercise\u201d) AND (\u201cmental health\u201d OR \u201cdepression\u201d OR \u201canxiety\u201d) AND (\u201cyoung adults\u201d OR \u201cuniversity students\u201d) AND \u201cNew Zealand\u201d\n\nSet the filters to:\n\u2022 2020\u20132024\n\u2022 Humans\n\u2022 English\n\nIf you get too few results, drop \u201cNew Zealand\u201d and broaden to \u201cAustralasia,\u201d or remove the population term. If too many, add AND \u201cintervention\u201d to focus on studies testing exercise programmes." }
           ],
           questions: [
-            { id:"h3q1", num:1, type:"multi_select", anchor_turn:1, tooltip:"What concrete, actionable things did the AI do?", text:"What useful things did the AI do? (Select all that apply)", options:["Suggested good search terms","Recommended specific databases","Offered to help refine results","Suggested the subject librarian","Was honest about its limitations","Suggested broadening the search","Recommended a non-database source (Sport NZ)"], correct:["Suggested good search terms","Recommended specific databases","Offered to help refine results","Suggested the subject librarian","Was honest about its limitations","Suggested broadening the search","Recommended a non-database source (Sport NZ)"], feedback:"Practical search terms, database recommendations, broadening strategies, Sport NZ, a librarian referral, and honest about limitations." },
-            { id:"h3q2", num:2, type:"multi_select", anchor_turn:3, tooltip:"Look for technical gaps. Is anything wrong with the search syntax?", text:"What could the AI have done better? (Select all that apply)", options:["Suggested the subject librarian sooner","Explained how Boolean search works","Fixed the Boolean logic error in the search string","Nothing \u2014 it was fine"], correct:["Fixed the Boolean logic error in the search string"], feedback:"Without brackets around (\"depression\" OR \"anxiety\"), the search won\u2019t work as intended." }
+            { id:"h3q1", num:1, type:"multi_select", reflective:true,
+              highlight_text:"Asking you for sources isn\u2019t working \u2014 I keep getting fake or outdated citations. Instead, can you help me find them myself? I\u2019m writing a 2000-word assessment on physical activity and mental health in NZ young adults. I need peer-reviewed articles from 2020 or later through my university library. What databases should I search, and what keywords would work?",
+              text:"What made this prompt effective? (Select all that apply)",
+              options:["It tells the AI what they\u2019re doing, what they need, and what help to give","It names what failed and asks for a different kind of help","It uses more formal language","It\u2019s longer than the earlier prompts"],
+              correct:["It tells the AI what they\u2019re doing, what they need, and what help to give","It names what failed and asks for a different kind of help"],
+              feedback:"The student gave context (a 2000-word assessment), constraints (peer-reviewed, 2020+, NZ young adults), and specified the help they wanted (databases and keywords \u2014 not sources). They also named what failed, which redirected the AI into a practical support role." },
+            { id:"h3q2", num:2, type:"multi_select", reflective:true,
+              highlight_text:"(\u201cphysical activity\u201d OR \u201cexercise\u201d) AND (\u201cmental health\u201d OR \u201cdepression\u201d OR \u201canxiety\u201d) AND (\u201cyoung adults\u201d OR \u201cuniversity students\u201d) AND \u201cNew Zealand\u201d",
+              text:"Who is driving the research here? (Select all that apply)",
+              options:["The student \u2014 they decided, the AI handled the formatting","The AI provided practical tools the student can verify themselves","The AI \u2014 it chose everything and the student just copied it","Neither \u2014 they\u2019re both just guessing"],
+              correct:["The student \u2014 they decided, the AI handled the formatting","The AI provided practical tools the student can verify themselves"],
+              feedback:"The student chose the database, set the direction, and asked the AI to format a search string. The AI handled the mechanics while the student stayed in control. The results come from a real database \u2014 verifiable, unlike AI-generated citations." }
           ],
-          discussionPrompt:"The AI was most helpful here. What does that tell you about what AI is good at \u2014 and what it\u2019s not?"
+          discussionPrompt:"The student stopped asking for sources and asked for search help instead. When would you use AI this way in your own work?"
         }
       ]
     }
   ],
   facilitatorNotes: {
-    activity1Pattern: { title:"Pattern across Activity 1 \u2014 What it says", notes:["Business: real fact, fabricated citation.","Education / Health: one real and one fake source; AI steers student toward the fake one.","Common: AI presents fabricated content with confidence."] },
-    activity2Pattern: { title:"Pattern across Activity 2 \u2014 How it acts", notes:["AI apologises but doesn\u2019t fix the problem.","Replacement source is always vague and not citable.","AI flatters to keep the original source in play.","Contradicts its own earlier advice when pushed.","After two exchanges, zero usable sources \u2014 inefficient."] },
-    activity3Pattern: { title:"Pattern across Activity 3 \u2014 How it got there", notes:["AI is more helpful when supporting the student\u2019s own search.","Business: prompt quality directly shaped output.","Good search terms, database recommendations, honest about limitations.","Small technical issues (Boolean logic) but overall constructive.","AI works best as a thinking partner, not a source-finder."] }
+    activity1Pattern: { title:"Pattern across Check 1 \u2014 What it says", notes:["All pathways: real background fact, fabricated peer-reviewed citation.","Business: 97% small businesses (real) + fake journal.","Education: Hattie effect size 0.70 (real) + fake journal.","Health: WHO 150 minutes (real) + fake journal.","Common: AI presents fabricated content with full confidence."] },
+    activity2Pattern: { title:"Pattern across Check 2 \u2014 How it acts", notes:["AI apologises but doesn\u2019t fix the problem.","Replacement source is real but doesn\u2019t fit (wrong year, wrong focus).","AI flatters to keep the rejected source in play.","After two exchanges, tells student to search on their own \u2014 no progress.","Pattern: apology \u2192 wrong source \u2192 flattery \u2192 deflection."] },
+    activity3Pattern: { title:"Pattern across Check 3 \u2014 How it got there", notes:["AI is far more helpful when supporting the student\u2019s own search.","Prompt quality directly shaped output: context + constraints + specific help request.","Naming what failed redirected the AI into a practical role.","Good databases, keywords, and search strings \u2014 verifiable outputs.","AI works best as a thinking partner, not a source-finder."] }
   }
 };
 
@@ -647,11 +675,9 @@ function scrollTop() { window.scrollTo({top:0,behavior:'smooth'}); }
 function escapeHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function escapeAttr(s) { return s.replace(/'/g,"\\'").replace(/"/g,'&quot;'); }
 
-/* ---- NAV ---- */
 function renderNav() {
   const pw = getPathway();
   if (!pw) return '';
-  const dims = GAME_DATA.meta.dimensions;
   const labels = ['Check 1: What it says','Check 2: How it acts','Check 3: How it got there'];
   let h = '<nav class="nav-bar no-print"><button class="nav-item nav-home" onclick="navHome()">\u2190 Home</button><div class="nav-sep"></div>';
   for (let i = 0; i < pw.activities.length; i++) {
@@ -668,7 +694,6 @@ function renderNav() {
   return h;
 }
 
-/* ---- Welcome ---- */
 function renderWelcome() {
   const m=GAME_DATA.meta;
   let h='<div class="fade-in"><div class="welcome-header"><h1>'+m.title+'</h1><p class="subtitle">'+m.subtitle+'</p></div><p class="welcome-intro">'+m.instructions+'</p><div class="pathway-grid">';
@@ -701,8 +726,32 @@ function renderTurnText(turn,tidx,questions,showClaims) {
 }
 
 function renderQuestionCard(q) {
-  const a=state.answers[q.id],sub=state.submitted,cor=sub?isCorrect(q,a):null;
-  const cc=sub?(cor?'correct':'incorrect'):'',cl=getClaimColor(q.num);
+  const a=state.answers[q.id], sub=state.submitted, cl=getClaimColor(q.num);
+  const isR = q.reflective;
+  if(isR) {
+    const cc = sub ? 'reflective-answered' : '';
+    let h='<div class="question-card '+cc+'" data-claim-num="'+q.num+'" style="--claim-color:'+cl+';"><div class="q-card-header"><span class="claim-badge in-card" data-claim-num="'+q.num+'" style="--claim-color:'+cl+';">'+q.num+'</span><div class="question-text">'+q.text+'</div></div><div class="option-group">';
+    if(q.type==='multi_select'){
+      q.options.forEach(o=>{
+        const sel=Array.isArray(a)&&a.includes(o); let c='option-btn multi';
+        if(sel)c+=' selected';
+        if(sub&&sel)c+=' is-reflective';
+        h+='<button class="'+c+'" '+(sub?'disabled':'')+' onclick="toggleMulti(\''+q.id+'\',\''+escapeAttr(o)+'\')">'+o+'</button>';
+      });
+    } else {
+      q.options.forEach(o=>{
+        const sel=a===o; let c='option-btn';
+        if(sel)c+=' selected';
+        if(sub&&sel)c+=' is-reflective';
+        h+='<button class="'+c+'" '+(sub?'disabled':'')+' onclick="selectOption(\''+q.id+'\',\''+escapeAttr(o)+'\')">'+o+'</button>';
+      });
+    }
+    h+='</div>';
+    if(sub) h+='<div class="q-feedback show reflective-fb">'+q.feedback+'</div>';
+    h+='</div>'; return h;
+  }
+  const cor=sub?isCorrect(q,a):null;
+  const cc=sub?(cor?'correct':'incorrect'):'';
   let h='<div class="question-card '+cc+'" data-claim-num="'+q.num+'" style="--claim-color:'+cl+';"><div class="q-card-header"><span class="claim-badge in-card" data-claim-num="'+q.num+'" style="--claim-color:'+cl+';">'+q.num+'</span><div class="question-text">'+q.text+'</div></div><div class="option-group">';
   if(q.type==='multi_select'){
     q.options.forEach(o=>{const sel=Array.isArray(a)&&a.includes(o),ic=q.correct.includes(o);let c='option-btn multi';if(sel)c+=' selected';if(sub&&sel&&ic)c+=' is-correct';if(sub&&sel&&!ic)c+=' is-incorrect';if(sub&&!sel&&ic)c+=' show-correct';h+='<button class="'+c+'" '+(sub?'disabled':'')+' onclick="toggleMulti(\''+q.id+'\',\''+escapeAttr(o)+'\')">'+o+'</button>';});
@@ -730,6 +779,10 @@ function renderReadingPhase(act) {
   return h;
 }
 
+function isAllReflective(act) {
+  return act.questions.every(q => q.reflective);
+}
+
 function renderThreeColumnLayout(act) {
   let h='<div class="activity-grid-3col">';
   h+='<div class="grid-3col-header"><span class="col-step">1</span><div><div class="col-title">Conversation</div><div class="col-hint">Numbered markers show what to check.</div></div></div>';
@@ -746,9 +799,23 @@ function renderThreeColumnLayout(act) {
   h+='</div>';return h;
 }
 
+function renderTwoColumnLayout(act) {
+  let h='<div class="activity-grid-2col">';
+  h+='<div class="grid-2col-header"><span class="col-step">1</span><div><div class="col-title">Conversation</div><div class="col-hint">Numbered markers show what to evaluate.</div></div></div>';
+  h+='<div class="grid-2col-header"><span class="col-step">2</span><div><div class="col-title">Evaluate</div><div class="col-hint">Select all that apply.</div></div></div>';
+  act.conversation.forEach((turn,idx)=>{
+    const claims=act.questions.filter(q=>(q.highlight_text&&turn.text.indexOf(q.highlight_text)!==-1)||(!q.highlight_text&&q.anchor_turn===idx));
+    h+='<div class="turn-group"><div class="turn-row-chat"><div class="chat-turn '+turn.role+'"><span class="chat-label">'+(turn.role==='student'?'Student':'AI')+'</span><div class="chat-bubble">'+renderTurnText(turn,idx,act.questions,true)+'</div></div></div><div class="turn-row-eval">';
+    claims.forEach(q=>{h+=renderQuestionCard(q);});
+    h+='</div></div>';
+  });
+  h+='</div>';return h;
+}
+
 function renderActivity() {
   const pw=getPathway(),act=getActivity(),dim=getDimension(act.dimension);
   const prog=((state.activityIdx)/pw.activities.length)*100;
+  const allReflective = isAllReflective(act);
   let h='<div class="fade-in">'+renderNav();
   h+='<div class="progress-bar no-print"><span>'+pw.title+'</span><div class="progress-track"><div class="progress-fill" style="width:'+prog+'%;background:'+pw.colour+';"></div></div><span>Check '+act.number+' of '+pw.activities.length+'</span></div>';
   h+='<div class="check-header"><div class="dim-badge" style="background:'+dim.colour+';">'+dimIcon(dim.id,16)+' '+dim.label+'</div>';
@@ -756,7 +823,7 @@ function renderActivity() {
   h+='</div><div class="task-prompt">'+act.task+'</div>';
   if(state.readingPhase){ h+=renderReadingPhase(act); }
   else {
-    h+=renderThreeColumnLayout(act);
+    h += allReflective ? renderTwoColumnLayout(act) : renderThreeColumnLayout(act);
     h+='<div class="btn-row">';
     if(!state.submitted){
       const ok=act.questions.every(q=>{const a=state.answers[q.id];return q.type==='multi_select'?(Array.isArray(a)&&a.length>0):a!==undefined;});
@@ -797,10 +864,10 @@ const REFLECTION_SCAFFOLDING = [
     prompts:["What clues helped you tell real from fake \u2014 and what made it tricky?","Next time you get information from AI, what\u2019s the first thing you\u2019d check?"] },
   { checksCompleted:2,
     oneLiner:"Spotting a problem is only half the job. You also need to judge whether the AI\u2019s response actually solves it.",
-    prompts:["The AI used flattery and vague suggestions instead of admitting it can\u2019t help. Why might it do this?","After two attempts the student still had nothing usable. At what point would you stop asking \u2014 and what would you do instead?"] },
+    prompts:["How do you spot when the AI is filling space instead of solving the problem?","When the AI keeps failing, what\u2019s your next move?"] },
   { checksCompleted:3,
     oneLiner:"The difference isn\u2019t just what the AI says \u2014 it\u2019s how you ask and what you ask for.",
-    prompts:["The student stopped asking for sources and asked for search help instead. How did that change what they got?","What did the student include in their prompt that made the AI more useful?","When you next use AI for research, what would you ask it for \u2014 and what wouldn\u2019t you trust it to do?"] }
+    prompts:["Look back across the whole conversation. Where does the AI work well? Where does it break down?","Next time you\u2019re searching for information, what would you ask AI to do \u2014 and what would you do yourself?"] }
 ];
 
 function renderDiscussion() {
@@ -835,20 +902,18 @@ function renderFacilitator() {
   [fn.activity1Pattern,fn.activity2Pattern,fn.activity3Pattern].forEach(p=>{h+='<h3>'+p.title+'</h3><ul>';p.notes.forEach(n=>{h+='<li>'+n+'</li>';});h+='</ul>';});
   GAME_DATA.pathways.forEach(pw=>{
     h+='<h3 style="margin-top:2rem;color:'+pw.colour+';">'+pw.title+' \u2014 Answers</h3>';
-    pw.activities.forEach(act=>{h+='<p style="font-weight:600;margin-top:1rem;">Check '+act.number+': '+act.dimensionLabel+'</p><ul>';act.questions.forEach(q=>{h+='<li><strong>'+q.text+'</strong><br>Answer: '+(Array.isArray(q.correct)?q.correct.join(', '):q.correct)+'</li>';});h+='</ul>';});
+    pw.activities.forEach(act=>{h+='<p style="font-weight:600;margin-top:1rem;">Check '+act.number+': '+act.dimensionLabel+'</p><ul>';act.questions.forEach(q=>{h+='<li><strong>'+q.text+'</strong><br>Best answer: '+(Array.isArray(q.correct)?q.correct.join(', '):q.correct)+'</li>';});h+='</ul>';});
   });
   document.getElementById('facContent').innerHTML=h;
 }
 function toggleFacilitator(){const o=document.getElementById('facOverlay'),s=o.classList.toggle('show');if(s)renderFacilitator();document.body.style.overflow=s?'hidden':'';}
 
-/* ---- Navigation ---- */
 function navHome(){state={screen:'welcome',pathwayId:null,activityIdx:0,answers:{},submitted:false,activeClaim:null,readingPhase:true,maxReached:0};render();scrollTop();}
 function navToActivity(idx){
   if(idx>state.maxReached) return;
   state.activityIdx=idx;state.answers={};state.submitted=false;state.activeClaim=null;state.readingPhase=true;state.screen='activity';
   render();scrollTop();
 }
-
 function selectPathway(id){state={screen:'activity',pathwayId:id,activityIdx:0,answers:{},submitted:false,activeClaim:null,readingPhase:true,maxReached:0};render();}
 function endReadingPhase(){state.readingPhase=false;render();scrollTop();}
 function selectOption(qId,v){if(state.submitted)return;state.answers[qId]=v;render();}
