@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Activity 1: Sort the information — MGMT996</title>
+<meta name="description" content="MGMT996 Activity 1: sort nine pieces of evidence into the group each one belongs to.">
+<style>
+:root{
+  color-scheme:light;
+  /* colours taken from the MGMT996 PowerPoint slide */
+  --ink:#14181F;
+  --muted:#5A6472;
+  --page:#FFFFFF;
+  --band:#D9D9D9;
+  --rule:#D5D9DE;
+
+  --company:#C55A11;   /* orange  */
+  --other:#548235;     /* green   */
+  --industry:#BF9000;  /* gold    */
+  --theory:#2E75B6;    /* blue    */
+
+  --chip:#C5E0B4;      /* mint header chip */
+  --card:#F8CBAD;      /* peach card       */
+  --card-edge:#E5A880;
+  --card-soft:#FBE5D6;
+
+  --good:#548235;
+  --good-bg:#E6F0DC;
+  --bad:#C55A11;
+  --bad-bg:#FBE5D6;
+
+  --font:'Aptos','Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif;
+  --side:104px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;color:var(--ink);font-family:var(--font);background:var(--page);
+  -webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;overscroll-behavior:none;
+}
+.app{
+  min-height:100%;display:flex;flex-direction:column;width:100%;max-width:580px;margin:0 auto;
+  padding:calc(12px + env(safe-area-inset-top,0px)) max(14px,env(safe-area-inset-right,0px))
+          calc(16px + env(safe-area-inset-bottom,0px)) max(14px,env(safe-area-inset-left,0px));
+}
+
+/* ---------- title band (grey bar on the slide) ---------- */
+.band{
+  background:var(--band);border-radius:8px;padding:11px 15px;margin-bottom:10px;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.band h1{font-size:1.06rem;font-weight:700;margin:0;line-height:1.2;letter-spacing:-.01em}
+.count{font-size:.72rem;font-weight:700;color:#5A6472;white-space:nowrap}
+.track{height:5px;background:#E8EAED;border-radius:99px;overflow:hidden;margin-bottom:12px}
+.track i{display:block;height:100%;width:0;border-radius:99px;background:var(--theory);transition:width .4s cubic-bezier(.4,0,.2,1)}
+
+/* ---------- brief (dashed box on the slide) ---------- */
+.brief{border:2px dashed #7A818B;border-radius:8px;padding:13px 15px;margin-bottom:12px;background:#fff}
+.brief p{margin:0 0 9px;font-size:.92rem;line-height:1.45}
+.brief p:last-child{margin-bottom:0}
+.brief b{font-weight:700}
+.btog{background:#fff;border:1px solid #9BA3AD;border-radius:6px;color:#3C4551;font:inherit;font-size:.72rem;font-weight:600;padding:5px 11px;cursor:pointer;white-space:nowrap}
+
+/* ---------- the four groups ---------- */
+.board{flex:1;display:grid;gap:9px;grid-template-columns:var(--side) minmax(0,1fr) var(--side);grid-template-rows:auto minmax(188px,1fr) auto}
+.zone{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  background:#fff;border:3px solid var(--c);border-radius:10px;padding:9px 7px;
+  cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;
+  transition:background .16s,transform .16s,box-shadow .16s,opacity .16s;
+}
+.zone .n{
+  display:block;background:var(--chip);border-radius:5px;padding:5px 9px;
+  font-size:.77rem;font-weight:700;line-height:1.18;color:#14181F;text-align:center;
+  transition:background .16s;
+}
+.zone .a{font-size:.92rem;line-height:1;font-weight:700;color:var(--c)}
+.z1{--c:var(--company)} .z2{--c:var(--other)} .z3{--c:var(--industry)} .z4{--c:var(--theory)}
+.zone.hot{transform:scale(1.04);box-shadow:0 8px 20px rgba(20,24,31,.2)}
+.zone.hot .n{background:#B2D79B}
+.zone.tried{opacity:.38}
+.zone.tried .n{background:#E3E6E9;text-decoration:line-through}
+.zone.right{background:var(--chip);box-shadow:0 8px 20px rgba(84,130,53,.3)}
+.zone.right .n{background:#A9CE8E}
+.zone.off{opacity:.3}
+.zone:focus-visible{outline:3px solid var(--theory);outline-offset:2px}
+.z-up{grid-column:1/4;grid-row:1;flex-direction:row;gap:8px}
+.z-left{grid-column:1;grid-row:2}
+.z-right{grid-column:3;grid-row:2}
+.z-down{grid-column:1/4;grid-row:3;flex-direction:row;gap:8px}
+.stage{grid-column:2;grid-row:2;display:flex;align-items:center;justify-content:center;position:relative;min-width:0}
+
+/* ---------- the card ---------- */
+.pcard{
+  width:100%;background:var(--card);border:1px solid var(--card-edge);border-radius:8px;
+  padding:16px 14px;text-align:center;font-size:.95rem;line-height:1.38;font-weight:600;color:#14181F;
+  box-shadow:0 9px 22px rgba(20,24,31,.16);
+  touch-action:none;cursor:grab;transform:rotate(-2deg);
+  transition:transform .22s cubic-bezier(.34,1.3,.5,1),opacity .22s;
+}
+.pcard .num{display:block;font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#9A5A22;margin-bottom:7px}
+.pcard.grab{cursor:grabbing;transition:none;box-shadow:0 20px 40px rgba(20,24,31,.26)}
+.pcard.enter{animation:enter .3s cubic-bezier(.2,.8,.3,1)}
+.pcard.nope{animation:nope .42s cubic-bezier(.36,.07,.19,.97)}
+.pcard.gone{opacity:0;transform:scale(.84) rotate(-2deg)}
+@keyframes enter{from{opacity:0;transform:translateY(10px) scale(.96) rotate(-2deg)}to{opacity:1;transform:rotate(-2deg)}}
+@keyframes nope{0%,100%{transform:rotate(-2deg)}20%{transform:translateX(-8px) rotate(-3.4deg)}50%{transform:translateX(7px) rotate(-.2deg)}80%{transform:translateX(-3px) rotate(-2.6deg)}}
+.hint{position:absolute;left:0;right:0;bottom:-24px;text-align:center;font-size:.73rem;color:var(--muted)}
+.hint.warn{color:var(--bad);font-weight:700}
+
+/* ---------- feedback ---------- */
+.fb{border-radius:8px;padding:14px 16px;margin-top:13px;border:2px solid var(--bad);background:var(--bad-bg);animation:rise .22s ease}
+.fb.yes{border-color:var(--good);background:var(--good-bg)}
+@keyframes rise{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.fb .vd{font-size:.68rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--bad);margin:0 0 6px}
+.fb.yes .vd{color:var(--good)}
+.fb p{margin:0;font-size:.93rem;line-height:1.5}
+.fb .again{margin-top:9px;font-weight:700;color:var(--bad)}
+
+/* ---------- buttons ---------- */
+.row{display:flex;gap:10px;margin-top:13px}
+.btn{font:inherit;font-weight:700;font-size:.96rem;background:#14181F;color:#fff;border:none;border-radius:8px;padding:14px 24px;cursor:pointer;flex:1}
+.btn:active{transform:translateY(1px)}
+.btn.alt{background:#fff;color:#14181F;border:2px solid #14181F}
+.btn:focus-visible{outline:3px solid var(--theory);outline-offset:2px}
+
+/* ---------- intro / results ---------- */
+.panel{background:#fff}
+.panel .lead{font-size:.95rem;line-height:1.5;margin:0 0 14px;color:#3C4551}
+.swatches{display:flex;gap:7px;margin:14px 0 4px;flex-wrap:wrap}
+.sw{flex:1;min-width:110px;border:3px solid var(--c);border-radius:8px;padding:7px 5px;text-align:center}
+.sw span{display:block;background:var(--chip);border-radius:5px;padding:4px 6px;font-size:.73rem;font-weight:700}
+.scorewrap{text-align:center;border:3px solid var(--theory);border-radius:10px;padding:18px 14px;margin:4px 0 2px}
+.score{font-size:3rem;font-weight:700;margin:0;color:var(--theory);line-height:1}
+.scorelbl{font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:7px 0 0}
+.trapbox{margin-top:14px;border:2px dashed var(--industry);background:#FFF6DE;border-radius:8px;padding:15px 17px}
+.trapbox h3{font-size:.88rem;font-weight:700;margin:0 0 7px}
+.trapbox p{margin:0;font-size:.91rem;line-height:1.5}
+.take{margin-top:16px;font-size:1rem;line-height:1.45;font-weight:700}
+.hidden{display:none!important}
+
+@media (max-width:400px){
+  :root{--side:96px}
+  .zone .n{font-size:.71rem;padding:4px 6px}
+  .pcard{font-size:.9rem;padding:14px 11px}
+  .board{grid-template-rows:auto minmax(168px,1fr) auto;gap:8px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ===== intro ===== -->
+  <section id="intro" class="panel">
+    <div class="band"><h1>Activity 1: Sort the information</h1></div>
+    <div class="brief">
+      <p><b>Your client:</b> <span id="i1"></span></p>
+      <p><b>Management issue:</b> <span id="i2"></span></p>
+      <p><b>Task:</b> <span id="i3"></span></p>
+    </div>
+    <p class="lead">Nine pieces of evidence, one at a time. Drag the card to a group, or just tap the group. Get it wrong and you will be told why, and the card comes back so you can try again.</p>
+    <div class="swatches">
+      <div class="sw z1"><span>The company</span></div>
+      <div class="sw z2"><span>Other organisations</span></div>
+      <div class="sw z3"><span>The industry</span></div>
+      <div class="sw z4"><span>Theory</span></div>
+    </div>
+    <div class="row"><button class="btn" id="start">Start</button></div>
+  </section>
+
+  <!-- ===== activity ===== -->
+  <section id="game" class="hidden" style="flex:1;display:flex;flex-direction:column">
+    <div class="band">
+      <h1>Sort the information</h1>
+      <div style="display:flex;align-items:center;gap:9px">
+        <span class="count" id="count">1 / 9</span>
+        <button class="btog" id="bt" aria-expanded="false">Brief</button>
+      </div>
+    </div>
+    <div class="track"><i id="bar"></i></div>
+    <div class="brief hidden" id="bp">
+      <p><b>Your client:</b> <span id="g1"></span></p>
+      <p><b>Management issue:</b> <span id="g2"></span></p>
+    </div>
+
+    <div class="board">
+      <div class="zone z-up z1"    data-g="company"  tabindex="0" role="button"><span class="a">&#8593;</span><span class="n">The company</span></div>
+      <div class="zone z-left z2"  data-g="other"    tabindex="0" role="button"><span class="a">&#8592;</span><span class="n">Other organisations</span></div>
+      <div class="stage">
+        <div class="pcard" id="card"><span class="num" id="cn">Card 1</span><span id="ct"></span></div>
+        <div class="hint" id="hint">Drag the card, or tap a group</div>
+      </div>
+      <div class="zone z-right z4" data-g="theory"   tabindex="0" role="button"><span class="a">&#8594;</span><span class="n">Theory</span></div>
+      <div class="zone z-down z3"  data-g="industry" tabindex="0" role="button"><span class="a">&#8595;</span><span class="n">The industry</span></div>
+    </div>
+
+    <div class="fb hidden" id="fb">
+      <p class="vd" id="vd"></p>
+      <p id="ft"></p>
+      <p class="again hidden" id="fa"></p>
+    </div>
+    <div class="row hidden" id="nr"><button class="btn" id="next">Next card</button></div>
+  </section>
+
+  <!-- ===== results ===== -->
+  <section id="end" class="panel hidden">
+    <div class="band"><h1>Activity 1 complete</h1></div>
+    <div class="scorewrap">
+      <p class="score" id="sc">0 / 8</p>
+      <p class="scorelbl" id="sclbl">right first time</p>
+    </div>
+    <div class="trapbox">
+      <h3 id="tt">And the last card</h3>
+      <p id="tx"></p>
+    </div>
+    <p class="take" id="tk"></p>
+    <div class="row"><button class="btn alt" id="again">Start again</button></div>
+  </section>
+
+</div>
+
+<script>
+/* ===================================================================
+   MGMT996 Activity 1 — card data.
+   Group names and colours match the PowerPoint slide.
+   =================================================================== */
+var ACTIVITY = {
+  brief:{
+    client:"A road traffic management company.",
+    issue:"Only three senior staff can judge worksite safety risks. The company wants to grow and needs to develop this capability in new staff.",
+    task:"Sort the evidence into the most appropriate groups."
+  },
+  groups:{
+    company:{label:"The company"}, other:{label:"Other organisations"},
+    industry:{label:"The industry"}, theory:{label:"Theory"}
+  },
+  cards:[
+  {text:"The company’s own plan to grow over the next three years",answer:"company",why:{
+    company:"Yes. This is the company’s own document. It tells you how fast they plan to grow, which is what makes the capability gap urgent.",
+    other:"Not quite. This is your client, not a different organisation. Other organisations means somebody else you can learn from.",
+    industry:"Not quite. One company’s growth plan is not evidence about the sector. The industry means rules, statistics and trends across all firms.",
+    theory:"Not quite. A business plan is not an idea that explains the problem. Theory means concepts and frameworks from academic literature."}},
+  {text:"A book on why experts cannot put their judgement into words",answer:"theory",why:{
+    theory:"Yes. This is the concept behind your client’s problem: some knowledge is hard to put into words, which is exactly why it has stayed with three people.",
+    company:"Not quite. This is a published idea, not something your client produced.",
+    other:"Not quite. It is not a case you can learn from — it is the idea that explains why the problem exists.",
+    industry:"Not quite. It is not about road works at all. It applies anywhere experts work."}},
+  {text:"The national rules for managing traffic at road works",answer:"industry",why:{
+    industry:"Yes. Rules set by a regulator apply to every firm in the sector. They tell you what competence is legally required, not just what this company would like.",
+    company:"Close. But these rules are not the company’s own — they are set outside it and apply across the whole industry.",
+    other:"Not quite. These are rules for everybody, not the experience of one other organisation.",
+    theory:"Not quite. Rules say what must happen. Theory explains why something is difficult."}},
+  {text:"How a hospital passed senior nurses’ judgement on to new nurses",answer:"other",why:{
+    other:"Yes. A different sector with the same problem: expert judgement held by a few experienced people. What transfers is the approach, not the setting.",
+    company:"Not quite. This is a different organisation, not your client.",
+    industry:"Not quite. A hospital is not in the road-work industry — and that is the point. It is a comparable case from elsewhere.",
+    theory:"Not quite. This is what one organisation actually did, not a concept that explains the problem."}},
+  {text:"The company’s job description for a site supervisor",answer:"company",why:{
+    company:"Yes. An internal document telling you what the company says a supervisor should be able to do. What it leaves out is often the interesting part.",
+    other:"Not quite. This is your client’s own paperwork, not another organisation’s.",
+    industry:"Not quite. A job description is one company’s view, not a sector-wide rule or statistic.",
+    theory:"Not quite. It describes a role. It does not explain why expert judgement is hard to teach."}},
+  {text:"A model of the stages people pass through from beginner to expert",answer:"theory",why:{
+    theory:"Yes. A framework from the literature. Use it carefully though — if you use it to decide someone is ready and you are wrong, they work unsupervised too soon.",
+    company:"Not quite. A published model, not a company document.",
+    other:"Not quite. It sounds practical, but a model is an idea, not a case study.",
+    industry:"Not quite. It is not specific to this sector, or to any sector."}},
+  {text:"A safety authority’s report into a serious road-work accident",answer:"industry",why:{
+    industry:"Yes. A regulator investigating the sector. It also tells you what is at stake if judgement is passed on badly — hold on to that.",
+    company:"Not quite, unless the accident happened at your client. A safety authority reports across the whole industry.",
+    other:"A fair answer. It is about a named incident, but it comes from a regulator looking at the sector, so it sits under The industry.",
+    theory:"Not quite. An investigation reports what happened. It does not offer a framework."}},
+  {text:"An airline’s report on why its pilot mentoring scheme failed",answer:"other",why:{
+    other:"Yes — and a failure is more useful than a success. It tells you what to avoid, and an organisation willing to publish its mistakes is usually being straight with you.",
+    company:"Not quite. Another organisation’s report, not your client’s.",
+    industry:"Not quite. Aviation is not your client’s industry. It is a comparable case from somewhere else.",
+    theory:"Not quite. It reports what happened in one scheme rather than explaining why mentoring works."}},
+  {text:"A recruitment company web page: “Five ways to keep expert knowledge”",answer:null,
+    trapWhy:"This one belongs in none of the four groups. It looks exactly like what you need — the title is almost your research question, it is free, short and easy to read, and it will come up first in any search. But a recruitment company writes this to sell its services, not to report what it found. There is no evidence behind it. Before you use anything, ask who wrote it and why."}
+  ],
+  takeaway:"The hard part is not finding sources. It is knowing what kind of evidence you are holding — and who wrote it, and why."
+};
+/* =================== end of card data =================== */
+
+(function(){
+  "use strict";
+  var A=ACTIVITY, C=A.cards, $=function(id){return document.getElementById(id)};
+  var intro=$('intro'),game=$('game'),end=$('end'),card=$('card'),hint=$('hint');
+  var zones=[].slice.call(document.querySelectorAll('.zone'));
+  var i=0, firstTry=0, settled=false, tried=[], trapAt=null;
+
+  $('i1').textContent=A.brief.client; $('i2').textContent=A.brief.issue; $('i3').textContent=A.brief.task;
+  $('g1').textContent=A.brief.client; $('g2').textContent=A.brief.issue; $('tk').textContent=A.takeaway;
+
+  $('start').onclick=function(){intro.classList.add('hidden');game.classList.remove('hidden');show()};
+  $('again').onclick=function(){i=0;firstTry=0;trapAt=null;end.classList.add('hidden');game.classList.remove('hidden');show()};
+  $('next').onclick=function(){i++; if(i>=C.length){finish()}else{show()}};
+  $('bt').onclick=function(){var h=$('bp').classList.toggle('hidden');this.setAttribute('aria-expanded',h?'false':'true')};
+
+  function show(){
+    settled=false; tried=[];
+    var c=C[i];
+    $('cn').textContent='Card '+(i+1);
+    $('ct').textContent=c.text;
+    card.style.transform=''; card.classList.remove('gone','nope');
+    void card.offsetWidth; card.classList.add('enter');
+    $('fb').classList.add('hidden'); $('fa').classList.add('hidden'); $('nr').classList.add('hidden');
+    hint.textContent='Drag the card, or tap a group'; hint.className='hint'; hint.style.visibility='visible';
+    zones.forEach(function(z){z.classList.remove('tried','right','hot','off')});
+    $('count').textContent=(i+1)+' / '+C.length;
+    $('bar').style.width=(i/C.length*100)+'%';
+    $('next').textContent=(i===C.length-1)?'See your results':'Next card';
+  }
+
+  function place(g){
+    if(settled) return;
+    if(tried.indexOf(g)>-1) return;
+    var c=C[i];
+
+    /* the card that fits nowhere: one attempt, then explain */
+    if(c.answer===null){
+      settled=true; trapAt=g;
+      zones.forEach(function(z){z.classList.add('off');z.classList.remove('hot')});
+      card.classList.add('gone'); hint.style.visibility='hidden';
+      $('fb').classList.remove('yes'); $('vd').textContent='Careful';
+      $('ft').textContent=c.trapWhy; $('fa').classList.add('hidden');
+      $('fb').classList.remove('hidden'); $('nr').classList.remove('hidden');
+      $('bar').style.width='100%';
+      return;
+    }
+
+    if(g===c.answer){
+      settled=true;
+      if(tried.length===0) firstTry++;
+      zones.forEach(function(z){
+        if(z.dataset.g===g){z.classList.remove('tried');z.classList.add('right')}
+        else if(!z.classList.contains('tried')) z.classList.add('off');
+        z.classList.remove('hot');
+      });
+      card.classList.add('gone'); hint.style.visibility='hidden';
+      $('fb').classList.add('yes'); $('vd').textContent='That fits';
+      $('ft').textContent=c.why[g]; $('fa').classList.add('hidden');
+      $('fb').classList.remove('hidden'); $('nr').classList.remove('hidden');
+      $('bar').style.width=((i+1)/C.length*100)+'%';
+      return;
+    }
+
+    /* wrong: say why, rule that group out, hand the card back */
+    tried.push(g);
+    var z = zones.filter(function(q){return q.dataset.g===g})[0];
+    if(z){z.classList.add('tried');z.classList.remove('hot')}
+    card.style.transform='';
+    card.classList.remove('enter'); void card.offsetWidth; card.classList.add('nope');
+    $('fb').classList.remove('yes'); $('vd').textContent='Not quite';
+    $('ft').textContent=c.why[g];
+    $('fa').textContent=(tried.length>=3)?'One group left. Which is it?':'Put the card in another group.';
+    $('fa').classList.remove('hidden');
+    $('fb').classList.remove('hidden');
+    hint.textContent='Try another group'; hint.className='hint warn';
+  }
+
+  function finish(){
+    game.classList.add('hidden'); end.classList.remove('hidden');
+    $('sc').textContent=firstTry+' / 8';
+    $('sclbl').textContent=(firstTry===8)?'right first time — every one':'right first time';
+    var last=C[C.length-1];
+    $('tx').textContent=last.trapWhy;
+    $('tt').textContent=trapAt?('You put the last card in '+A.groups[trapAt].label):'And the last card';
+  }
+
+  zones.forEach(function(z){
+    z.onclick=function(){place(z.dataset.g)};
+    z.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();place(z.dataset.g)}};
+  });
+  document.addEventListener('keydown',function(e){
+    if(game.classList.contains('hidden'))return;
+    if(settled){if(e.key==='Enter'||e.key===' '){e.preventDefault();$('next').click()}return}
+    var m={ArrowUp:'company',ArrowLeft:'other',ArrowDown:'industry',ArrowRight:'theory'};
+    if(m[e.key]){e.preventDefault();place(m[e.key])}
+  });
+
+  var d=null;
+  card.addEventListener('pointerdown',function(e){
+    if(settled)return; d={x:e.clientX,y:e.clientY,m:false};
+    card.setPointerCapture(e.pointerId);
+    card.classList.remove('enter','nope'); card.classList.add('grab');
+  });
+  card.addEventListener('pointermove',function(e){
+    if(!d)return;
+    var dx=e.clientX-d.x, dy=e.clientY-d.y;
+    if(Math.abs(dx)>5||Math.abs(dy)>5)d.m=true;
+    card.style.transform='translate('+dx+'px,'+dy+'px) rotate(0deg)';
+    var z=at(e.clientX,e.clientY);
+    zones.forEach(function(q){q.classList.toggle('hot', q===z && !q.classList.contains('tried'))});
+  });
+  card.addEventListener('pointerup',function(e){
+    if(!d)return;
+    card.classList.remove('grab');
+    var z=d.m?at(e.clientX,e.clientY):null; d=null;
+    zones.forEach(function(q){q.classList.remove('hot')});
+    if(z && !z.classList.contains('tried')){ place(z.dataset.g) } else { card.style.transform='' }
+  });
+  card.addEventListener('pointercancel',function(){
+    if(!d)return; d=null; card.classList.remove('grab'); card.style.transform='';
+    zones.forEach(function(q){q.classList.remove('hot')});
+  });
+  function at(x,y){
+    for(var k=0;k<zones.length;k++){
+      var r=zones[k].getBoundingClientRect();
+      if(x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom)return zones[k];
+    }
+    return null;
+  }
+})();
+</script>
+</body>
+</html>
